@@ -1,0 +1,122 @@
+<html>
+<head>
+<script>
+treeData = [
+  {
+    "name": "1",
+    "children": [
+		  {
+        "name": "2",
+	      "cost": 1,
+        "children": [
+			    {
+            "name": "3",
+            "cost": 2,
+            "pruned": 1,
+          },
+          { 
+            "name": "4",
+            "target": 1,
+            "cost": 3,
+          },
+        ]
+      },
+      {
+        "name": "5",
+        "cost": 5,
+      }
+    ]
+  }
+];
+
+/*
+Prende l'albero e una funzione e ritorna:
+ false - no soluzione
+ un nodo - un nodo obiettivo
+La funzione strategy prende l'albero, il nodo corrente e
+la frontiera e ritorna la nuova frontiera espandendo il 
+nodo in questione 
+*/
+function TreeSearch(tree, strategy) {
+  root = tree[0];
+  fringe = [];
+  fringe.push(root);
+  d_counter = 0; //debug
+  while (true && d_counter<10) {
+//    console.log("iterazione " + d_counter); //debug
+    d_counter++; //debug
+    if (fringe.length == 0) {
+      return false;
+    }
+    //pick the first node and remove from fringe
+    current_node = fringe[0];
+    fringe.shift();
+    console.log("nodo:" + current_node.name);
+    
+    if (current_node.target == 1){
+      console.log("goal raggiunto");
+      return current_node;
+    }
+    if (typeof(current_node.children) != 'undefined') {
+      fringe = strategy(current_node, tree, fringe);
+    }
+    string = ""
+    for (i in fringe){
+      string += fringe[i].name+",";
+    }
+    console.log("fringe: [" + string + "]");
+    
+  }
+}
+
+/*
+  Implements Depth first-search
+*/
+function Dfs(node, tree, fringe){
+  for (i = 0; i < current_node.children.length; i++){
+    fringe.unshift(current_node.children[current_node.children.length - i -1]);
+  }
+  return fringe;
+}
+
+/*
+  Implements Breadth first-search
+*/
+function Bfs(list){
+  for (i = 0; i < current_node.children.length; i++){
+    fringe.push(current_node.children[i]);
+  }
+  return fringe;
+}
+
+</script>
+
+</head>
+
+<body>
+<script>
+  TreeSearch(treeData, Bfs);
+</script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
