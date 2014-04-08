@@ -12,10 +12,11 @@
 
 function TreeManager(json) {
 	//Non credo serva .size ma ho paura di rompere qualcosa
+	//In realtà serve ma si può tweakare
 	this._tree = d3.layout.tree()
 	 .size([height, width]);
 	 
-	 
+	//Questa non è una buona idea 
 	this._json = json;
 }
 
@@ -70,16 +71,26 @@ TreeManager.prototype.update = function(source) {
 	var links = this._tree.links(nodes);
 
 	//Chiamata da tweakare per sistemare l'altezza dei nodi
+	//Si può rendere parametrico a seconda di quanti nodi ci sono
 	nodes.forEach(function(d) { d.y = d.depth * 80; });
 	
-	//Unisce dati agli archi e li disegna
+	
+	//
+	//	PIMP MY LINKS
+	//
+	
+	// 1 - Data join
 	var link = this._svg.selectAll(".link")
 	 .data(links);	 
+	 
+	// 2 - Enter Selection
 	var linkenter = link.enter().append("path")
 	 .attr("class", "link")
 	 .attr("id", 
 		function(d) { 
 			//Disegna le etichette sugli archi
+			//Sono sicuro si potrebbe spostare, qui fa schifo (dovrebbe avere un suo append)
+			//Ma INTANTO funziona
 			_svg.append("text")
 			 .attr("class", "labels")
 			 .attr("x", d.source.x/2 + d.target.x/2)
@@ -92,10 +103,15 @@ TreeManager.prototype.update = function(source) {
 	 .attr("d", function(d) { return "M " + d.source.x + "," + d.source.y + " L " + d.target.x + "," + d.target.y; });
 
 	 
-	//Unisce dati ai nodi e li disegna
+	//
+	//	PIMP MY NODES
+	//
+	
+	// 1 - Data join
 	var node = this._svg.selectAll("g.node")
-	 .data(nodes, function(d) { return d.id || (d.id = ++i); });
-
+	 .data(nodes, function(d) { return d.name; });
+	
+	// 2 - Enter Selection
 	var nodeEnter = node.enter().append("g")
 	 .attr("class", function (d) { return (d.target != 1 ) ? "node" : "node target"; })
 	 .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")";});
@@ -104,15 +120,6 @@ TreeManager.prototype.update = function(source) {
 	 .attr("id", function(d) { return "circle" + d.name; })
 	 .attr("r", 10)
 	 .style("fill", "#fff");
-	 
-	 nodeEnter.append("line")
-	 .filter( function(d) { return d.pruned === 1; })
-	 .attr("stroke", "red")
-     .attr("stroke-width", "1")
-	 .attr("x1", -10)
-	 .attr("y1", -10)
-	 .attr("x2", 10)
-	 .attr("y2", 10);
 	 
 	nodeEnter.append("circle")
 	 .filter( function(d) { return d.target === 1; })
@@ -126,11 +133,32 @@ TreeManager.prototype.update = function(source) {
 	 .style("fill-opacity", 1)
 	 .style("font-size", "0.6em");
 	 
-	 var node = this._svg.selectAll("g.node")
+	// 2 - Update Selection
+	node.append("line")
+	 .filter( function(d) { return d.pruned === 1; })
+	 .attr("stroke", "red")
+     .attr("stroke-width", "1")
+	 .attr("stroke-dasharray","0, 28.28")
+	 .attr("x1", -10)
+	 .attr("y1", -10)
+	 .attr("x2", 10)
+	 .attr("y2", 10)
+	 .transition()
+	 .attr("stroke-dasharray","28.28, 28.28")
+	 .duration(1000);
+	 
+	var count = this._svg.selectAll("g.node").filter(function(d) { return d.selected; })[0].length;
+	node.select('circle')
+	 .filter( function(d) {return d.selected == count; } )
+	 .transition()
+	 .style("fill", treeConfig.nodeSelectedFillColor)
+	 .duration(1000);
+	 
 };
 
 
 /*** Metodo NodeSelected ***/
+//OBSOLETE
 TreeManager.prototype.selected = function(selector) {
 
 	var node = d3.select(selector).node();
@@ -151,25 +179,13 @@ TreeManager.prototype.selected = function(selector) {
 };
 
 /*** Metodo NodeDeselected ***/
+//OBSOLETE
 TreeManager.prototype.deselected = function(selector) {
 	d3.select(selector).transition().style("fill", "#FFF").duration(1000);
 	d3.select(selector + "~ text").transition()
 	 .each(function(d) { d3.select(this).text( "#" + d.name); })
 	 .style("font-size", "10px")
 	 .duration(1000);
-};
-
-/*** Metodo NodePruned ***/
-TreeManager.prototype.pruned = function(node) {
-	node.pruned = 1;
-	var scope = this;
-	if (typeof node.children === 'undefined') {
-		console.log(node.children);
-		node.children.forEach(function(child) {
-			scope.pruned(child);
-		});
-	}
-	this.update(this._json);
 };
 
 
