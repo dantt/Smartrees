@@ -15,7 +15,7 @@
     
     <div class="off-canvas-wrap" data-offcanvas> 
     	<div class="inner-wrap"> 
-    		<nav class="tab-bar"> 
+    		<nav class="tab-bar topmenu"> 
     			<section class="left-small"> 
     				<a class="left-off-canvas-toggle menu-icon" >
     					<span></span>
@@ -38,10 +38,16 @@
     		<section class="main-section">
     		
     		
-	    		<div class='container'>
-				<div class='svg-container' id='treecontainer'>
-				</div>
-			</div>   		
+				<div class='container'>
+					<div class='columns small-8'>
+						<div class='svg-container' id='treecontainer'></div>
+					</div>
+					<div class='columns small-4'>
+						<button id="step" value="steppa" ><img id="img_step" width=30 src="images/step.png"> Steppa</button>
+						<button id="play" value="steppa" ><img id="img_play" width=30 src="images/play.png">Play</button>
+						<button id="stop" value="steppa" ><img id="img_stop" width=30 src="images/pause_h.png">Stop</button>
+					</div>
+				</div>   		
     		
     		
     		
@@ -50,9 +56,19 @@
     	</div>
     </div>    
     
-    
+    <!-- Third Party scripts -->
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
+	<script src="js/d3.v3.min.js" charset="utf-8"></script>
+	
+	<!-- Project scripts -->
+	<script src="config.js" charset="utf-8"></script>
+	<script src="treemanager.js" charset="utf-8"></script>
+	<script src="alg.js" charset="utf-8"></script>
+	
+	<!-- Demo data -->
+	<script src="demo.js" charset="utf-8"></script>
+	
     <script>
       $(document).foundation();
     </script>
