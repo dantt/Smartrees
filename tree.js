@@ -77,7 +77,6 @@ TreeManager.prototype.update = function(source) {
 	var y = d3.scale.linear()
    	 .domain([0, d3.max(list)+1])
     	 .range([0, 500]);
-    	 console.log(y(1));
 	nodes.forEach(function(d) { d.y = y(d.depth)/2; console.log(d.y) });
 	
 	
@@ -133,6 +132,7 @@ TreeManager.prototype.update = function(source) {
 	 .style("fill", "#fff");
 
 	nodeEnter.append("text")
+	 .attr("class", "nodetext")
 	 .attr("dy", "3")
 	 .attr("text-anchor", "middle")
 	 .text(function(d) { return "#" + d.name; })
@@ -154,11 +154,22 @@ TreeManager.prototype.update = function(source) {
 	 .duration(1000);
 	 
 	var count = this._svg.selectAll("g.node").filter(function(d) { return d.selected; })[0].length;
+	var scope = this;
 	node.select('circle')
 	 .filter( function(d) {return d.selected == count; } )
+	 .each( function(d, i) { scope.selected(this); })
 	 .transition()
 	 .style("fill", treeConfig.nodeSelectedFillColor)
 	 .duration(1000);
+	 
+	var nodetext = d3.selectAll("text.nodetext")
+	 .filter( function(d) {return d.selected == count; } )
+	 .transition()
+	 .each("end", function(d) { d3.select(this).text( "#" + d.name + "/" + count); })
+	 .style("font-size", "7px")
+	 .duration(1000);
+	 
+	
 	 
 };
 
@@ -166,18 +177,14 @@ TreeManager.prototype.update = function(source) {
 /*** Metodo NodeSelected ***/
 //OBSOLETE
 //A PARTE LA PARTE "CLONA IL NODO", VA SPOSTATA IN UPDATE
+//MA PER ORA FUNZIONA CHIAMANDOLO
 TreeManager.prototype.selected = function(selector) {
 
 	var node = d3.select(selector).node();
-    var clone = d3.select(node.parentNode.insertBefore(node.cloneNode(true),node.nextSibling));
+    	var clone = d3.select(node.parentNode.insertBefore(node.cloneNode(true),node.nextSibling));
 	 
 	clone.transition().attr('r', 20).style('opacity', 0).duration(1000).remove();
 	var count = this._svg.selectAll("g.node").filter(function(d) { return d.selected == 1; })[0].length;
-	
-	d3.select(selector + "~ text").transition()
-	 .each("end", function(d) { d3.select(this).text( "#" + d.name + "/" + count); })
-	 .style("font-size", "7px")
-	 .duration(1000);
 };
 
 
