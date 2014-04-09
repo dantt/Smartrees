@@ -72,7 +72,13 @@ TreeManager.prototype.update = function(source) {
 
 	//Chiamata da tweakare per sistemare l'altezza dei nodi
 	//Si può rendere parametrico a seconda di quanti nodi ci sono
-	nodes.forEach(function(d) { d.y = d.depth * 80; });
+	var list = Array();
+	nodes.forEach(function(d) { list.push(d.depth); }, list);
+	var y = d3.scale.linear()
+   	 .domain([0, d3.max(list)+1])
+    	 .range([0, 500]);
+    	 console.log(y(1));
+	nodes.forEach(function(d) { d.y = y(d.depth)/2; console.log(d.y) });
 	
 	
 	//
@@ -159,15 +165,11 @@ TreeManager.prototype.update = function(source) {
 
 /*** Metodo NodeSelected ***/
 //OBSOLETE
+//A PARTE LA PARTE "CLONA IL NODO", VA SPOSTATA IN UPDATE
 TreeManager.prototype.selected = function(selector) {
 
 	var node = d3.select(selector).node();
     var clone = d3.select(node.parentNode.insertBefore(node.cloneNode(true),node.nextSibling));
-	
-	d3.select(selector).transition()
-	 .style("fill", treeConfig.nodeSelectedFillColor)
-	 .each(function(d) { d.selected = 1; })
-	 .duration(1000);
 	 
 	clone.transition().attr('r', 20).style('opacity', 0).duration(1000).remove();
 	var count = this._svg.selectAll("g.node").filter(function(d) { return d.selected == 1; })[0].length;
@@ -175,16 +177,6 @@ TreeManager.prototype.selected = function(selector) {
 	d3.select(selector + "~ text").transition()
 	 .each("end", function(d) { d3.select(this).text( "#" + d.name + "/" + count); })
 	 .style("font-size", "7px")
-	 .duration(1000);
-};
-
-/*** Metodo NodeDeselected ***/
-//OBSOLETE
-TreeManager.prototype.deselected = function(selector) {
-	d3.select(selector).transition().style("fill", "#FFF").duration(1000);
-	d3.select(selector + "~ text").transition()
-	 .each(function(d) { d3.select(this).text( "#" + d.name); })
-	 .style("font-size", "10px")
 	 .duration(1000);
 };
 
