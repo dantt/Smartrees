@@ -10,14 +10,14 @@
 /**********************************/
 /**********************************/
 
-function TreeManager(json) {
+function TreeManager(problem) {
 	//Non credo serva .size ma ho paura di rompere qualcosa
 	//In realtà serve ma si può tweakare
 	this._tree = d3.layout.tree()
 	 .size([height, width]);
 	 
 	//Questa non è una buona idea 
-	this._json = json;
+	this._problem = problem;
 }
 
 
@@ -28,7 +28,7 @@ function TreeManager(json) {
 /*********************************/
 
 /*** Un albero ha i riferimenti ad albero di d3.js, e al rendering in svg ***/
-TreeManager.prototype._json = '';
+TreeManager.prototype._problem = '';
 TreeManager.prototype._tree = '';
 TreeManager.prototype._nodes = '';
 TreeManager.prototype._svg = '';
@@ -55,7 +55,7 @@ TreeManager.prototype.draw = function(container) {
 	 .attr("transform", "translate(0, 50)")
 	  .append("g");
 	  
-	this.update(this._json);
+	this.update(this._problem.getTree());
 };
 
 /*** Metodo Update ***/
