@@ -1,5 +1,8 @@
 <html>
 <head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"> </script>
+<script src="./alg.js"> </script>
+
 <script>
 treeData = [
   {
@@ -7,7 +10,7 @@ treeData = [
     "children": [
 		  {
         "name": "2",
-	      "cost": 1,
+	"cost": 1,
         "children": [
 			    {
             "name": "3",
@@ -28,74 +31,24 @@ treeData = [
     ]
   }
 ];
-
-/*
-Prende l'albero e una funzione e ritorna:
- false - no soluzione
- un nodo - un nodo obiettivo
-La funzione strategy prende l'albero, il nodo corrente e
-la frontiera e ritorna la nuova frontiera espandendo il 
-nodo in questione 
-*/
-function TreeSearch(tree, strategy) {
-  root = tree[0];
-  fringe = [];
-  fringe.push(root);
-  d_counter = 0; //debug
-  while (true && d_counter<10) {
-//    console.log("iterazione " + d_counter); //debug
-    d_counter++; //debug
-    if (fringe.length == 0) {
-      return false;
-    }
-    //pick the first node and remove from fringe
-    current_node = fringe[0];
-    fringe.shift();
-    console.log("nodo:" + current_node.name);
-    
-    if (current_node.target == 1){
-      console.log("goal raggiunto");
-      return current_node;
-    }
-    if (typeof(current_node.children) != 'undefined') {
-      fringe = strategy(current_node, tree, fringe);
-    }
-    string = ""
-    for (i in fringe){
-      string += fringe[i].name+",";
-    }
-    console.log("fringe: [" + string + "]");
-    
-  }
-}
-
-/*
-  Implements Depth first-search
-*/
-function Dfs(node, tree, fringe){
-  for (i = 0; i < current_node.children.length; i++){
-    fringe.unshift(current_node.children[current_node.children.length - i -1]);
-  }
-  return fringe;
-}
-
-/*
-  Implements Breadth first-search
-*/
-function Bfs(list){
-  for (i = 0; i < current_node.children.length; i++){
-    fringe.push(current_node.children[i]);
-  }
-  return fringe;
-}
-
 </script>
 
 </head>
 
 <body>
+<button id="step" value="steppa" ><img id="img_step" width=30 src="images/step.png"> Steppa</button>
+<button id="play" value="steppa" ><img id="img_play" width=30 src="images/play.png">Play</button>
+<button id="stop" value="steppa" ><img id="img_stop" width=30 src="images/pause_h.png">Stop</button>
 <script>
-  TreeSearch(treeData, Bfs);
+  
+  var probl = new Problem(treeData);
+  probl.strategy = UniformCost;
+  var control = new Controller(probl);
+  document.getElementById("step").onclick = function() {control.step();};
+  document.getElementById("play").onclick = function() {control.play();};
+  document.getElementById("stop").onclick = function() {control.stop();};
+  
+  //TreeSearch(treeData, Bfs);
 </script>
 
 </body>
