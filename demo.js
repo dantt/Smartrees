@@ -32,12 +32,10 @@
 	tm = new TreeManager(probl.getTree.bind(probl));
 	tm.draw('treecontainer');
 	
-	var event = new Event('build');
-
 	// Listen for the event.
-	//elem.addEventListener('build', function (e) { }, false);
+	document.addEventListener('updated', tm.update.bind(tm), false);
 
-	// Dispatch the event.
+	//Dispatch the event.
 	//elem.dispatchEvent(event);
 	
 	$(document).ready(function() {

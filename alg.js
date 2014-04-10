@@ -2,6 +2,9 @@ function Problem(tree){
   this._tree = JSON.parse(JSON.stringify(tree));
 }
 Problem.prototype._frontier = [];
+Problem.prototype.getFrontier = function() {
+	return this._frontier;
+};
 Problem.prototype._tree;
 Problem.prototype._isStarted = false;
 Problem.prototype._nodesFound = 0;
@@ -26,6 +29,7 @@ Problem.prototype.step = function(){
   console.log("nodo:" + current_node.name);
   this._nodesFound++;
   current_node.selected =  this._nodesFound;
+  document.dispatchEvent(new Event('updated'));
   if (current_node.target == 1){
     console.log("goal raggiunto");
     return current_node;
