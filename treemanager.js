@@ -1,6 +1,6 @@
 /***** Legacy code *******/
 	 margin = {top: 50, right: 120, bottom: 20, left: 120},
-	 width = 960 - margin.right - margin.left,
+	 width = '100%',
 	 height = 500 - margin.top - margin.bottom;
 	 
 	 
@@ -14,7 +14,7 @@ function TreeManager(getTree) {
 	//Non credo serva .size ma ho paura di rompere qualcosa
 	//In realtà serve ma si può tweakare
 	this._tree = d3.layout.tree()
-	 .size([height, width]);
+	 .size([300, 300]);
 	 
 	//Questa non è una buona idea 
 	this._getTree = getTree;
@@ -48,8 +48,8 @@ TreeManager.prototype.draw = function(container) {
 	//dovremmo controllare il JSON prima di usarlo
 	//Altrimenti si delega al chiamante
 	this._svg = d3.select("#" + container).append("svg")
-	 .attr("width", "100%")
-	 .attr("viewBox", "0 0 500 500")
+	 .attr("style", "width:100%;height:100%")
+	 .attr("viewBox", "0 0 300 300")
 	 .attr("preserveAspectRatio", "xMinYMin meet")
 	 .attr("class", "svg-content")
 	 .attr("transform", "translate(0, 50)")
@@ -62,7 +62,6 @@ TreeManager.prototype.draw = function(container) {
 TreeManager.prototype.update = function() {
 	
 	var source = this._getTree();
-	console.log(source);
 	var root = source[0];
 	var _svg = this._svg;
 	var i = 0;

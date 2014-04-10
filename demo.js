@@ -25,21 +25,26 @@
 	  }
 	];	
 	
-	probl = new Problem(treeData);
-	probl.strategy = UniformCost;
-	control = new Controller(probl);
 	
-	tm = new TreeManager(probl.getTree.bind(probl));
-	tm.draw('treecontainer');
-	
-	// Listen for the event.
-	document.addEventListener('updated', tm.update.bind(tm), false);
 
-	//Dispatch the event.
-	//elem.dispatchEvent(event);
 	
 	$(document).ready(function() {
-		document.getElementById("step").onclick = function() {control.step();};
-		document.getElementById("play").onclick = function() {control.play();};
-		document.getElementById("stop").onclick = function() {control.stop();};
+		$('#maincontainer').load('templates/homepage.html', function() {
+			probl = new Problem(treeData);
+			probl.strategy = UniformCost;
+			control = new Controller(probl);
+			
+			tm = new TreeManager(probl.getTree.bind(probl));
+			tm.draw('treecontainer');
+			
+			// Event Listeners
+			document.addEventListener('updated', tm.update.bind(tm), false);
+		});
+		
+		$('#settingslink').click(function(event) {
+			event.preventDefault();
+			$('#maincontainer').load('templates/settings.html');
+		});
+		
 	});
+	

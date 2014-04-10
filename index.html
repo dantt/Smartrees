@@ -27,26 +27,18 @@
     		</nav> 
     		<aside class="left-off-canvas-menu"> 
     			<ul class="off-canvas-list"> 
-    				<li><label>Foundation</label></li> 
     				<li><a href="#">Home</a></li>
     				<li><a href="#">Load tree from JSON</a></li>
     				<li><a href="#">Presets</a></li>
     				<li><a href="#">Random tree</a></li>
-    				<li><a href="#">Settings</a></li>
+    				<li><a href="#" id='settingslink'>Settings</a></li>
     			</ul>
     		</aside> 
     		<section class="main-section">
     		
     		
-				<div class='container'>
-					<div class='columns small-8'>
-						<div class='svg-container' id='treecontainer'></div>
-					</div>
-					<div class='columns small-4'>
-						<button id="step" value="steppa" ><img id="img_step" width=30 src="images/step.png"> Steppa</button>
-						<button id="play" value="steppa" ><img id="img_play" width=30 src="images/play.png">Play</button>
-						<button id="stop" value="steppa" ><img id="img_stop" width=30 src="images/pause_h.png">Stop</button>
-					</div>
+				<div class='container' id='maincontainer'>
+					
 				</div>   		
     		
     		
@@ -63,8 +55,10 @@
 	
 	<!-- Project scripts -->
 	<script src="config.js" charset="utf-8"></script>
-	<script src="treemanager.js" charset="utf-8"></script>
 	<script src="alg.js" charset="utf-8"></script>
+	<script src="treemanager.js" charset="utf-8"></script>
+	<script src="problem.js" charset="utf-8"></script>
+	<script src="controller.js" charset="utf-8"></script>
 	
 	<!-- Demo data -->
 	<script src="demo.js" charset="utf-8"></script>

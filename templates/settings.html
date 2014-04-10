@@ -1,0 +1,41 @@
+<h1>Such options. Much customize. Wow</h1>
+
+<div class='row'>
+	<form>
+	
+		<h5>Tree display</h5>
+		<hr>
+		<div class='row'>
+			<div class="small-6 medium-3 columns">
+				<label for="right-label" class="right inline">Selected node</label> 
+			</div> 
+			<div class="small-6 medium-2 columns end"> 
+				<input type="text" id="right-label" placeholder="#FF0000" value='' id='nodeSelectedFillColor'> 
+			</div>
+		</div>
+		
+		
+		<br>
+		<h5>Simulation</h5>
+		<hr>
+		<div class='row'>
+			<div class="small-6 medium-3 columns">
+				<label for="right-label" class="right inline">Sim speed</label> 
+			</div> 
+			<div class="small-6 medium-2 columns end"> 
+				<input type="text" id="right-label" placeholder="2000" value='' id='simulationSpeed'> 
+			</div>
+		</div>
+		
+		<br>
+		<button>Save</button>
+		
+	</form>
+</div>
+
+<script type='text/javascript'>
+$(document).ready(function() {	
+	$('#nodeSelectedFillColor').val(treeConfig.nodeSelectedFillColor);
+
+});
+</script>	
