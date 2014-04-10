@@ -1,38 +1,44 @@
 	treeData = [
 	  {
-		"name": "1",
-		"selected": 1,
+		"name": "A",
 		"children": [
 		  {
-			"name": "2",
+			"name": "B",
 			"cost": 1,
 			"children": [
 			  {
-				"name": "3",
+				"name": "C",
 				"cost": 2,
-				"pruned": 1,
 			  },
 			  { 
-				"name": "4",
+				"name": "D",
 				"target": 1,
 				"cost": 3,
 			  },
 			]
 		  },
 		  {
-			"name": "5",
+			"name": "E",
 			"cost": 5,
 		  }
 		]
 	  }
 	];	
 	
-	var probl = new Problem(treeData);
+	probl = new Problem(treeData);
 	probl.strategy = UniformCost;
-	var control = new Controller(probl);
+	control = new Controller(probl);
 	
-	tm = new TreeManager(probl);
+	tm = new TreeManager(probl.getTree.bind(probl));
 	tm.draw('treecontainer');
+	
+	var event = new Event('build');
+
+	// Listen for the event.
+	//elem.addEventListener('build', function (e) { }, false);
+
+	// Dispatch the event.
+	//elem.dispatchEvent(event);
 	
 	$(document).ready(function() {
 		document.getElementById("step").onclick = function() {control.step();};

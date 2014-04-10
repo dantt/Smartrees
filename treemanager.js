@@ -10,14 +10,14 @@
 /**********************************/
 /**********************************/
 
-function TreeManager(problem) {
+function TreeManager(getTree) {
 	//Non credo serva .size ma ho paura di rompere qualcosa
 	//In realtà serve ma si può tweakare
 	this._tree = d3.layout.tree()
 	 .size([height, width]);
 	 
 	//Questa non è una buona idea 
-	this._problem = problem;
+	this._getTree = getTree;
 }
 
 
@@ -28,7 +28,7 @@ function TreeManager(problem) {
 /*********************************/
 
 /*** Un albero ha i riferimenti ad albero di d3.js, e al rendering in svg ***/
-TreeManager.prototype._problem = '';
+TreeManager.prototype._getTree = '';
 TreeManager.prototype._tree = '';
 TreeManager.prototype._nodes = '';
 TreeManager.prototype._svg = '';
@@ -55,12 +55,14 @@ TreeManager.prototype.draw = function(container) {
 	 .attr("transform", "translate(0, 50)")
 	  .append("g");
 	  
-	this.update(this._problem.getTree());
+	this.update();
 };
 
 /*** Metodo Update ***/
-TreeManager.prototype.update = function(source) {
-
+TreeManager.prototype.update = function() {
+	
+	var source = this._getTree();
+	console.log(source);
 	var root = source[0];
 	var _svg = this._svg;
 	var i = 0;
@@ -77,7 +79,7 @@ TreeManager.prototype.update = function(source) {
 	var y = d3.scale.linear()
    	 .domain([0, d3.max(list)+1])
     	 .range([0, 500]);
-	nodes.forEach(function(d) { d.y = y(d.depth)/2; console.log(d.y) });
+	nodes.forEach(function(d) { d.y = y(d.depth)/2; });
 	
 	
 	//
