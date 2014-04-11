@@ -1,81 +1,102 @@
 algoMap = {
-	Dfs: Dfs,
-	Bfs: Bfs,
-	UniformCost: UniformCost
+    Dfs: Dfs,
+    Bfs: Bfs,
+    UniformCost: UniformCost,
+    DepthLimited: DepthLimited
 };
 
 
 
 
 /* 
-  Implements Depth first-search
-*/
+ Implements Depth first-search
+ */
 function Dfs(node, frontier){
-  for (i = 0; i < node.children.length; i++){
-    frontier.unshift(node.children[node.children.length - i -1]);
-  }
-  return frontier;
+    for (i = 0; i < node.children.length; i++){
+        frontier.unshift(node.children[node.children.length - i -1]);
+    }
+    return frontier;
 }
 
 /*
-  Implements Breadth first-search
-*/
+ Implements Breadth first-search
+ */
 function Bfs(node, frontier){
-  for (i = 0; i < node.children.length; i++){
-    frontier.push(node.children[i]);
-  }
-  return frontier;
+    for (i = 0; i < node.children.length; i++){
+        frontier.push(node.children[i]);
+    }
+    return frontier;
 }
 
+
 /*
-  Implements Uniform Cost search
-*/
+ Implements Depth-limited-search
+ */
+function DepthLimited(node, frontier, limit) {
+    if (typeof(node.pathCost) == 'undefined') { //we are in root
+        node.depth = 0;
+    }
+    for (i = 0; i < node.children.length; i++) {
+        node.children[i].depth = node.depth + 1;
+    }
+    if (node.depth < limit) {
+        for (i = 0; i < node.children.length; i++) {
+            frontier.unshift(node.children[node.children.length - i - 1]);
+        }
+    }
+    return frontier;
+}
+
+
+/*
+ Implements Uniform Cost search
+ */
 function UniformCost(node, frontier){
-  if (typeof(node.pathCost) == 'undefined') { //we are in root
-    node.pathCost = 0;
-  }
-  var ord = [];
-  for (i = 0; i < node.children.length; i++){ //loop trough children, update pathCost and insert info in ord
-    node.children[i].pathCost = node.pathCost + node.children[i].cost;
-    ord.push({index:i, pathCost: node.children[i].pathCost});
-  }
-  //loop trough ord and sort the nodes
-  //BUBBLE SORT FTW
-  for (i = 0; i < ord.length; i++){
-    for (j = i; j < ord.length; j++){
-      if (ord[j].pathCost < ord[i].pathCost){
-	//then swap j and i
-	var tmp = ord[j];
-	ord[j] = ord[i];
-	ord[i] = tmp;
-      }  
+    if (typeof(node.pathCost) == 'undefined') { //we are in root
+        node.pathCost = 0;
     }
-  }
-  
-  k = 0;
-  old_f = frontier;
-  frontier = [];
-  while ( old_f.length > 0 || ord.length > 0){
-    if ( old_f.length == 0 ){
-      while(ord.length > 0){
-	frontier.push(node.children[ord[0].index]);
-	ord.shift();
-      }
+    var ord = [];
+    for (i = 0; i < node.children.length; i++){ //loop trough children, update pathCost and insert info in ord
+        node.children[i].pathCost = node.pathCost + node.children[i].cost;
+        ord.push({index:i, pathCost: node.children[i].pathCost});
     }
-    else if ( ord.length == 0){
-      while( old_f.length > 0){
-	frontier.push(old_f.shift());
-      }
+    //loop trough ord and sort the nodes
+    //BUBBLE SORT FTW
+    for (i = 0; i < ord.length; i++){
+        for (j = i; j < ord.length; j++){
+            if (ord[j].pathCost < ord[i].pathCost){
+                //then swap j and i
+                var tmp = ord[j];
+                ord[j] = ord[i];
+                ord[i] = tmp;
+            }
+        }
     }
-    else if ( old_f[0].pathCost < ord[0].pathCost ){
-      frontier.push(old_f.shift()); 
+
+    k = 0;
+    old_f = frontier;
+    frontier = [];
+    while ( old_f.length > 0 || ord.length > 0){
+        if ( old_f.length == 0 ){
+            while(ord.length > 0){
+                frontier.push(node.children[ord[0].index]);
+                ord.shift();
+            }
+        }
+        else if ( ord.length == 0){
+            while( old_f.length > 0){
+                frontier.push(old_f.shift());
+            }
+        }
+        else if ( old_f[0].pathCost < ord[0].pathCost ){
+            frontier.push(old_f.shift());
+        }
+        else{
+            frontier.push(node.children[ord[0].index]);
+            ord.shift();
+        }
+        k++;
     }
-    else{
-      frontier.push(node.children[ord[0].index]);
-      ord.shift();
-    }
-    k++;
-  }
-  
-  return frontier;
+
+    return frontier;
 }
