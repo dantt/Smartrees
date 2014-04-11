@@ -1,3 +1,9 @@
+algoMap = {
+	Dfs: Dfs,
+	Bfs: Bfs,
+	UniformCost: UniformCost
+};
+
 
 
 

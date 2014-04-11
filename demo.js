@@ -31,7 +31,7 @@
 	$(document).ready(function() {
 		$('#maincontainer').load('templates/homepage.html', function() {
 			probl = new Problem(treeData);
-			probl.strategy = UniformCost;
+			probl.strategy = Dfs;
 			control = new Controller(probl);
 			
 			tm = new TreeManager(probl.getTree.bind(probl));
@@ -39,6 +39,12 @@
 			
 			// Event Listeners
 			document.addEventListener('updated', tm.update.bind(tm), false);
+			$('#algo').change(function() {
+				var selected = $('#algo option:selected').val();
+				probl.strategy = algoMap[selected];
+			});
+			
+			
 		});
 		
 		$('#settingslink').click(function(event) {
