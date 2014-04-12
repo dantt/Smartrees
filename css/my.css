@@ -76,3 +76,11 @@
 .centered {
 	text-align: center;
 }
+
+.container > div {
+	display: none;
+}
+
+.container > div.active {
+	display: block;
+}
