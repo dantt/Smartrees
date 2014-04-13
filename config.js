@@ -34,6 +34,7 @@ treeConfig = {
 
 simulationConfig = {
 	simulationSpeed: 2000,
+	defaultStrategy: 'Dfs',
 }
 
 

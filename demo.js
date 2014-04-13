@@ -27,19 +27,14 @@
 	
 	
 	//IA_PROJECT INIT CODE (will be moved and namespaced)
-	probl = new Problem(treeData);
-	probl.strategy = Dfs;
-	
-	control = new Controller(probl);
-	
-	tm = new TreeManager(probl.getTree.bind(probl));
+	mIA = new IA(treeData);
 	
 	
 	//DOM INIT CODE	
 	$(document).ready(function() {
 		
 		// Event Listeners
-		document.addEventListener('updated', tm.update.bind(tm), false);
+		document.addEventListener('updated', mIA.update.bind(mIA), false);
 	
 	
 		//Navigation how-to: on first pageload load every template you'll need in a div inside #maincontainer
@@ -57,7 +52,7 @@
 		
 		$('#homepage').load('templates/homepage.html', function() {
 		
-			tm.draw('treecontainer');
+			mIA.draw('treecontainer');
 			
 			$("#step").click(function() {control.step();});
 			$("#play").click(function() {control.play();});
@@ -65,7 +60,7 @@
 			
 			$('#algo').change(function() {
 				var selected = $('#algo option:selected').val();
-				probl.strategy = algoMap[selected];
+				mIA.setStrategy = selected;
 			});
 			
 		});

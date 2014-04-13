@@ -6,6 +6,7 @@
 
 function Problem(tree){
   this._tree = tree;
+  this._startingTree = tree;
   this._frontier = [this._tree[0]];
 }
 
