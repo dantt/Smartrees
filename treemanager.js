@@ -48,7 +48,7 @@ TreeManager.prototype.draw = function(container) {
 	//dovremmo controllare il JSON prima di usarlo
 	//Altrimenti si delega al chiamante
 	this._svg = d3.select("#" + container).append("svg")
-	 .attr("style", "width:100%;height:100%")
+	 //.attr("style", "width:100%;height:100%")
 	 .attr("viewBox", "0 0 300 300")
 	 .attr("preserveAspectRatio", "xMinYMin meet")
 	 .attr("class", "svg-content")
@@ -64,9 +64,6 @@ TreeManager.prototype.update = function() {
 	var source = this._getTree();
 	var root = source[0];
 	var _svg = this._svg;
-	var i = 0;
-	var i2 = 0;
-	var i3 = 0;
 	var nodes = this._tree.nodes(root).reverse();
 	this._nodes = this._tree.nodes(root);
 	var links = this._tree.links(nodes);
@@ -107,6 +104,10 @@ TreeManager.prototype.update = function() {
 			return "p" + d.target.name; 
 		})
 	 .attr("d", function(d) { return "M " + d.source.x + "," + d.source.y + " L " + d.target.x + "," + d.target.y; });
+	 
+	// 3 - Exit selection
+	
+	link.exit().remove();
 
 	 
 	//
@@ -169,10 +170,15 @@ TreeManager.prototype.update = function() {
 	 .each("end", function(d) { d3.select(this).text( "#" + d.name + "/" + count); })
 	 .style("font-size", "7px")
 	 .duration(1000);
-	 
+	
+
+	// 3 - Exit selection
+	
+	node.exit().remove();
 	
 	 
 };
+
 
 
 /*** Metodo NodeSelected ***/

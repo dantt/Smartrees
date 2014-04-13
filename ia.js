@@ -66,3 +66,15 @@ IA.prototype.draw = function(container) {
 IA.prototype.update = function() {
 	this.treemanager.update();
 };
+
+IA.prototype.step = function() {
+	this.control.step();
+};
+
+IA.prototype.play = function() {
+	this.control.play();
+};
+
+IA.prototype.stop = function() {
+	this.control.stop();
+};
