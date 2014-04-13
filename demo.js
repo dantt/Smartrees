@@ -50,9 +50,10 @@
 				navigateTo('#homepage');
 			});
 			
-			$('#preset2').click(function() { 
+			$('#preset2').click(function() {	
+				$('#treecontainer').empty();
 				mIA.setTree(treePresets.preset2);
-				mIA.update();
+				mIA.draw('treecontainer');
 				navigateTo('#homepage');				
 			});
 		

@@ -40,7 +40,7 @@ IA.prototype.setStrategy = function(strategy) {
 };
 
 IA.prototype.setTree = function(tree) {
-	this.problem._tree = tree;
+	this.problem.setTree(tree);
 }
 
 
