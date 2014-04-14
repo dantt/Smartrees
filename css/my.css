@@ -86,13 +86,15 @@
 }
 
 .presetcontainer {
-	/*border: 1px solid #CCC;*/
-	/*margin: 10px;*/
 	text-align: center;
 }
 
 .presetcontainer img {
 	height: 300px;
-	border: 4px solid #FFFFFF;
+	border: 1px solid #CCC;
     display: inline-block;
+}
+
+.presetcontainer a {
+	color: #222;
 }

@@ -45,14 +45,21 @@
 		
 			$('#preset1').click(function() { 
 				$('#treecontainer').empty();
-				mIA.setTree(treePresets.preset1);
+				mIA.newTree(treePresets.preset1);
 				mIA.draw('treecontainer');
 				navigateTo('#homepage');
 			});
 			
 			$('#preset2').click(function() {	
 				$('#treecontainer').empty();
-				mIA.setTree(treePresets.preset2);
+				mIA.newTree(treePresets.preset2);
+				mIA.draw('treecontainer');
+				navigateTo('#homepage');				
+			});
+			
+			$('#preset3').click(function() {	
+				$('#treecontainer').empty();
+				mIA.newTree(treePresets.preset3);
 				mIA.draw('treecontainer');
 				navigateTo('#homepage');				
 			});

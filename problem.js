@@ -50,6 +50,7 @@ Problem.prototype.setTree = function(tree){
   this._tree = tree;
   this._startingTree = tree;
   this._frontier = [this._tree[0]];
+  this._nodesFound = 0;
 };
 
 

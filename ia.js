@@ -52,6 +52,10 @@ IA.prototype.setTree = function(tree) {
 /*****************************/
 /*****************************/
 
+IA.prototype.newTree = function(tree) {
+	this.problem.setTree(tree);
+	this.treemanager = new TreeManager(this.problem.getTree.bind(this.problem));
+}
 
 IA.prototype.reset = function() {
 	this.problem.frontier = [];

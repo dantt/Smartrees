@@ -43,16 +43,16 @@ treePresets = {
 				"name": "D",
 				"cost": 3,
 				"children": [
-			  {
-				"name": "H",
-				"cost": 4,
-				"target": 1,
-			  },
-			  { 
-				"name": "I",
-				"cost": 1,
-			  },
-			]
+				  {
+					"name": "H",
+					"cost": 4,
+					"target": 1,
+				  },
+				  { 
+					"name": "I",
+					"cost": 1,
+				  },
+				]
 			  },
 			]
 		  },
@@ -71,6 +71,83 @@ treePresets = {
 			  },
 			]
 		  }
+		]
+	  }
+	],
+	
+	preset3: [
+	  {
+		"name": "A",
+		"children": [
+		  {
+			"name": "B",
+			"cost": 1,
+			"children": [
+			  {
+				"name": "D",
+				"cost": 2,
+				"children": [
+				  {
+					"name": "H",
+					"cost": 4,
+				  },
+				  { 
+					"name": "I",
+					"cost": 1,
+				  },
+				]
+			  },
+			  { 
+				"name": "E",
+				"cost": 3,
+				"children": [
+				  {
+					"name": "J",
+					"cost": 4,
+				  },
+				  { 
+					"name": "K",
+					"cost": 1,
+				  },
+				]
+			  },
+			]
+		  },
+		  {
+			"name": "C",
+			"cost": 1,
+			"children": [
+			  {
+				"name": "F",
+				"cost": 2,
+				"children": [
+				  {
+					"name": "L",
+					"cost": 4,
+				  },
+				  { 
+					"name": "M",
+					"cost": 1,
+				  },
+				]
+			  },
+			  { 
+				"name": "G",
+				"cost": 3,
+				"children": [
+				  {
+					"name": "N",
+					"cost": 4,
+				  },
+				  { 
+					"name": "O",
+					"cost": 1,
+					"target": 1,
+				  },
+				]
+			  },
+			]
+		  },
 		]
 	  }
 	],
