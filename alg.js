@@ -2,29 +2,27 @@ algoMap = {
     Dfs: Dfs,
     Bfs: Bfs,
     Ucs: Ucs,
-    Dls: Dls,
+    Lds: Lds,
     Ids: Ids
 };
 
 /**
  * Assumes that frontier is not empty
  * @param frontier
+ * @param nodesFound
  */
 function pickFirst(frontier, nodesFound){
-    var node = frontier[0];
-    frontier.shift();
-    debug("nodo:" + node.name);
-    nodesFound++;
-    node.selected =  nodesFound;
+    debug("pickFist, nodo:" + frontier[0].name + " " + (nodesFound+1));
+    frontier[0].selected =  nodesFound+1;
     document.dispatchEvent(new Event('updated'));
-    return node;
+    return frontier.shift();
 }
 
 
 function Bfs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
-        return false;
+        return 0;
     }
     var current_node = pickFirst(frontier, nodesFound);
     if (current_node.target == 1){
@@ -36,14 +34,14 @@ function Bfs(frontier, tree, options, nodesFound){
             frontier.push(current_node.children[i]);
         }
     }
-    return true;
+    return 1;
 }
 
 
 function Dfs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
-        return 1;
+        return 0;
     }
     var current_node = pickFirst(frontier, nodesFound);
     if (current_node.target == 1){
@@ -55,10 +53,10 @@ function Dfs(frontier, tree, options, nodesFound){
             frontier.unshift(current_node.children[current_node.children.length - i -1]);
         }
     }
-    return 2;
+    return 1;
 }
 
-function Dls(frontier, tree, options, nodesFound) {
+function Lds(frontier, tree, options, nodesFound) {
     if (frontier.length == 0){
         debug('frontiera vuota fail');
         return false;
@@ -86,15 +84,10 @@ function Dls(frontier, tree, options, nodesFound) {
 
 function Ids(frontier, tree, options, nodesFound){
     if (frontier.length == 0) {
-        debug('aumento lim a: ' + ++options.limit);
-        restoreTree(tree[0]);
-        frontier.push(tree[0]);
-        document.dispatchEvent(new Event('updated'));
-        nodesFound = 0;
-        return 3; //facciamo finta che 3 significhi restart
+        return 2; //facciamo finta che 2 significhi restart
     }
     else {
-        return Dls(frontier, tree, options, nodesFound);
+        return Lds(frontier, tree, options, nodesFound);
     }
 
 }

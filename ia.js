@@ -36,7 +36,7 @@ IA.prototype.treemanager;
 /*********************************/
 
 IA.prototype.setStrategy = function(strategy) {
-	this.problem.strategy = algomap[strategy];
+	this.problem.strategy = algoMap[strategy];
 };
 
 IA.prototype.setTree = function(tree) {

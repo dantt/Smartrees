@@ -36,7 +36,7 @@
 			
 			$('#algo').change(function() {
 				var selected = $('#algo option:selected').val();
-				mIA.setStrategy = selected;
+				mIA.setStrategy(selected);
 			});
 			
 		});
