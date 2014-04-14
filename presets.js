@@ -152,4 +152,30 @@ treePresets = {
 	  }
 	],
 	
+	preset4: [
+	  {
+		"name": "A",
+		"children": [
+		  {
+			"name": "B",
+			"cost": 1,
+			"children": [
+			  {
+				"name": "C",
+				"cost": 2,
+			  },
+			  { 
+				"name": "D",
+				"cost": 3,
+			  },
+			]
+		  },
+		  {
+			"name": "E",
+			"cost": 5,
+		  }
+		]
+	  }
+	],
+	
 }

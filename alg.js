@@ -15,7 +15,7 @@ function pickFirst(frontier, nodesFound){
     frontier.shift();
     debug("nodo:" + node.name);
     nodesFound++;
-    node.selected =  nodesFound;
+    node.selected = nodesFound;
     document.dispatchEvent(new Event('updated'));
     return node;
 }
@@ -24,6 +24,7 @@ function pickFirst(frontier, nodesFound){
 function Bfs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
+		document.dispatchEvent(new Event('emptyfringe'));
         return false;
     }
     var current_node = pickFirst(frontier, nodesFound);
@@ -43,6 +44,7 @@ function Bfs(frontier, tree, options, nodesFound){
 function Dfs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
+		document.dispatchEvent(new Event('emptyfringe'));
         return 1;
     }
     var current_node = pickFirst(frontier, nodesFound);
@@ -61,6 +63,7 @@ function Dfs(frontier, tree, options, nodesFound){
 function Dls(frontier, tree, options, nodesFound) {
     if (frontier.length == 0){
         debug('frontiera vuota fail');
+		document.dispatchEvent(new Event('emptyfringe'));
         return false;
     }
     var current_node = pickFirst(frontier, nodesFound);
@@ -131,6 +134,7 @@ function bubbleSorta(array){
 function Ucs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
+		document.dispatchEvent(new Event('emptyfringe'));
         return false;
     }
     var current_node = pickFirst(frontier, nodesFound);

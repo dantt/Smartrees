@@ -39,6 +39,11 @@
 				mIA.setStrategy = selected;
 			});
 			
+			document.addEventListener('emptyfringe', function() {
+				$('#output').html('<p class="warning">Empty frontier! Search failed</p>');				
+			}, false);
+			
+			
 		});
 		
 		$('#presets').load('templates/presets.html', function() {
@@ -60,6 +65,13 @@
 			$('#preset3').click(function() {	
 				$('#treecontainer').empty();
 				mIA.newTree(treePresets.preset3);
+				mIA.draw('treecontainer');
+				navigateTo('#homepage');				
+			});
+			
+			$('#preset4').click(function() {	
+				$('#treecontainer').empty();
+				mIA.newTree(treePresets.preset4);
 				mIA.draw('treecontainer');
 				navigateTo('#homepage');				
 			});
