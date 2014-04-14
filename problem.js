@@ -6,6 +6,7 @@
 
 function Problem(tree){
   this._tree = tree;
+  this._startingTree = tree;
   this._frontier = [this._tree[0]];
 }
 
@@ -43,6 +44,12 @@ Problem.prototype.getFrontier = function() {
 };
 Problem.prototype.getTree = function(){
   return this._tree;
+};
+
+Problem.prototype.setTree = function(tree){
+  this._tree = tree;
+  this._startingTree = tree;
+  this._frontier = [this._tree[0]];
 };
 
 

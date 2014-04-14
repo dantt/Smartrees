@@ -1,6 +1,17 @@
 // Configuration file. So kewl
 
 
+
+
+
+
+
+
+
+
+
+
+
 /**********************************/
 /**********************************/
 /**** Tree Configuration Hash *****/
@@ -23,6 +34,7 @@ treeConfig = {
 
 simulationConfig = {
 	simulationSpeed: 2000,
+	defaultStrategy: 'Dfs',
 }
 
 
