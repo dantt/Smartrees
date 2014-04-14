@@ -23,7 +23,10 @@ Problem.prototype._frontier = [];
 Problem.prototype._tree;
 Problem.prototype._nodesFound = 0;
 Problem.prototype.strategy;
-
+Problem.prototype._options = {
+    limit: 0,
+    iteration: 0
+}
 
 
 
@@ -51,8 +54,12 @@ Problem.prototype.getTree = function(){
 /***** Metodi di Problem *****/
 /*****************************/
 /*****************************/
+Problem.prototype.step = function(){
+    this.strategy(this._frontier, this._tree, this._options, this._nodesFound);
+    //debug(this._frontier.length);
+}
 
-
+/*
 Problem.prototype.step = function(){
 
   if (this._frontier.length == 0){
@@ -78,5 +85,5 @@ Problem.prototype.step = function(){
   }
   debug("frontier: [" + string + "]");
 };
-
+*/
 
