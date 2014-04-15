@@ -40,6 +40,12 @@ IA.prototype.setStrategy = function(strategy) {
 	this.problem.strategy = algoMap[strategy];
 };
 
+IA.prototype.setOrder = function(order) {
+	this.problem.setOrder(order);
+	//debug(order);
+};
+
+
 IA.prototype.setTree = function(tree) {
 	this.problem.setTree(tree);
 }

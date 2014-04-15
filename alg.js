@@ -44,9 +44,17 @@ function Bfs(frontier, tree, options, nodesFound){
         return current_node;
     }
     if (typeof(current_node.children) != 'undefined') {
-        for (var i = 0; i < current_node.children.length; i++){
-            frontier.push(current_node.children[i]);
-        }
+	//debug(options.order);
+	if (options.order == 'ltr'){
+	  for (var i = 0; i < current_node.children.length; i++){
+	    frontier.push(current_node.children[i]);
+	  }
+	}
+	else if (options.order == 'rtl'){
+	  for (var i = current_node.children.length-1; i >= 0; i--){
+	    frontier.push(current_node.children[i]);
+	  }
+	}
     }
     return 1;
 }
@@ -66,9 +74,16 @@ function Dfs(frontier, tree, options, nodesFound){
         return current_node;
     }
     if (typeof(current_node.children) != 'undefined') {
+      if(options.order == 'ltr'){
         for (var i = 0; i < current_node.children.length; i++){
             frontier.unshift(current_node.children[current_node.children.length - i -1]);
         }
+      }
+      else if(options.order == 'rtl'){
+	for (var i = current_node.children.length-1; i >= 0; i--){
+            frontier.unshift(current_node.children[current_node.children.length - i -1]);
+        }
+      }
     }
     return 1;
 }
@@ -93,9 +108,16 @@ function Lds(frontier, tree, options, nodesFound) {
             for (var i = 0; i < current_node.children.length; i++) {
                 current_node.children[i].depth = current_node.depth + 1;
             }
-            for (i = 0; i < current_node.children.length; i++) {
+            if(options.order == 'ltr'){
+	      for (i = 0; i < current_node.children.length; i++) {
                 frontier.unshift(current_node.children[current_node.children.length - i - 1]);
-            }
+	      }
+	    }
+	    else{
+	      for (i = current_node.children.length - 1; i >= 0; i--) {
+                frontier.unshift(current_node.children[current_node.children.length - i - 1]);
+	      }
+	    }
         }
     }
     return true;
@@ -122,7 +144,7 @@ function restoreTree(node){
     return true;
 }
 
-function bubbleSorta(array){
+function bubbleSorta(array, criteria){
     for (var i = 0; i < array.length; i++){
         for (var j = i; j < array.length; j++){
             if (array[j].pathCost < array[i].pathCost){
@@ -131,6 +153,36 @@ function bubbleSorta(array){
                 array[j] = array[i];
                 array[i] = tmp;
             }
+            else if (array[j].pathCost == array[i].pathCost){
+	        //with the same pathCost i should pick the node
+	        //based on his depth and 'leftiness' 
+	        if (criteria == 'ltr'){
+		  //pick the highest leftest one
+		  if (array[j].depth < array[i].depth){
+		    var tmp = array[j];
+		    array[j] = array[i];
+		    array[i] = tmp;
+		  }
+		  else if (array[j].depth == array[i].depth && array[j].position < array[i].position){
+		    var tmp = array[j];
+		    array[j] = array[i];
+		    array[i] = tmp;
+		  }
+		}
+		else{ //rtl
+		  //pick the highest rightest one
+		  if (array[j].depth < array[i].depth){
+		    var tmp = array[j];
+		    array[j] = array[i];
+		    array[i] = tmp;
+		  }
+		  else if (array[j].depth == array[i].depth && array[j].position > array[i].position){
+		    var tmp = array[j];
+		    array[j] = array[i];
+		    array[i] = tmp;
+		  }
+		}
+	    }
         }
     }
     return array;
@@ -159,38 +211,69 @@ function Ucs(frontier, tree, options, nodesFound){
     if (typeof(current_node.children) != 'undefined') {
         for (var i = 0; i < current_node.children.length; i++) {
             current_node.children[i].pathCost = current_node.pathCost + current_node.children[i].cost;
-            ord.push({index:i, pathCost: current_node.children[i].pathCost});
+            ord.push({
+	      index:i,
+	      pathCost: current_node.children[i].pathCost,
+	      depth: current_node.children[i].depth,
+	      position: current_node.children[i].position
+	    });
         }
 
-        ord = bubbleSorta(ord);
-
+        ord = bubbleSorta(ord, options.order);
         var k = 0;
         var old_f = frontier.splice(0);
-        //debug (old_f.length + " " + ord.length + " " + frontier.length);
         frontier.length = 0;
 
         while ( (old_f.length > 0 || ord.length > 0)){
-           // debug (old_f.length + " " + ord.length + " " + frontier.length);
+	    debug("length: " + old_f.length + " " + ord.length);
+	    
             if ( old_f.length == 0 ){
                 while(ord.length > 0){
-                    //debug(ord.length);
                     frontier.push(current_node.children[ord[0].index]);
                     ord.shift();
                 }
             }
             else if ( ord.length == 0){
                 while( old_f.length > 0){
-                    //debug(old_f.length);
                     frontier.push(old_f.shift());
                 }
             }
             else if ( old_f[0].pathCost < ord[0].pathCost ){
                 frontier.push(old_f.shift());
             }
-            else{
-                frontier.push(current_node.children[ord[0].index]);
-                ord.shift();
-            }
+            else if ( old_f[0].pathCost == ord[0].pathCost ){
+	        if (old_f[0].depth < ord[0].depth){
+		    frontier.push(old_f.shift());
+		}
+		else if (old_f[0].depth == ord[0].depth){
+		    if (options.order == 'ltr'){
+		        if (old_f[0].position < ord[0].position){
+		            frontier.push(old_f.shift());
+			}
+			else{
+			    frontier.push(current_node.children[ord[0].index]);
+			    ord.shift();
+			}
+		    }
+		    else{ //rtl
+		        if (old_f[0].position < ord[0].position){
+			    frontier.push(current_node.children[ord[0].index]);
+			    ord.shift();
+			}
+			else{
+			    frontier.push(old_f.shift());
+			}
+		    }
+		}
+		else{
+		    frontier.push(current_node.children[ord[0].index]);
+		    ord.shift();
+		}
+	    }
+	    else{
+		frontier.push(current_node.children[ord[0].index]);
+		ord.shift();
+	    }
             k++;
         }
 
