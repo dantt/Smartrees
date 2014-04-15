@@ -5,9 +5,7 @@
 /**********************************/
 
 function Problem(tree){
-    this._tree = tree;
-    this._startingTree = tree;
-    this._frontier = [this._tree[0]];
+    this.setTree(tree);
 }
 
 
@@ -48,7 +46,19 @@ Problem.prototype.getTree = function(){
 
 Problem.prototype.setTree = function(tree){
     this._tree = tree;
-    this._startingTree = JSON.parse(JSON.stringify(tree));
+    var seen = [];
+
+    var stringami = JSON.stringify(tree, function(key, val) {
+        if (typeof val == "object") {
+            if (seen.indexOf(val.name) >= 0) //then we have already visited this node
+                return;
+            seen.push(val.name);
+        }
+        return val;
+    });
+    debug(stringami);
+    this._startingTree = JSON.parse(stringami);
+
     this._frontier = [this._tree[0]];
     this._nodesFound = 0;
 };
