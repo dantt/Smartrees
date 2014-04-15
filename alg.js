@@ -44,9 +44,17 @@ function Bfs(frontier, tree, options, nodesFound){
         return current_node;
     }
     if (typeof(current_node.children) != 'undefined') {
-        for (var i = 0; i < current_node.children.length; i++){
-            frontier.push(current_node.children[i]);
-        }
+	//debug(options.order);
+	if (options.order == 'ltr'){
+	  for (var i = 0; i < current_node.children.length; i++){
+	    frontier.push(current_node.children[i]);
+	  }
+	}
+	else if (options.order == 'rtl'){
+	  for (var i = current_node.children.length-1; i >= 0; i--){
+	    frontier.push(current_node.children[i]);
+	  }
+	}
     }
     return 1;
 }
@@ -66,9 +74,16 @@ function Dfs(frontier, tree, options, nodesFound){
         return current_node;
     }
     if (typeof(current_node.children) != 'undefined') {
+      if(options.order == 'ltr'){
         for (var i = 0; i < current_node.children.length; i++){
             frontier.unshift(current_node.children[current_node.children.length - i -1]);
         }
+      }
+      else if(options.order == 'rtl'){
+	for (var i = current_node.children.length-1; i >= 0; i--){
+            frontier.unshift(current_node.children[current_node.children.length - i -1]);
+        }
+      }
     }
     return 1;
 }
@@ -93,9 +108,16 @@ function Lds(frontier, tree, options, nodesFound) {
             for (var i = 0; i < current_node.children.length; i++) {
                 current_node.children[i].depth = current_node.depth + 1;
             }
-            for (i = 0; i < current_node.children.length; i++) {
+            if(options.order == 'ltr'){
+	      for (i = 0; i < current_node.children.length; i++) {
                 frontier.unshift(current_node.children[current_node.children.length - i - 1]);
-            }
+	      }
+	    }
+	    else{
+	      for (i = current_node.children.length - 1; i >= 0; i--) {
+                frontier.unshift(current_node.children[current_node.children.length - i - 1]);
+	      }
+	    }
         }
     }
     return true;
@@ -184,7 +206,7 @@ function Ucs(frontier, tree, options, nodesFound){
                     frontier.push(old_f.shift());
                 }
             }
-            else if ( old_f[0].pathCost < ord[0].pathCost ){
+            else if ( old_f[0].pathCost <= ord[0].pathCost ){
                 frontier.push(old_f.shift());
             }
             else{

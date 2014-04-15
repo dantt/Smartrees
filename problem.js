@@ -24,7 +24,8 @@ Problem.prototype._nodesFound = 0;
 Problem.prototype.strategy;
 Problem.prototype._options = {
     limit: 1,
-    iteration: 0
+    iteration: 0,
+    order: 'ltr'
 }
 
 
@@ -44,23 +45,29 @@ Problem.prototype.getTree = function(){
     return this._tree;
 };
 
+Problem.prototype.setOrder = function(order){
+  this._options.order = order;
+}
+
 Problem.prototype.setTree = function(tree){
     this._tree = tree;
     var seen = [];
 
     var stringami = JSON.stringify(tree, function(key, val) {
-        if (typeof val == "object") {
-            if (seen.indexOf(val.name) >= 0) //then we have already visited this node
-                return;
-            seen.push(val.name);
-        }
-        return val;
+    if (typeof val == "object") {
+        if (seen.indexOf(val) >= 0)
+            return;
+        seen.push(val);
+      }
+      return val;
     });
     debug(stringami);
+    
     this._startingTree = JSON.parse(stringami);
 
     this._frontier = [this._tree[0]];
     this._nodesFound = 0;
+    
 };
 
 
@@ -93,6 +100,26 @@ Problem.prototype.step = function(){
         return true;
     }
 
+}
+
+Problem.prototype.preElab = function(){
+  if(typeof this._tree != 'undefined'){
+    process_node(this._tree[0]);
+  }
+}
+
+function process_node(node){
+  if (typeof node.pathCost == 'undefined'){ //siamo nella radice
+    node.pathCost = 0;
+    node.depth = 0;
+    node.position = 0;
+  }
+  if (typeof(node.children) != 'undefined') {
+     for (var i = 0; i < node.children.length; i++) {
+       node.children[i].depth = node.depth + 1;
+       node.children[i].pathCost = node.pathCost + node.children[i].cost;
+     }
+  }
 }
 
 /*
