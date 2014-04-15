@@ -38,7 +38,10 @@
 				var selected = $('#algo option:selected').val();
 				mIA.setStrategy(selected);
 			});
-			
+			$('#order').change(function() {
+				var selected = $('#order option:selected').val();
+				mIA.setOrder(selected);
+			});
 			document.addEventListener('emptyfringe', function() {
 				$('#output').html('<p class="warning">Empty frontier! Search failed</p>');
 				mIA.stop();
