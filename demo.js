@@ -40,7 +40,14 @@
 			});
 			
 			document.addEventListener('emptyfringe', function() {
-				$('#output').html('<p class="warning">Empty frontier! Search failed</p>');				
+				$('#output').html('<p class="warning">Empty frontier! Search failed</p>');
+				mIA.stop();
+			}, false);
+			
+			document.addEventListener('goalfound', function(e) {
+				$('#output').html('<p class="warning">Goal found in node ' + e.detail.target + '</p>');
+				$('#output').append('<p class="warning">Path to goal was: ' + e.detail.path + '</p>');
+				mIA.stop();
 			}, false);
 			
 			

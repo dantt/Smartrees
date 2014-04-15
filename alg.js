@@ -6,6 +6,18 @@ algoMap = {
     Ids: Ids
 };
 
+
+//This is ugly and will probably kill your cat
+function getPath(node) {
+	if (typeof node.parent === 'undefined')
+		return '#' + node.name;
+	else
+		return getPath(node.parent) +' #' + node.name;
+};
+
+
+
+
 /**
  * Assumes that frontier is not empty
  * @param frontier
@@ -22,11 +34,13 @@ function pickFirst(frontier, nodesFound){
 function Bfs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
+		document.dispatchEvent(new Event('emptyfringe'));
         return 0;
     }
     var current_node = pickFirst(frontier, nodesFound);
     if (current_node.target == 1){
         debug("goal raggiunto");
+		document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
         return current_node;
     }
     if (typeof(current_node.children) != 'undefined') {
@@ -41,11 +55,14 @@ function Bfs(frontier, tree, options, nodesFound){
 function Dfs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
+		document.dispatchEvent(new Event('emptyfringe'));
         return 0;
     }
     var current_node = pickFirst(frontier, nodesFound);
     if (current_node.target == 1){
         debug("goal raggiunto");
+		console.log(current_node.name);
+		document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
         return current_node;
     }
     if (typeof(current_node.children) != 'undefined') {
@@ -59,11 +76,13 @@ function Dfs(frontier, tree, options, nodesFound){
 function Lds(frontier, tree, options, nodesFound) {
     if (frontier.length == 0){
         debug('frontiera vuota fail');
+		document.dispatchEvent(new Event('emptyfringe'));
         return false;
     }
     var current_node = pickFirst(frontier, nodesFound);
     if (current_node.target == 1){
         debug("goal raggiunto");
+		document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
         return current_node;
     }
     if (typeof(current_node.depth) == 'undefined') { //we are in root
@@ -124,11 +143,13 @@ function bubbleSorta(array){
 function Ucs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
+		document.dispatchEvent(new Event('emptyfringe'));
         return false;
     }
     var current_node = pickFirst(frontier, nodesFound);
     if (current_node.target == 1){
         debug("goal raggiunto");
+		document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
         return current_node;
     }
     if (typeof(current_node.pathCost) == 'undefined') { //we are in root
