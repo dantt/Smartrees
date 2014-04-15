@@ -26,13 +26,17 @@
 				<input type="text" id="right-label" placeholder="2000" value='' id='simulationSpeed' name='simulationSpeed'> 
 			</div>
 		</div>
+		<div class='row'>
+			<div class="small-6 medium-3 columns">
+				<label for="right-label" class="right inline">Default Strategy</label> 
+			</div> 
+			<div class="small-6 medium-2 columns end"> 
+				<input type="text" id="right-label" placeholder="Dfs" value='' id='defaultStrategy' name='defaultStrategy'> 
+			</div>
+		</div>
 		
 		<br>
-		<input type='submit' value='save' />
+		<input type='submit' value='save' class='button' />
 		
 	</form>
 </div>
-
-<script type='text/javascript'>
-	$('#nodeSelectedFillColor').val(treeConfig.nodeSelectedFillColor);
-</script>	

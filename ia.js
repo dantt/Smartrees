@@ -9,6 +9,7 @@ function IA(tree){
   this.problem.strategy = algoMap[simulationConfig.defaultStrategy];
   this.control = new Controller(this.problem);
   this.treemanager = new TreeManager(this.problem.getTree.bind(this.problem));
+  this.settings = new Config();
 }
 
 

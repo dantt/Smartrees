@@ -45,8 +45,8 @@
 			}, false);
 			
 			document.addEventListener('goalfound', function(e) {
-				$('#output').html('<p class="warning">Goal found in node ' + e.detail.target + '</p>');
-				$('#output').append('<p class="warning">Path to goal was: ' + e.detail.path + '</p>');
+				$('#output').html('<p class="success">Goal found in node ' + e.detail.target + '</p>');
+				$('#output').append('<p class="success">Path to goal was: ' + e.detail.path + '</p>');
 				mIA.stop();
 			}, false);
 			
@@ -86,6 +86,10 @@
 		});
 		
 		$('#settings').load('templates/settings.html', function() {
+		
+			$('#optionsform input[type = "text"]').each(function() {
+				$(this).val(mIA.settings.getOption($(this).attr('name')));
+			});
 		
 			$('#optionsform').submit(function(event) {
 				event.preventDefault();
