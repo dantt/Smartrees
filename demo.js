@@ -56,6 +56,17 @@
 			
 		});
 		
+		$('#loadtree').load('templates/loadtree.html', function() {
+			$('#formtree').submit(function(event) {
+				event.preventDefault();
+				//@WARNING: VALIDALO VALIDALO VALIDALO
+				console.log($('#treepaster').val().replace("\\t", '').replace("\\n", ''));
+				mIA.newTree($('#treepaster').val().replace("\\t", '').replace("\\n", ''));
+				mIA.draw('treecontainer');
+				navigateTo('#homepage');
+			});
+		});
+		
 		$('#presets').load('templates/presets.html', function() {
 		
 			$('#preset1').click(function() { 
