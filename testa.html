@@ -1,0 +1,23 @@
+    <html>
+    <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"> </script>
+    <script src="./problem.js"></script>
+    <script src="./alg.js"> </script>
+    <script src="./controller.js"></script>
+    <script src="./treemanager.js"></script>
+    <script src="randomtree.js"></script>
+    <script src="config.js"></script>
+    </head>
+    <script>
+var root = randomTree(2, 10, 10);
+debug(booom(root));
+var i = new Object({count: 1});
+i.count--;
+
+function decrease(num){
+  num.count--;
+};
+decrease(i);
+
+    </script>
+    </html>
