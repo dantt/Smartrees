@@ -47,7 +47,7 @@ Controller.prototype.play = function(){
     $('#img_play').attr("src", "images/play_h.png");
     $('#img_stop').attr("src", "images/pause.png");
     this.step();
-    this._intervalId = setInterval(this.step.bind(this), simulationConfig.simulationSpeed);
+    this._intervalId = setInterval(this.step.bind(this), iaSettings.getOption('simulationSpeed'));
 };
 
 

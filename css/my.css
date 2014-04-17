@@ -59,6 +59,14 @@
 /*			*/
 /**************/ 
 
+.warning {
+	color: #c60f13 !important;
+}
+
+.success {
+	color: #5da423 !important;
+}
+
 
 .off-canvas-wrap, .inner-wrap {
     	min-height: 100%;
