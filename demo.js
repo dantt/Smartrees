@@ -113,5 +113,12 @@
 		
 		});
 		
+		
+		$('#randomtree').load('templates/randomtree.html', function() {
+		
+
+		
+		});
+		
 	});
 	
