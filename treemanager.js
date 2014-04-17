@@ -161,7 +161,7 @@ TreeManager.prototype.update = function() {
 	 .filter( function(d) {return d.selected == count; } )
 	 .each( function(d, i) { scope.selected(this); })
 	 .transition()
-	 .style("fill", treeConfig.nodeSelectedFillColor)
+	 .style("fill", iaSettings.getOption('nodeSelectedFillColor'))
 	 .duration(1000);
 	 
 	var nodetext = d3.selectAll("text.nodetext")

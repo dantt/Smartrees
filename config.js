@@ -70,7 +70,24 @@ Config.prototype.setOption = function(optName, optValue) {
 };
 
 
+Config.prototype.setOptions = function(serialized) {
+	var scope = this;
+	$.each(serialized.split('&'), function (index, elem) {
+   		var vals = elem.split('=');
+   		scope.setOption(vals[0], decodeURIComponent(vals[1]));
+	});
+};
 
+
+
+
+/******************/
+/******************/
+/******* Init *******/
+/******************/
+/******************/
+
+iaSettings = new Config();
 
 
 /**********************************/

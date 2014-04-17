@@ -96,7 +96,8 @@
 		
 			$('#optionsform').submit(function(event) {
 				event.preventDefault();
-				console.log($('form').serialize());
+				mIA.setOptions($('form').serialize());
+				navigateTo('#homepage');
 			});
 		
 		});

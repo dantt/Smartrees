@@ -6,10 +6,10 @@
 
 function IA(tree){
   this.problem = new Problem(tree);
-  this.problem.strategy = algoMap[simulationConfig.defaultStrategy];
+  this.problem.strategy = algoMap[iaSettings.getOption('defaultStrategy')];
   this.control = new Controller(this.problem);
   this.treemanager = new TreeManager(this.problem.getTree.bind(this.problem));
-  this.settings = new Config();
+  this.settings = iaSettings;
 }
 
 
@@ -48,6 +48,10 @@ IA.prototype.setOrder = function(order) {
 
 IA.prototype.setTree = function(tree) {
 	this.problem.setTree(tree);
+}
+
+IA.prototype.setOptions = function(options) {
+	this.settings.setOptions(options);
 }
 
 
