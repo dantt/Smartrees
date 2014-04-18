@@ -33,6 +33,7 @@
 			$("#step").click(function() {mIA.step();});
 			$("#play").click(function() {mIA.play();});
 			$("#stop").click(function() {mIA.stop();});
+            $("#restart").click(function() {mIA.reset();});
 			
 			$('#algo').change(function() {
 				var selected = $('#algo option:selected').val();
@@ -115,7 +116,22 @@
 		
 		
 		$('#randomtree').load('templates/randomtree.html', function() {
-		
+
+            $('#randomtreeform').submit(function(event) {
+                event.preventDefault();
+                //debug(booom(root));
+                //var params = $("#randomtreeform input[name=randomTreeBranchingFactor]").val();
+                //debug(parseIntparams);
+                var tree = randomTree(
+                    parseInt($("#randomtreeform input[name=randomTreeBranchingFactor]").val()),
+                    parseInt($("#randomtreeform input[name=randomTreeMaxNodes]").val()),
+                    parseInt($("#randomtreeform input[name=randomTreeMaxDepth]").val())
+                );
+                $('#treecontainer').empty();
+                mIA.newTree(tree);
+                mIA.draw('treecontainer');
+                navigateTo('#homepage');
+            });
 
 		
 		});

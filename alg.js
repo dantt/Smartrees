@@ -9,10 +9,10 @@ algoMap = {
 
 //This is ugly and will probably kill your cat
 function getPath(node) {
-	if (typeof node.parent === 'undefined')
-		return '#' + node.name;
-	else
-		return getPath(node.parent) +' #' + node.name;
+    if (typeof node.parent === 'undefined')
+        return '#' + node.name;
+    else
+        return getPath(node.parent) +' #' + node.name;
 };
 
 
@@ -34,27 +34,27 @@ function pickFirst(frontier, nodesFound){
 function Bfs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
-		document.dispatchEvent(new Event('emptyfringe'));
+        document.dispatchEvent(new Event('emptyfringe'));
         return 0;
     }
     var current_node = pickFirst(frontier, nodesFound);
     if (current_node.target == 1){
         debug("goal raggiunto");
-		document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
+        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
         return current_node;
     }
     if (typeof(current_node.children) != 'undefined') {
-	//debug(options.order);
-	if (options.order == 'ltr'){
-	  for (var i = 0; i < current_node.children.length; i++){
-	    frontier.push(current_node.children[i]);
-	  }
-	}
-	else if (options.order == 'rtl'){
-	  for (var i = current_node.children.length-1; i >= 0; i--){
-	    frontier.push(current_node.children[i]);
-	  }
-	}
+        //debug(options.order);
+        if (options.order == 'ltr'){
+            for (var i = 0; i < current_node.children.length; i++){
+                frontier.push(current_node.children[i]);
+            }
+        }
+        else if (options.order == 'rtl'){
+            for (var i = current_node.children.length-1; i >= 0; i--){
+                frontier.push(current_node.children[i]);
+            }
+        }
     }
     return 1;
 }
@@ -63,27 +63,27 @@ function Bfs(frontier, tree, options, nodesFound){
 function Dfs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
-		document.dispatchEvent(new Event('emptyfringe'));
+        document.dispatchEvent(new Event('emptyfringe'));
         return 0;
     }
     var current_node = pickFirst(frontier, nodesFound);
     if (current_node.target == 1){
         debug("goal raggiunto");
-		console.log(current_node.name);
-		document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
+        console.log(current_node.name);
+        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
         return current_node;
     }
     if (typeof(current_node.children) != 'undefined') {
-      if(options.order == 'ltr'){
-        for (var i = 0; i < current_node.children.length; i++){
-            frontier.unshift(current_node.children[current_node.children.length - i -1]);
+        if(options.order == 'ltr'){
+            for (var i = 0; i < current_node.children.length; i++){
+                frontier.unshift(current_node.children[current_node.children.length - i -1]);
+            }
         }
-      }
-      else if(options.order == 'rtl'){
-	for (var i = current_node.children.length-1; i >= 0; i--){
-            frontier.unshift(current_node.children[current_node.children.length - i -1]);
+        else if(options.order == 'rtl'){
+            for (var i = current_node.children.length-1; i >= 0; i--){
+                frontier.unshift(current_node.children[current_node.children.length - i -1]);
+            }
         }
-      }
     }
     return 1;
 }
@@ -91,13 +91,13 @@ function Dfs(frontier, tree, options, nodesFound){
 function Lds(frontier, tree, options, nodesFound) {
     if (frontier.length == 0){
         debug('frontiera vuota fail');
-		document.dispatchEvent(new Event('emptyfringe'));
+        document.dispatchEvent(new Event('emptyfringe'));
         return false;
     }
     var current_node = pickFirst(frontier, nodesFound);
     if (current_node.target == 1){
         debug("goal raggiunto");
-		document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
+        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
         return current_node;
     }
     if (typeof(current_node.depth) == 'undefined') { //we are in root
@@ -109,15 +109,15 @@ function Lds(frontier, tree, options, nodesFound) {
                 current_node.children[i].depth = current_node.depth + 1;
             }
             if(options.order == 'ltr'){
-	      for (i = 0; i < current_node.children.length; i++) {
-                frontier.unshift(current_node.children[current_node.children.length - i - 1]);
-	      }
-	    }
-	    else{
-	      for (i = current_node.children.length - 1; i >= 0; i--) {
-                frontier.unshift(current_node.children[current_node.children.length - i - 1]);
-	      }
-	    }
+                for (i = 0; i < current_node.children.length; i++) {
+                    frontier.unshift(current_node.children[current_node.children.length - i - 1]);
+                }
+            }
+            else{
+                for (i = current_node.children.length - 1; i >= 0; i--) {
+                    frontier.unshift(current_node.children[current_node.children.length - i - 1]);
+                }
+            }
         }
     }
     return true;
@@ -154,35 +154,35 @@ function bubbleSorta(array, criteria){
                 array[i] = tmp;
             }
             else if (array[j].pathCost == array[i].pathCost){
-	        //with the same pathCost i should pick the node
-	        //based on his depth and 'leftiness' 
-	        if (criteria == 'ltr'){
-		  //pick the highest leftest one
-		  if (array[j].depth < array[i].depth){
-		    var tmp = array[j];
-		    array[j] = array[i];
-		    array[i] = tmp;
-		  }
-		  else if (array[j].depth == array[i].depth && array[j].position < array[i].position){
-		    var tmp = array[j];
-		    array[j] = array[i];
-		    array[i] = tmp;
-		  }
-		}
-		else{ //rtl
-		  //pick the highest rightest one
-		  if (array[j].depth < array[i].depth){
-		    var tmp = array[j];
-		    array[j] = array[i];
-		    array[i] = tmp;
-		  }
-		  else if (array[j].depth == array[i].depth && array[j].position > array[i].position){
-		    var tmp = array[j];
-		    array[j] = array[i];
-		    array[i] = tmp;
-		  }
-		}
-	    }
+                //with the same pathCost i should pick the node
+                //based on his depth and 'leftiness'
+                if (criteria == 'ltr'){
+                    //pick the highest leftest one
+                    if (array[j].depth < array[i].depth){
+                        var tmp = array[j];
+                        array[j] = array[i];
+                        array[i] = tmp;
+                    }
+                    else if (array[j].depth == array[i].depth && array[j].position < array[i].position){
+                        var tmp = array[j];
+                        array[j] = array[i];
+                        array[i] = tmp;
+                    }
+                }
+                else{ //rtl
+                    //pick the highest rightest one
+                    if (array[j].depth < array[i].depth){
+                        var tmp = array[j];
+                        array[j] = array[i];
+                        array[i] = tmp;
+                    }
+                    else if (array[j].depth == array[i].depth && array[j].position > array[i].position){
+                        var tmp = array[j];
+                        array[j] = array[i];
+                        array[i] = tmp;
+                    }
+                }
+            }
         }
     }
     return array;
@@ -195,13 +195,13 @@ function bubbleSorta(array, criteria){
 function Ucs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
-		document.dispatchEvent(new Event('emptyfringe'));
+        document.dispatchEvent(new Event('emptyfringe'));
         return false;
     }
     var current_node = pickFirst(frontier, nodesFound);
     if (current_node.target == 1){
         debug("goal raggiunto");
-		document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
+        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
         return current_node;
     }
     if (typeof(current_node.pathCost) == 'undefined') { //we are in root
@@ -212,11 +212,11 @@ function Ucs(frontier, tree, options, nodesFound){
         for (var i = 0; i < current_node.children.length; i++) {
             current_node.children[i].pathCost = current_node.pathCost + current_node.children[i].cost;
             ord.push({
-	      index:i,
-	      pathCost: current_node.children[i].pathCost,
-	      depth: current_node.children[i].depth,
-	      position: current_node.children[i].position
-	    });
+                index:i,
+                pathCost: current_node.children[i].pathCost,
+                depth: current_node.children[i].depth,
+                position: current_node.children[i].position
+            });
         }
 
         ord = bubbleSorta(ord, options.order);
@@ -225,8 +225,8 @@ function Ucs(frontier, tree, options, nodesFound){
         frontier.length = 0;
 
         while ( (old_f.length > 0 || ord.length > 0)){
-	    debug("length: " + old_f.length + " " + ord.length);
-	    
+            debug("length: " + old_f.length + " " + ord.length);
+
             if ( old_f.length == 0 ){
                 while(ord.length > 0){
                     frontier.push(current_node.children[ord[0].index]);
@@ -242,38 +242,38 @@ function Ucs(frontier, tree, options, nodesFound){
                 frontier.push(old_f.shift());
             }
             else if ( old_f[0].pathCost == ord[0].pathCost ){
-	        if (old_f[0].depth < ord[0].depth){
-		    frontier.push(old_f.shift());
-		}
-		else if (old_f[0].depth == ord[0].depth){
-		    if (options.order == 'ltr'){
-		        if (old_f[0].position < ord[0].position){
-		            frontier.push(old_f.shift());
-			}
-			else{
-			    frontier.push(current_node.children[ord[0].index]);
-			    ord.shift();
-			}
-		    }
-		    else{ //rtl
-		        if (old_f[0].position < ord[0].position){
-			    frontier.push(current_node.children[ord[0].index]);
-			    ord.shift();
-			}
-			else{
-			    frontier.push(old_f.shift());
-			}
-		    }
-		}
-		else{
-		    frontier.push(current_node.children[ord[0].index]);
-		    ord.shift();
-		}
-	    }
-	    else{
-		frontier.push(current_node.children[ord[0].index]);
-		ord.shift();
-	    }
+                if (old_f[0].depth < ord[0].depth){
+                    frontier.push(old_f.shift());
+                }
+                else if (old_f[0].depth == ord[0].depth){
+                    if (options.order == 'ltr'){
+                        if (old_f[0].position < ord[0].position){
+                            frontier.push(old_f.shift());
+                        }
+                        else{
+                            frontier.push(current_node.children[ord[0].index]);
+                            ord.shift();
+                        }
+                    }
+                    else{ //rtl
+                        if (old_f[0].position < ord[0].position){
+                            frontier.push(current_node.children[ord[0].index]);
+                            ord.shift();
+                        }
+                        else{
+                            frontier.push(old_f.shift());
+                        }
+                    }
+                }
+                else{
+                    frontier.push(current_node.children[ord[0].index]);
+                    ord.shift();
+                }
+            }
+            else{
+                frontier.push(current_node.children[ord[0].index]);
+                ord.shift();
+            }
             k++;
         }
 
@@ -284,5 +284,5 @@ function Ucs(frontier, tree, options, nodesFound){
         string += "]";
         debug(string);
     }
-   return true;
+    return true;
 }

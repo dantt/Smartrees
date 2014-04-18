@@ -1,42 +1,36 @@
-<h1>Such options. Much customize. Wow</h1>
+<h1>Random Tree Generator</h1>
 
 <div class='row'>
-	<form id='optionsform'>
+	<form id='randomtreeform'>
 	
-		<h5>Tree display</h5>
+		<h5>Configure</h5>
 		<hr>
 		<div class='row'>
 			<div class="small-6 medium-3 columns">
-				<label for="right-label" class="right inline">Selected node</label> 
+				<label for="right-label" class="right inline">Branching factor</label>
 			</div> 
 			<div class="small-6 medium-2 columns end"> 
-				<input type="text" id="right-label" placeholder="#FF0000" value='' id='nodeSelectedFillColor' name='nodeSelectedFillColor'> 
+				<input type="text" id="right-label" placeholder="2-4" value='' id='randomTreeBranchingFactor' name='randomTreeBranchingFactor'>
 			</div>
+        </div>
+        <div class="row">
+            <div class="small-6 medium-3 columns">
+                <label for="right-label" class="right inline">Maximum node count</label>
+            </div>
+            <div class="small-6 medium-2 columns end">
+                <input type="text" id="right-label" placeholder="1-26" value='' id='randomTreeMaxNodes' name='randomTreeMaxNodes'>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-6 medium-3 columns">
+                <label for="right-label" class="right inline">Maximum depth</label>
+            </div>
+            <div class="small-6 medium-2 columns end">
+                <input type="text" id="right-label" placeholder="1-8" value='' id='randomTreeMaxDepth' name='randomTreeMaxDepth'>
+            </div>
 		</div>
-		
-		
-		<br>
-		<h5>Simulation</h5>
-		<hr>
-		<div class='row'>
-			<div class="small-6 medium-3 columns">
-				<label for="right-label" class="right inline">Sim speed</label> 
-			</div> 
-			<div class="small-6 medium-2 columns end"> 
-				<input type="text" id="right-label" placeholder="2000" value='' id='simulationSpeed' name='simulationSpeed'> 
-			</div>
-		</div>
-		<div class='row'>
-			<div class="small-6 medium-3 columns">
-				<label for="right-label" class="right inline">Default Strategy</label> 
-			</div> 
-			<div class="small-6 medium-2 columns end"> 
-				<input type="text" id="right-label" placeholder="Dfs" value='' id='defaultStrategy' name='defaultStrategy'> 
-			</div>
-		</div>
-		
-		<br>
-		<input type='submit' value='save' class='button' />
+
+		<input type='submit' value='generate' class='button' />
 		
 	</form>
 </div>
