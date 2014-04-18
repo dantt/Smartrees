@@ -71,9 +71,8 @@ IA.prototype.newTree = function(tree) {
 IA.prototype.reset = function() {/*
 	this.problem.frontier = [];
 	this.problem._tree = this.problem._startingTree;*/
-    //TODO qui bisogna che i nodi gialli tornino bianchi
-    this.problem.setTree(this.problem._startingTree);
-	this.treemanager.update();
+    this.newTree(this.problem._startingTree);
+	this.draw('treecontainer');
 };
 
 IA.prototype.draw = function(container) {
