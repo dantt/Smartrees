@@ -17,14 +17,15 @@ function randomTree(branching, depth_limit, nodes_limit){
     debug("dl " + depth_limit);
     debug("nl " + nodes_limit);*/
     var alphabet = new Object({
-        letters: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+        letters: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     });
     //debug(nodes_limit);
     //var last_node_name = alphabet.letters.unshift();
     var root = [{
         name: node_limit_wrapper.node_counter++,
         depth: 0,
-        cost: getRandomInt(1,10)
+        cost: getRandomInt(1,10),
+        h: 1*getRandomInt(1,50)
     }];
     //debug(nodes_limit);
     node_limit_wrapper.left_count--;
@@ -54,7 +55,8 @@ function generateChildrens(node, branching, depth_limit, nodes_limit){
             childrens.push(new Object({
                 name: String(nodes_limit.node_counter++),
                 depth: node.depth+1,
-                cost: getRandomInt(1,10)
+                cost: getRandomInt(1,10),
+                h: 1/(node.depth+1)*getRandomInt(1,50) //decreases with depth
             }));
             nodes_limit.left_count--;
             childrens[i].children = generateChildrens(childrens[i], branching, depth_limit, nodes_limit);

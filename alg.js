@@ -31,6 +31,99 @@ function pickFirst(frontier, nodesFound){
 }
 
 
+function Greedy(frontier, tree, options, nodesFound){
+    if (frontier.length == 0){
+        debug('frontiera vuota fail');
+        document.dispatchEvent(new Event('emptyfringe'));
+        return 0;
+    }
+    var current_node = pickFirst(frontier, nodesFound);
+    if (current_node.target == 1){
+        debug("goal raggiunto");
+        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
+        return current_node;
+    }
+    var ord = [];
+    if (typeof(current_node.children) != 'undefined') {
+        for (var i = 0; i < current_node.children.length; i++) {
+            ord.push({
+                index:i,
+                h: current_node.children[i].h,
+                depth: current_node.children[i].depth,
+                position: current_node.children[i].position,
+                getParam: function(){return this.h;}  //don't do this at home kids
+            });
+        }
+
+        ord = bubbleSorta(ord, options.order);
+        var k = 0;
+        var old_f = frontier.splice(0);
+        frontier.length = 0;
+
+        while ( (old_f.length > 0 || ord.length > 0)){
+            debug("length: " + old_f.length + " " + ord.length);
+
+            if ( old_f.length == 0 ){
+                while(ord.length > 0){
+                    frontier.push(current_node.children[ord[0].index]);
+                    ord.shift();
+                }
+            }
+            else if ( ord.length == 0){
+                while( old_f.length > 0){
+                    frontier.push(old_f.shift());
+                }
+            }
+            else if ( old_f[0].h < ord[0].h ){
+                frontier.push(old_f.shift());
+            }
+            else if ( old_f[0].h == ord[0].h ){
+                if (old_f[0].depth < ord[0].depth){
+                    frontier.push(old_f.shift());
+                }
+                else if (old_f[0].depth == ord[0].depth){
+                    if (options.order == 'ltr'){
+                        if (old_f[0].position < ord[0].position){
+                            frontier.push(old_f.shift());
+                        }
+                        else{
+                            frontier.push(current_node.children[ord[0].index]);
+                            ord.shift();
+                        }
+                    }
+                    else{ //rtl
+                        if (old_f[0].position < ord[0].position){
+                            frontier.push(current_node.children[ord[0].index]);
+                            ord.shift();
+                        }
+                        else{
+                            frontier.push(old_f.shift());
+                        }
+                    }
+                }
+                else{
+                    frontier.push(current_node.children[ord[0].index]);
+                    ord.shift();
+                }
+            }
+            else{
+                frontier.push(current_node.children[ord[0].index]);
+                ord.shift();
+            }
+            k++;
+        }
+
+        var string = "[";
+        for (i in frontier){
+            string += frontier[i].name + ": " + frontier[i].h + ", ";
+        }
+        string += "]";
+        debug(string);
+    }
+    return true;
+}
+
+
 function Bfs(frontier, tree, options, nodesFound){
     if (frontier.length == 0){
         debug('frontiera vuota fail');
@@ -134,26 +227,16 @@ function Ids(frontier, tree, options, nodesFound){
 }
 
 
-function restoreTree(node){
-    node.selected = 0;
-    if (typeof(node.children) != 'undefined'){
-        for (var i in node.children){
-            restoreTree(node.children[i]);
-        }
-    }
-    return true;
-}
-
 function bubbleSorta(array, criteria){
     for (var i = 0; i < array.length; i++){
         for (var j = i; j < array.length; j++){
-            if (array[j].pathCost < array[i].pathCost){
+            if (array[j].getParam() < array[i].getParam()){
                 //then swap j and i
                 var tmp = array[j];
                 array[j] = array[i];
                 array[i] = tmp;
             }
-            else if (array[j].pathCost == array[i].pathCost){
+            else if (array[j].getParam() == array[i].getParam()){
                 //with the same pathCost i should pick the node
                 //based on his depth and 'leftiness'
                 if (criteria == 'ltr'){
@@ -215,7 +298,8 @@ function Ucs(frontier, tree, options, nodesFound){
                 index:i,
                 pathCost: current_node.children[i].pathCost,
                 depth: current_node.children[i].depth,
-                position: current_node.children[i].position
+                position: current_node.children[i].position,
+                getParam: function(){return this.pathCost;} //don't do this at home kids
             });
         }
 
