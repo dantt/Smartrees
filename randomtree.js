@@ -5,12 +5,20 @@ function getRandomInt (min, max) {
 }
 
 
-function randomTree(branching, depth_limit, nodes_limit){
+/**
+ *
+ * @param branching
+ * @param branching_fixed
+ * @param depthLimit
+ * @param depthLimitFixed
+ * @returns {{name: number, depth: number, cost: *, h: number}[]}
+ */
+function randomTree(branching, branchingFixed, depth_limit, depthLimitFixed){
+    branchingFixed = false;
+    depthLimitFixed = false;
     branching = (typeof branching === 'undefined' || isNaN(branching))? getRandomInt(2,4): branching;
     depth_limit = (typeof depth_limit === 'undefined' || isNaN(depth_limit))? getRandomInt(1,8): depth_limit;
-    nodes_limit = (typeof nodes_limit === 'undefined' || isNaN(nodes_limit))? getRandomInt(1,26): nodes_limit;
     var node_limit_wrapper = new Object({
-        left_count: nodes_limit,
         node_counter: "0"
     });
     /*debug("br " + branching);
@@ -28,7 +36,6 @@ function randomTree(branching, depth_limit, nodes_limit){
         h: 1*getRandomInt(1,50)
     }];
     //debug(nodes_limit);
-    node_limit_wrapper.left_count--;
     //var num_childrens = getRandomInt(0, branching);
     //debug
     root[0].children = generateChildrens(
@@ -49,16 +56,18 @@ function generateChildrens(node, branching, depth_limit, nodes_limit){
     debug(depth_limit);
     debug(nodes_limit.left_count);
     debug(num_childrens);*/
-    if (node.depth < depth_limit && nodes_limit.left_count > 0 && num_childrens > 0){
+    if (num_childrens == 1){
+        num_childrens++; //atleaast 2
+    }
+    if (node.depth < depth_limit && num_childrens > 0){
         var childrens = [];
-        for (var i = 0; i < num_childrens && nodes_limit.left_count > 0; i++){
+        for (var i = 0; i < num_childrens; i++){
             childrens.push(new Object({
                 name: String(nodes_limit.node_counter++),
                 depth: node.depth+1,
                 cost: getRandomInt(1,10),
                 h: 1/(node.depth+1)*getRandomInt(1,50) //decreases with depth
             }));
-            nodes_limit.left_count--;
             childrens[i].children = generateChildrens(childrens[i], branching, depth_limit, nodes_limit);
         }
         return childrens;

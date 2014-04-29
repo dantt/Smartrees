@@ -124,8 +124,10 @@
                 //debug(parseIntparams);
                 var tree = randomTree(
                     parseInt($("#randomtreeform input[name=randomTreeBranchingFactor]").val()),
-                    parseInt($("#randomtreeform input[name=randomTreeMaxNodes]").val()),
-                    parseInt($("#randomtreeform input[name=randomTreeMaxDepth]").val())
+                    parseInt($("#randomtreeform input[name=randomTreeBranchingFactorFixed]").val()),
+                    parseInt($("#randomtreeform input[name=randomTreeMaxDepth]").val()),
+                    parseInt($("#randomtreeform input[name=randomTreeMaxDepthFixed]").val())
+
                 );
                 $('#treecontainer').empty();
                 mIA.newTree(tree);

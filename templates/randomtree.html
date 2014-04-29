@@ -7,28 +7,38 @@
 		<hr>
 		<div class='row'>
 			<div class="small-6 medium-3 columns">
-				<label for="right-label" class="right inline">Branching factor</label>
+				<label for="randomTreeBranchingFactor" class="right inline">Max branching factor</label>
 			</div> 
-			<div class="small-6 medium-2 columns end"> 
-				<input type="text" id="right-label" placeholder="2-4" value='' id='randomTreeBranchingFactor' name='randomTreeBranchingFactor'>
+			<div class="small-6 medium-2 columns end">
+				<input type="text" value='' id='randomTreeBranchingFactor' name='randomTreeBranchingFactor'>
 			</div>
+
         </div>
         <div class="row">
             <div class="small-6 medium-3 columns">
-                <label for="right-label" class="right inline">Maximum node count</label>
+                <label for="randomTreeBranchingFactorFixed" class="right inline">Fixed</label>
             </div>
             <div class="small-6 medium-2 columns end">
-                <input type="text" id="right-label" placeholder="1-26" value='' id='randomTreeMaxNodes' name='randomTreeMaxNodes'>
+                <input type="checkbox" id="randomTreeBranchingFactorFixed" name="randomTreeBranchingFactorFixed">
             </div>
         </div>
+
         <div class="row">
             <div class="small-6 medium-3 columns">
-                <label for="right-label" class="right inline">Maximum depth</label>
+                <label for="randomTreeMaxDepth" class="right inline">Maximum depth</label>
             </div>
             <div class="small-6 medium-2 columns end">
-                <input type="text" id="right-label" placeholder="1-8" value='' id='randomTreeMaxDepth' name='randomTreeMaxDepth'>
+                <input type="text" id='randomTreeMaxDepth' name='randomTreeMaxDepth'>
             </div>
 		</div>
+        <div class="row">
+            <div class="small-6 medium-3 columns">
+                <label for="randomTreeMaxDepthFixed" class="right inline">Fixed</label>
+            </div>
+            <div class="small-6 medium-2 columns end">
+                <input type="checkbox" id="randomTreeMaxDepthFixed" name="randomTreeMaxDepthFixed">
+            </div>
+        </div>
 
 		<input type='submit' value='generate' class='button' />
 		
