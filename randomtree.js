@@ -8,73 +8,124 @@ function getRandomInt (min, max) {
 /**
  *
  * @param branching
- * @param branching_fixed
- * @param depthLimit
- * @param depthLimitFixed
+ * @param depth_limit
+ * @param complete
+ * @param leaf_flag: if true, generate goals only in leafs
  * @returns {{name: number, depth: number, cost: *, h: number}[]}
  */
-function randomTree(branching, branchingFixed, depth_limit, depthLimitFixed){
-    branchingFixed = false;
-    depthLimitFixed = false;
+function randomTree(branching, depth_limit, complete_flag, leaf_flag ){
     branching = (typeof branching === 'undefined' || isNaN(branching))? getRandomInt(2,4): branching;
-    depth_limit = (typeof depth_limit === 'undefined' || isNaN(depth_limit))? getRandomInt(1,8): depth_limit;
+    depth_limit = (typeof depth_limit === 'undefined' || isNaN(depth_limit))? getRandomInt(2,4): depth_limit;
     var node_limit_wrapper = new Object({
-        node_counter: "0"
+        node_counter: "0",
+	targets_count: 0
     });
-    /*debug("br " + branching);
-    debug("dl " + depth_limit);
-    debug("nl " + nodes_limit);*/
-    var alphabet = new Object({
-        letters: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-    });
-    //debug(nodes_limit);
-    //var last_node_name = alphabet.letters.unshift();
     var root = [{
         name: node_limit_wrapper.node_counter++,
         depth: 0,
         cost: getRandomInt(1,10),
         h: 1*getRandomInt(1,50)
     }];
-    //debug(nodes_limit);
-    //var num_childrens = getRandomInt(0, branching);
-    //debug
+    
+    var leafs = [];
+    
     root[0].children = generateChildrens(
         root[0],
         branching,
         depth_limit,
-        node_limit_wrapper
+        complete_flag,
+	leaf_flag,
+	node_limit_wrapper,
+	leafs
     );
-    //debug(root.children.length);
+    
+    //qui fai una funzinoe che inserisce almeno un goal
+    if (node_limit_wrapper.targets_count == 0){
+      var ind = getRandomInt(0,leafs.length-1);
+      leafs[ind].target = 1;
+    }
+   
     return root;
 }
 
-function generateChildrens(node, branching, depth_limit, nodes_limit){
-    var num_childrens = getRandomInt(0, branching);
-    //odes_limit -= num_childrens;
-    /*debug("num child: " + num_childrens);
-    debug(node.depth);
-    debug(depth_limit);
-    debug(nodes_limit.left_count);
-    debug(num_childrens);*/
+
+
+
+// Returns a random number between min and max
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+
+/**
+ * @param node: the object node
+ * @param branching: the branching factor
+ * @param depth_limit: the maximum value for depth
+ * @param complete: 0->tree is not complete, 1->tree is complete
+ * @param leaf_flag: 1->goals are present only in leafs, 0->goals may be everywhere
+ * @param nodes_limit: Object that contains counter for nodes and for targets
+ * @param leafs: should be empty at the beginning, at the end of the recursive
+ *	         call will contain an array of references to the leafs of the tree
+ * @returns the children array
+ */
+function generateChildrens(node, branching, depth_limit, complete, leaf_flag, nodes_limit, leafs){
+
+    if (complete){
+      var num_childrens = branching;
+    }
+    else{
+      var num_childrens = getRandomInt(0, branching);
+    }
+    if (node.name == "0" && num_childrens == 0){
+      num_childrens += 2;
+    }
     if (num_childrens == 1){
         num_childrens++; //atleaast 2
+    }
+    //check if it is a leaf
+    if (num_childrens == 0 || node.depth == depth_limit){
+      if(leaf_flag){
+	node.target = Math.random(0,1)>0.9? 1: 0;
+	if (node.target == 1){
+	  nodes_limit.targets_count++;
+	}
+      }
+      leafs.push(node);
     }
     if (node.depth < depth_limit && num_childrens > 0){
         var childrens = [];
         for (var i = 0; i < num_childrens; i++){
+	    //decide if the node will be target
+	    //probability grows with node_count and decrease with targets_count
+	    
+	    var is_target = 0;
+	    //max nodes number
+	    if(!leaf_flag){
+	      var max_nodes = Math.pow(depth_limit, branching);
+	      var nodecount_weight = Math.log(nodes_limit.node_counter) / Math.log(max_nodes); //this is between 0 and 1
+	      var targets_weight = 1+nodes_limit.targets_count/2;
+	    
+	      var rnd = Math.random(0,1)*nodecount_weight/targets_weight;
+	      is_target = (rnd>0.3)?1:0;
+	      if (is_target){
+		nodes_limit.targets_count++;
+	      }
+	    }
             childrens.push(new Object({
                 name: String(nodes_limit.node_counter++),
                 depth: node.depth+1,
                 cost: getRandomInt(1,10),
-                h: 1/(node.depth+1)*getRandomInt(1,50) //decreases with depth
+                target: is_target,
+                h: parseInt(depth_limit/(node.depth+1)*getRandomArbitrary(1,5)) //decreases with depth
             }));
-            childrens[i].children = generateChildrens(childrens[i], branching, depth_limit, nodes_limit);
+            childrens[i].children = generateChildrens(childrens[i], branching, depth_limit, complete, leaf_flag, nodes_limit, leafs);
         }
         return childrens;
-    }
-    else{
+      }
+      else{
         return [];
     }
+
 }
 
 /*
