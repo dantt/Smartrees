@@ -99,12 +99,13 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
 	    //probability grows with node_count and decrease with targets_count
 	    
 	    var is_target = 0;
-	    //max nodes number
+	   	    
 	    if(!leaf_flag){
+	      //max nodes number
 	      var max_nodes = Math.pow(depth_limit, branching);
 	      var nodecount_weight = Math.log(nodes_limit.node_counter) / Math.log(max_nodes); //this is between 0 and 1
 	      var targets_weight = 1+nodes_limit.targets_count/2;
-	    
+	      //I HAD TO STUDY MATHS
 	      var rnd = Math.random(0,1)*nodecount_weight/targets_weight;
 	      is_target = (rnd>0.3)?1:0;
 	      if (is_target){

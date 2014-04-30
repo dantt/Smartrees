@@ -62,9 +62,24 @@
 				event.preventDefault();
 				//@WARNING: VALIDALO VALIDALO VALIDALO
 				console.log($('#treepaster').val().replace("\\t", '').replace("\\n", ''));
-				mIA.newTree($('#treepaster').val().replace("\\t", '').replace("\\n", ''));
-				mIA.draw('treecontainer');
-				navigateTo('#homepage');
+				//much error safeness wow
+				try {
+				  var to_string;
+				  to_string = JSON.parse($('#treepaster').val().replace("\\t", '').replace("\\n", ''));
+				  mIA.newTree(to_string);
+				  mIA.draw('treecontainer');
+				  navigateTo('#homepage');
+				} catch (err) {
+				  var alertBox = $('<div id="myId" data-alert class="alert-box alert round alertClose"> The Json is not valid <a id="alertCloseLink" href="#" class="close">&times;</a></div>');
+				  $('#loadTreeContainer').append(alertBox);
+				  // qua in genere la proprieta' 'data-alert' del div dovrebbe provvedere alla chiusura ma inizializzandola
+				  // con jquery stampa 'data-alert=""' e non funziona perche sembra un attributo
+				  $("#alertCloseLink").bind("click",function(){
+				    $('.alertClose').remove();
+				  })
+
+				}
+								
 			});
 		});
 		

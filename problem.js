@@ -66,6 +66,7 @@ Problem.prototype.setTree = function(tree){
 
     this._tree = tree;
     this.preElab();
+    
     var seen = [];
     var stringami = JSON.stringify(tree, function(key, val) {
         if (typeof val == "object") {
@@ -79,12 +80,17 @@ Problem.prototype.setTree = function(tree){
     this._startingTree = JSON.parse(stringami);
     this._frontier = [this._tree[0]];
     this._nodesFound = 0;
-
+    this._options.limit = 1;
+    this._options.iteration = 0;
 };
 
 
 
-
+Problem.prototype.idsIterate = function(startTree, cur_limit, cur_iteration){
+  this.setTree(startTree);
+  this._options.limit = cur_limit;
+  this._options.iteration = cur_iteration;
+}
 
 /*****************************/
 /*****************************/
@@ -105,9 +111,11 @@ Problem.prototype.step = function(){
     }
     if (result == 2){ //fatta un'itearazione su ids
         debug('aumento lim a: ' + ++this._options.limit);
-        this.setTree(this._startingTree);
+	this.idsIterate(this._startingTree, this._options.limit, this._options.iteration);
+        /*this.setTree(this._startingTree);
         this._frontier.length = 0;
-        this._frontier.push(this._tree[0]);
+        this._frontier.push(this._tree[0]);*/
+	
         document.dispatchEvent(new Event('updated'));
         return true;
     }
