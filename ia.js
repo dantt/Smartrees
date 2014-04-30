@@ -73,6 +73,7 @@ IA.prototype.reset = function() {/*
 	this.problem._tree = this.problem._startingTree;*/
     this.newTree(this.problem._startingTree);
 	this.draw('treecontainer');
+	$('#output').html("");
 };
 
 IA.prototype.draw = function(container) {
