@@ -85,7 +85,7 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
     //check if it is a leaf
     if (num_childrens == 0 || node.depth == depth_limit){
       if(leaf_flag){
-	node.target = Math.random(0,1)>0.9? 1: 0;
+	node.target = Math.random(0,1)>0.99999999999? 1: 0;
 	if (node.target == 1){
 	  nodes_limit.targets_count++;
 	}

@@ -3,7 +3,9 @@ algoMap = {
     Bfs: Bfs,
     Ucs: Ucs,
     Lds: Lds,
-    Ids: Ids
+    Ids: Ids,
+    Greedy: Greedy,
+    AStar: AStar
 };
 
 
@@ -29,6 +31,103 @@ function pickFirst(frontier, nodesFound){
     document.dispatchEvent(new Event('updated'));
     return frontier.shift();
 }
+
+
+/***
+ * Random coded
+ */
+function AStar(frontier, tree, options, nodesFound){
+    if (frontier.length == 0){
+        debug('frontiera vuota fail');
+        document.dispatchEvent(new Event('emptyfringe'));
+        return 0;
+    }
+    var current_node = pickFirst(frontier, nodesFound);
+    if (current_node.target == 1){
+        debug("goal raggiunto");
+        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
+        return current_node;
+    }
+    var ord = [];
+    if (typeof(current_node.children) != 'undefined') {
+        for (var i = 0; i < current_node.children.length; i++) {
+            ord.push({
+                index:i,
+                f: current_node.children[i].f,
+                depth: current_node.children[i].depth,
+                position: current_node.children[i].position,
+                getParam: function(){return this.f;}  //don't do this at home kids
+            });
+        }
+
+        ord = bubbleSorta(ord, options.order);
+        var k = 0;
+        var old_f = frontier.splice(0);
+        frontier.length = 0;
+
+        while ( (old_f.length > 0 || ord.length > 0)){
+            debug("length: " + old_f.length + " " + ord.length);
+
+            if ( old_f.length == 0 ){
+                while(ord.length > 0){
+                    frontier.push(current_node.children[ord[0].index]);
+                    ord.shift();
+                }
+            }
+            else if ( ord.length == 0){
+                while( old_f.length > 0){
+                    frontier.push(old_f.shift());
+                }
+            }
+            else if ( old_f[0].f < ord[0].f ){
+                frontier.push(old_f.shift());
+            }
+            else if ( old_f[0].f == ord[0].f ){
+                if (old_f[0].depth < ord[0].depth){
+                    frontier.push(old_f.shift());
+                }
+                else if (old_f[0].depth == ord[0].depth){
+                    if (options.order == 'ltr'){
+                        if (old_f[0].position < ord[0].position){
+                            frontier.push(old_f.shift());
+                        }
+                        else{
+                            frontier.push(current_node.children[ord[0].index]);
+                            ord.shift();
+                        }
+                    }
+                    else{ //rtl
+                        if (old_f[0].position < ord[0].position){
+                            frontier.push(current_node.children[ord[0].index]);
+                            ord.shift();
+                        }
+                        else{
+                            frontier.push(old_f.shift());
+                        }
+                    }
+                }
+                else{
+                    frontier.push(current_node.children[ord[0].index]);
+                    ord.shift();
+                }
+            }
+            else{
+                frontier.push(current_node.children[ord[0].index]);
+                ord.shift();
+            }
+            k++;
+        }
+
+        var string = "[";
+        for (i in frontier){
+            string += frontier[i].name + ": " + frontier[i].h + ", ";
+        }
+        string += "]";
+        debug(string);
+    }
+    return true;
+}
+
 
 
 function Greedy(frontier, tree, options, nodesFound){

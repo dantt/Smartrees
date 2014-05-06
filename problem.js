@@ -65,9 +65,14 @@ Problem.prototype.setOrder = function(order){
 Problem.prototype.setTree = function(tree){
 
     this._tree = tree;
+    console.time('preelab');
     this.preElab();
+    console.timeEnd('preelab');
     
+    console.time('stringify');
     var seen = [];
+    var stringami = "{}";
+    /*
     var stringami = JSON.stringify(tree, function(key, val) {
         if (typeof val == "object") {
             if (seen.indexOf(val) >= 0)
@@ -76,6 +81,8 @@ Problem.prototype.setTree = function(tree){
         }
         return val;
     });
+    */
+    console.timeEnd('stringify');
     debug(stringami);
     this._startingTree = JSON.parse(stringami);
     this._frontier = [this._tree[0]];
@@ -147,12 +154,14 @@ function process_node(node, matrix){
     if (typeof node.pathCost == 'undefined'){ //siamo nella radice
         node.pathCost = 0;
         node.depth = 0;
+	node.f = node.h + node.pathCost;
         matrix.push([node]);
     }
     if (typeof(node.children) != 'undefined') { //
         for (var i = 0; i < node.children.length; i++) {
             node.children[i].depth = node.depth + 1;
             node.children[i].pathCost = node.pathCost + node.children[i].cost;
+	    node.children[i].f = node.children[i].pathCost + node.children[i].h;
             if(typeof matrix[node.children[i].depth] == 'undefined'){
                 matrix.push([node.children[i]]);
             }

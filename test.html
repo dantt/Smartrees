@@ -1,0 +1,28 @@
+<html>
+<head>
+<script type="text/javascript" src="alg.js"></script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+	<script src="js/d3.v3.min.js" charset="utf-8"></script>
+	
+	<!-- Project scripts -->
+	<script src="config.js" charset="utf-8"></script>
+	<script src="presets.js" charset="utf-8"></script>
+	<script src="alg.js" charset="utf-8"></script>
+	<script src="treemanager.js" charset="utf-8"></script>
+	<script src="problem.js" charset="utf-8"></script>
+	<script src="ia.js" charset="utf-8"></script>
+	<script src="controller.js" charset="utf-8"></script>
+    <script src="randomtree.js" charset="utf-8"></script>
+    <script src="benchmark.js" charset="utf-8"></script>
+</head>
+<body>
+<script>
+  _projectDebug = 0;
+  console.time('random');
+  var tree = randomTree(6, 7, 1, 1);
+  console.timeEnd('random');
+  var bm = Benchmarker(tree, Dfs);
+</script>
+</body>
+</html>

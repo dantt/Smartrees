@@ -5,6 +5,7 @@
 /**********************************/
 
 function Controller(prob){
+    this._isPlaying = false;
     this._problem = prob;
 }
 
@@ -42,20 +43,25 @@ Controller.prototype.step = function(){
 //HERE BE DRAGONS.
 //THIS WILL BE REFACTORED W/SIGNALS & TRIGGERS
 Controller.prototype.play = function(){
-    debug("method play");
-    this._isPlaying = true;
-    $('#img_play').attr("src", "images/play_h.png");
-    $('#img_stop').attr("src", "images/pause.png");
-    this.step();
-    this._intervalId = setInterval(this.step.bind(this), iaSettings.getOption('simulationSpeed'));
+    debug("method play" + this._isPlaying);
+    if (this._isPlaying == false){
+      this._isPlaying = true;
+      $('#img_play').attr("src", "images/play_h.png");
+      $('#img_stop').attr("src", "images/pause.png");
+      this.step();
+      this._intervalId = setInterval(this.step.bind(this), iaSettings.getOption('simulationSpeed'));
+      
+    }
 };
 
 
 
 
 Controller.prototype.stop = function(){
-    clearInterval(this._intervalId);
-    this._isPlaying = false;
-    $('#img_play').attr("src", "images/play.png");
-    $('#img_stop').attr("src", "images/pause_h.png");
+    if (this._isPlaying == true){
+      clearInterval(this._intervalId);
+      this._isPlaying = false;
+      $('#img_play').attr("src", "images/play.png");
+      $('#img_stop').attr("src", "images/pause_h.png");
+    }
 };
