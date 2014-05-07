@@ -18,11 +18,8 @@ onmessage = function (oEvent) {
 function Benchmarker(tree, strategy){
     //questo chiama settree
     //settree mette la radice in frontiera
-    console.time('init');
     this._problem = new Problem(tree);
-    console.timeEnd('init');
     
-    console.time('execution');
     var t0 = performance.now();
     this._problem.strategy = strategy;
     var result = false;
@@ -31,7 +28,6 @@ function Benchmarker(tree, strategy){
         result = this._problem.step();
     }
     var t1 = performance.now();
-    console.timeEnd('execution');
     console.log(result);
     
     return t1 - t0;

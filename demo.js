@@ -129,10 +129,17 @@
 		
 		});
 		
+		$('#benchmark').load('templates/benchmark.html', function() {
+		    $('#benchmarkTreeCount').submit(function(event) {
+                        event.preventDefault();
+			
+                    });
+		});
+		
 		
 		$('#randomtree').load('templates/randomtree.html', function() {
 
-            $('#randomtreeform').submit(function(event) {
+                 $('#randomtreeform').submit(function(event) {
                 event.preventDefault();
                 //debug(booom(root));
                 //var params = $("#randomtreeform input[name=randomTreeBranchingFactor]").val();
@@ -148,6 +155,10 @@
                 mIA.draw('treecontainer');
                 navigateTo('#homepage');
             });
+	    
+
+	    
+	    
 
 		
 		});

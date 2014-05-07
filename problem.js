@@ -4,8 +4,8 @@
 /**********************************/
 /**********************************/
 
-function Problem(tree){
-    this.setTree(tree);
+function Problem(tree, saveStartTreeFlag){
+    this.setTree(tree, saveStartTreeFlag);
 }
 
 
@@ -62,28 +62,25 @@ Problem.prototype.setOrder = function(order){
     this._options.order = order;
 }
 
-Problem.prototype.setTree = function(tree){
-
-    this._tree = tree;
-    console.time('preelab');
-    this.preElab();
-    console.timeEnd('preelab');
+Problem.prototype.setTree = function(tree, startTreeFlag){
     
-    console.time('stringify');
+    if (typeof startTreeFlag === 'undefined'){startTreeFlag = false;}
+  
+    this._tree = tree;
+    this.preElab();
     var seen = [];
     var stringami = "{}";
-    /*
-    var stringami = JSON.stringify(tree, function(key, val) {
-        if (typeof val == "object") {
-            if (seen.indexOf(val) >= 0)
-                return;
-            seen.push(val);
-        }
-        return val;
-    });
-    */
-    console.timeEnd('stringify');
-    debug(stringami);
+    if (startTreeFlag == true){
+        var stringami = JSON.stringify(tree, function(key, val) {
+            if (typeof val == "object") {
+                if (seen.indexOf(val) >= 0)
+                    return;
+                seen.push(val);
+            }
+            return val;
+        });
+    }
+    //debug(stringami);
     this._startingTree = JSON.parse(stringami);
     this._frontier = [this._tree[0]];
     this._nodesFound = 0;

@@ -16,15 +16,59 @@
 	<script src="controller.js" charset="utf-8"></script>
     <script src="randomtree.js" charset="utf-8"></script>
     <script src="benchmark.js" charset="utf-8"></script>
+    <script src="my_worker.js" charset="utf-8"></script>
 </head>
 <body>
-<script>
-  _projectDebug = 0;
-  console.time('random');
-  var tree = randomTree(6, 5, 1, 1);
-  console.timeEnd('random');
+
+<div id="clickme">
+  Click here
+</div>
+<img id="book" src="book.png" alt="" width="100" height="123"
+  style="position: relative; left: 10px;"><br>
   
-  async.parallel({
+  <button onclick="sayHI()">Say HI</button>
+<button onclick="unknownCmd()">Send unknown command</button>
+<button onclick="stop()">Stop worker</button>
+<output id="result"></output>
+
+<script>
+  function sayHI() {
+    worker.postMessage({'cmd': 'start', 'msg': 'Hi'});
+  }
+
+  function stop() {
+    // worker.terminate() from this script would also stop the worker.
+    worker.postMessage({'cmd': 'stop', 'msg': 'Bye'});
+  }
+
+  function unknownCmd() {
+    worker.postMessage({'cmd': 'foobard', 'msg': '???'});
+  }
+
+  var worker = new Worker('my_worker.js');
+
+  worker.addEventListener('message', function(e) {
+    document.getElementById('result').textContent = e.data;
+  }, false);
+</script>
+  
+<script>
+
+$( "#clickme" ).click(function() {
+  $( "#book" ).animate({
+    opacity: 0.25,
+    left: "+=50",
+    height: "toggle"
+  }, 5000, function() {
+    // Animation complete.
+  });
+});
+$("#clickme").click();
+  _projectDebug = 0;
+  var tree = randomTree(6, 4, 1, 1);
+
+  /*
+  async.series({
   	dfs: function(callback) {
   		callback(null, Benchmarker(tree, Dfs));
   	},
@@ -34,7 +78,7 @@
   },
   function(err, results) {
   	console.log(results);
-  });
+  });*/
 </script>
 </body>
 </html>
