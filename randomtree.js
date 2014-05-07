@@ -1,5 +1,19 @@
 
+// Returns a random number between min and max
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
+/**
+ * Returns the log10 of val (awesome eh?)
+ */
+function log10(val) {
+  return Math.log(val) / Math.LN10;
+}
+
+/**
+ * Returns a random integer between min and max
+ */
 function getRandomInt (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -11,7 +25,7 @@ function getRandomInt (min, max) {
  * @param depth_limit
  * @param complete
  * @param leaf_flag: if true, generate goals only in leafs
- * @returns {{name: number, depth: number, cost: *, h: number}[]}
+ * @returns the root object 
  */
 function randomTree(branching, depth_limit, complete_flag, leaf_flag ){
     branching = (typeof branching === 'undefined' || isNaN(branching))? getRandomInt(2,4): branching;
@@ -49,14 +63,6 @@ function randomTree(branching, depth_limit, complete_flag, leaf_flag ){
 }
 
 
-
-
-// Returns a random number between min and max
-function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-
 /**
  * @param node: the object node
  * @param branching: the branching factor
@@ -85,7 +91,11 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
     //check if it is a leaf
     if (num_childrens == 0 || node.depth == depth_limit){
       if(leaf_flag){
-	node.target = Math.random(0,1)>0.99999999999? 1: 0;
+	//math, bitches http://cdn.memegenerator.net/images/300x/8111949.jpg
+	var max_nodes = Math.pow(depth_limit, branching);
+	var exp_of_ten = Math.ceil(log10(max_nodes));
+	var power_of_ten = Math.pow(10,exp_of_ten);
+	node.target = Math.random(0,1) > (1-(1/power_of_ten))? 1: 0;
 	if (node.target == 1){
 	  nodes_limit.targets_count++;
 	}
@@ -99,7 +109,7 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
 	    //probability grows with node_count and decrease with targets_count
 	    
 	    var is_target = 0;
-	   	    
+
 	    if(!leaf_flag){
 	      //max nodes number
 	      var max_nodes = Math.pow(depth_limit, branching);
@@ -128,35 +138,3 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
     }
 
 }
-
-/*
- function booom(root){
- seen = [];
- return JSON.stringify(root, function(key, val) {
- if (typeof val == "object") {
- if (seen.indexOf(val) >= 0)
- return;
- seen.push(val);
- }
- return val;
- });
- }
-
-
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
