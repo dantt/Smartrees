@@ -4,6 +4,7 @@
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
 	<script src="js/d3.v3.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/async.js"></script>
 	
 	<!-- Project scripts -->
 	<script src="config.js" charset="utf-8"></script>
@@ -20,9 +21,20 @@
 <script>
   _projectDebug = 0;
   console.time('random');
-  var tree = randomTree(6, 7, 1, 1);
+  var tree = randomTree(6, 5, 1, 1);
   console.timeEnd('random');
-  var bm = Benchmarker(tree, Dfs);
+  
+  async.parallel({
+  	dfs: function(callback) {
+  		callback(null, Benchmarker(tree, Dfs));
+  	},
+  	bfs: function(callback) {
+  		callback(null, Benchmarker(tree, Bfs));
+  	}
+  },
+  function(err, results) {
+  	console.log(results);
+  });
 </script>
 </body>
 </html>
