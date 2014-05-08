@@ -64,7 +64,7 @@ Problem.prototype.setOrder = function(order){
 
 Problem.prototype.setTree = function(tree, startTreeFlag){
     
-    if (typeof startTreeFlag === 'undefined'){startTreeFlag = false;}
+    if (typeof startTreeFlag === 'undefined'){startTreeFlag = true;}
   
     this._tree = tree;
     this.preElab();
