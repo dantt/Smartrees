@@ -6,8 +6,8 @@ importScripts('problem.js');
 self.onmessage = function(e) {
 
 	var data = e.data;
-
-	var problem = new Problem(data.tree, false);
+	var c = (data.s == 'Ids') ? true : false;
+	var problem = new Problem(data.tree, c);
 	problem.strategy = algoMap[data.s];
   
 	var result = false;

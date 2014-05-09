@@ -18,6 +18,37 @@ function getPath(node) {
 };
 
 
+function checkFrontier(frontier) { 
+	 if (frontier.length == 0){
+        	debug('frontiera vuota fail');
+        	if(typeof window !== 'undefined')
+       			document.dispatchEvent(new Event('emptyfringe'));
+        	return 0;
+        }
+        else {
+        	return 1;
+        }
+};
+
+
+function checkSuccess(current_node) {
+	if (current_node.target == 1){
+		debug("goal raggiunto");
+		if(typeof window !== 'undefined')
+			document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
+		return current_node;
+	}
+	else {
+		return 0;
+	}
+};
+
+
+function updated() {
+	if(typeof window !== 'undefined')
+		 document.dispatchEvent(new Event('updated'));
+};
+
 
 
 /**
@@ -28,7 +59,7 @@ function getPath(node) {
 function pickFirst(frontier, nodesFound){
     debug("pickFist, nodo:" + frontier[0].name + " " + (nodesFound+1));
     frontier[0].selected =  nodesFound+1;
-    document.dispatchEvent(new Event('updated'));
+    updated();
     return frontier.shift();
 }
 
@@ -37,17 +68,15 @@ function pickFirst(frontier, nodesFound){
  * Random coded
  */
 function AStar(frontier, tree, options, nodesFound){
-    if (frontier.length == 0){
-        debug('frontiera vuota fail');
-        document.dispatchEvent(new Event('emptyfringe'));
-        return 0;
-    }
+
+    if (checkFrontier(frontier) == 0)
+    	return 0;
+    	
     var current_node = pickFirst(frontier, nodesFound);
-    if (current_node.target == 1){
-        debug("goal raggiunto");
-        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
-        return current_node;
-    }
+    
+    if (checkSuccess(current_node) != 0)
+    	return current_node;
+    	    
     var ord = [];
     if (typeof(current_node.children) != 'undefined') {
         for (var i = 0; i < current_node.children.length; i++) {
@@ -131,17 +160,14 @@ function AStar(frontier, tree, options, nodesFound){
 
 
 function Greedy(frontier, tree, options, nodesFound){
-    if (frontier.length == 0){
-        debug('frontiera vuota fail');
-        document.dispatchEvent(new Event('emptyfringe'));
-        return 0;
-    }
+    if (checkFrontier(frontier) == 0)
+    	return 0;
+    	
     var current_node = pickFirst(frontier, nodesFound);
-    if (current_node.target == 1){
-        debug("goal raggiunto");
-        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
-        return current_node;
-    }
+    
+    if (checkSuccess(current_node) != 0)
+    	return current_node;
+    	
     var ord = [];
     if (typeof(current_node.children) != 'undefined') {
         for (var i = 0; i < current_node.children.length; i++) {
@@ -224,17 +250,14 @@ function Greedy(frontier, tree, options, nodesFound){
 
 
 function Bfs(frontier, tree, options, nodesFound){
-    if (frontier.length == 0){
-        debug('frontiera vuota fail');
-        document.dispatchEvent(new Event('emptyfringe'));
-        return 0;
-    }
+    if (checkFrontier(frontier) == 0)
+    	return 0;
+    	
     var current_node = pickFirst(frontier, nodesFound);
-    if (current_node.target == 1){
-        debug("goal raggiunto");
-        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
-        return current_node;
-    }
+    
+    if (checkSuccess(current_node) != 0)
+    	return current_node;
+    	
     if (typeof(current_node.children) != 'undefined') {
         //debug(options.order);
         if (options.order == 'ltr'){
@@ -253,18 +276,14 @@ function Bfs(frontier, tree, options, nodesFound){
 
 
 function Dfs(frontier, tree, options, nodesFound){
-    if (frontier.length == 0){
-        debug('frontiera vuota fail');
-        document.dispatchEvent(new Event('emptyfringe'));
-        return 0;
-    }
+    if (checkFrontier(frontier) == 0)
+    	return 0;
+    	
     var current_node = pickFirst(frontier, nodesFound);
-    if (current_node.target == 1){
-        debug("goal raggiunto");
-        console.log(current_node.name);
-        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
-        return current_node;
-    }
+    
+    if (checkSuccess(current_node) != 0)
+    	return current_node;
+    	
     if (typeof(current_node.children) != 'undefined') {
         if(options.order == 'ltr'){
             for (var i = 0; i < current_node.children.length; i++){
@@ -281,17 +300,14 @@ function Dfs(frontier, tree, options, nodesFound){
 }
 
 function Lds(frontier, tree, options, nodesFound) {
-    if (frontier.length == 0){
-        debug('frontiera vuota fail');
-        document.dispatchEvent(new Event('emptyfringe'));
-        return false;
-    }
+    if (checkFrontier(frontier) == 0)
+    	return 0;
+    	
     var current_node = pickFirst(frontier, nodesFound);
-    if (current_node.target == 1){
-        debug("goal raggiunto");
-        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
-        return current_node;
-    }
+    
+    if (checkSuccess(current_node) != 0)
+    	return current_node;
+    	
     if (typeof(current_node.depth) == 'undefined') { //we are in root
         current_node.depth = 0;
     }
@@ -375,17 +391,14 @@ function bubbleSorta(array, criteria){
  Implements Uniform Cost search
  */
 function Ucs(frontier, tree, options, nodesFound){
-    if (frontier.length == 0){
-        debug('frontiera vuota fail');
-        document.dispatchEvent(new Event('emptyfringe'));
-        return false;
-    }
+    if (checkFrontier(frontier) == 0)
+    	return 0;
+    	
     var current_node = pickFirst(frontier, nodesFound);
-    if (current_node.target == 1){
-        debug("goal raggiunto");
-        document.dispatchEvent(new CustomEvent('goalfound', {'detail': { 'target': current_node.name, 'path': getPath(current_node) }}));
-        return current_node;
-    }
+    
+    if (checkSuccess(current_node) != 0)
+    	return current_node;
+    	
     if (typeof(current_node.pathCost) == 'undefined') { //we are in root
         current_node.pathCost = 0;
     }

@@ -99,7 +99,7 @@ iaSettings = new Config();
 _projectDebug = 1;
 
 function debug(msg) {
-	if (_projectDebug == 1) {
+	if (typeof window !== 'undefined' && _projectDebug == 1) {
 		console.log(msg);
 	}
 }

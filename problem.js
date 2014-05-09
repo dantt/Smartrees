@@ -119,8 +119,10 @@ Problem.prototype.step = function(){
         /*this.setTree(this._startingTree);
         this._frontier.length = 0;
         this._frontier.push(this._tree[0]);*/
-	
-        document.dispatchEvent(new Event('updated'));
+        
+        //Move this in alg.js
+	if (typeof window !== 'undefined')
+        	document.dispatchEvent(new Event('updated'));
         return true;
     }
 

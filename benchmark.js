@@ -6,31 +6,43 @@ This is no longer a web worker, still lots of magic will be used here
 
 
 
+
+
+
 function Benchmarker(tree){
     //questo chiama settree
     //settree mette la radice in frontiera
     //this._problem = new Problem(tree);
-	
-	
-	
+		
+	function doWork(strategy, callback) {
+		var t0 = performance.now();
+		var worker = new Worker('my_worker.js');
+		worker.onmessage = function(e) {
+			var t1 = performance.now();
+			callback(null, {'data': e.data, 'time': t1-t0});
+		};
+		worker.postMessage({'tree': tree, 's': strategy});
+	}	
 	
 	async.parallel({
-			dfs: function(callback) {
-				console.log(1);
-				var worker = new Worker('my_worker.js');
-				worker.onmessage = function(e) {
-					callback(null, e.data);
-				};
-				worker.postMessage({'tree': tree, 's': "Dfs"});
+			Dfs: function(callback) {
+				doWork("Dfs", callback);
 			},
-			bfs: function(callback) {
-				console.log(2);
-				var worker = new Worker('my_worker.js');
-				worker.postMessage({'tree': tree, 's': "Bfs"});
-				worker.onmessage = function(e) {
-					callback(null, e.data);
-				};
-			}
+			Bfs: function(callback) {
+				doWork("Dfs", callback);
+			},
+			Ucs: function(callback) {
+				doWork("Ucs", callback);
+			},
+			Ids: function(callback) {
+				doWork("Ids", callback);
+			},
+			Greedy: function(callback) {
+				doWork("Greedy", callback);
+			},
+			AStar: function(callback) {
+				doWork("AStar", callback);
+			},
 		},
 		function(err, results) {
 			console.log(results);
