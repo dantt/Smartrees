@@ -150,7 +150,7 @@ Problem.prototype.preElab = function(){
  * Same for this one
  */
 function process_node(node, matrix){
-    if (typeof node.pathCost == 'undefined'){ //siamo nella radice
+    if (typeof node.f == 'undefined'){ //siamo nella radice
         node.pathCost = 0;
         node.depth = 0;
 	node.f = node.h + node.pathCost;
