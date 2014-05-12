@@ -29,7 +29,7 @@ function Benchmarker(tree, callback){
 				doWork("Dfs", callback);
 			},
 			Bfs: function(callback) {
-				doWork("Dfs", callback);
+				doWork("Bfs", callback);
 			},
 			Ucs: function(callback) {
 				doWork("Ucs", callback);

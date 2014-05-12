@@ -149,12 +149,36 @@
                     	}		
 			function cback(data) {
 				console.log(data);
+				
 				var timechart = $('#timechart').highcharts();
 				timechart.series[0].addPoint(data.Dfs.time, false);
 				timechart.series[1].addPoint(data.Bfs.time, false);
 				timechart.series[2].addPoint(data.Ucs.time, false);
 				timechart.series[3].addPoint(data.Greedy.time, false);
 				timechart.series[4].addPoint(data.AStar.time, true);
+				
+				var pointschart = $('#pointschart').highcharts();
+				var par = pointschart.series[0].yData;
+				var results = [
+					['Dfs', data.Dfs.time],
+					['Bfs', data.Bfs.time],
+					['Ucs', data.Ucs.time],
+					['Greedy', data.Greedy.time],
+					['AStar', data.AStar.time],
+				];
+				results.sort(function(a, b) {return a[1] - b[1]});
+				console.log(results);
+				var res2 = {};
+				for (var i = 0; i < 5; i++) {
+					res2[results[i][0]] = i;
+				}
+				par[0]+=(6 - res2['Dfs']);
+				par[1]+=(6 - res2['Bfs']);
+				par[2]+=(6 - res2['Ucs']);
+				par[3]+=(6 - res2['Greedy']);
+				par[4]+=(6 - res2['AStar']);
+				pointschart.series[0].setData(par);			
+				
 			}
 			
                     });

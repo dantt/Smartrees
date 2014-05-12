@@ -12,10 +12,11 @@ for (var i = 0; i < NoT; i++) {
 	$(function () {
 		$('#timechart').highcharts({	    
 		    chart: {
-		        type: 'column'
+		        type: 'column',
+            		zoomType: 'y'
 		    },	    
 		    title: {
-		        text: 'Exec time'
+		        text: 'Exec time - the lower the better'
 		    },	    
 		    xAxis: {
 		        categories: categoryArray
@@ -62,6 +63,52 @@ for (var i = 0; i < NoT; i++) {
 		    ]
 		});
 	    });
+	    
+	    
+	    $(function () {
+		$('#pointschart').highcharts({	    
+		    chart: {
+		        type: 'column',
+		    },	    
+		    title: {
+		        text: 'Overall score - The higher the better'
+		    },	    
+		    xAxis: {
+		        categories:  [
+		    	'Dfs',
+			'Bfs',
+			'Ucs',
+			'Greedy',
+			'A*',		    
+		    ]
+		    },	    
+		    yAxis: {
+		        min: 0,
+		        title: {
+		            text: 'Points'
+		        }
+		    },	    
+		    /*tooltip: {
+		        formatter: function() {
+		            return '<b>'+ this.x +'</b><br/>'+
+		                this.series.name +': '+ this.y +'<br/>'+
+		                'Total: '+ this.point.stackTotal;
+		        }
+		    },	    */
+		    plotOptions: {
+		        column: {
+		            //stacking: 'normal'
+		        }
+		    },	    
+		    series: [
+		    	{
+				name: 'Score',
+				data: [0, 0, 0, 0, 0]
+			},    
+		    ]
+		});
+	    });
+	    
 	    
 	    
 }
