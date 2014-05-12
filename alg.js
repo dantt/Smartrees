@@ -5,7 +5,8 @@ algoMap = {
     Lds: Lds,
     Ids: Ids,
     Greedy: Greedy,
-    AStar: AStar
+    AStar: AStar,
+    UcsNo: UcsNoRtl
 };
 
 
@@ -179,8 +180,10 @@ function Greedy(frontier, tree, options, nodesFound){
                 getParam: function(){return this.h;}  //don't do this at home kids
             });
         }
-
-        ord = bubbleSorta(ord, options.order);
+	ord.sort(function(a, b){
+	  return a.h - b.h;
+	})
+        //ord = bubbleSorta(ord, options.order);
         var k = 0;
         var old_f = frontier.splice(0);
         frontier.length = 0;
@@ -399,13 +402,10 @@ function Ucs(frontier, tree, options, nodesFound){
     if (checkSuccess(current_node) != 0)
     	return current_node;
     	
-    if (typeof(current_node.pathCost) == 'undefined') { //we are in root
-        current_node.pathCost = 0;
-    }
     var ord = [];
-    if (typeof(current_node.children) != 'undefined') {
+    if (current_node.children) {
         for (var i = 0; i < current_node.children.length; i++) {
-            current_node.children[i].pathCost = current_node.pathCost + current_node.children[i].cost;
+            //current_node.children[i].pathCost = current_node.pathCost + current_node.children[i].cost;
             ord.push({
                 index:i,
                 pathCost: current_node.children[i].pathCost,
@@ -482,3 +482,34 @@ function Ucs(frontier, tree, options, nodesFound){
     }
     return true;
 }
+
+
+function UcsNoRtl(frontier, tree, options, nodesFound){
+    if (checkFrontier(frontier) == 0)
+    	return 0;
+
+    var current_node = pickFirst(frontier, nodesFound);
+    
+    if (checkSuccess(current_node) != 0)
+    	return current_node;
+    	
+    var ord = [];
+    if (current_node.children) {
+        for (var i = 0; i < current_node.children.length; i++) {
+	    frontier.push(current_node.children[i]);
+        }
+                
+	frontier.sort(function (a, b) {
+	  return a.pathCost-b.pathCost;
+        })
+	
+        var string = "[";
+        /*for (i in frontier){
+            string += frontier[i].name + ": " + frontier[i].pathCost + ", ";
+        }
+        string += "]";
+        debug(string);*/
+    }
+    return true;
+}
+
