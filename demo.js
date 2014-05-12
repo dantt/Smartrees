@@ -130,8 +130,32 @@
 		});
 		
 		$('#benchmark').load('templates/benchmark.html', function() {
-		    $('#benchmarkTreeCount').submit(function(event) {
+		    $('#benchmarkform').submit(function(event) {
                         event.preventDefault();
+                        var ntest = parseInt($("#benchmarkTestCount").val());
+                        initCharts(ntest);
+                        
+                        
+                        
+                        for (var i = 0; i < ntest; i++) {
+                        	Benchmarker(
+                        		randomTree(
+                        			parseInt($("#benchmarkBranching").val()),
+                    				parseInt($("#benchmarkTreeDepth").val()),
+                    				true,
+                    				true
+                    			), cback
+                    		);
+                    	}		
+			function cback(data) {
+				console.log(data);
+				var timechart = $('#timechart').highcharts();
+				timechart.series[0].addPoint(data.Dfs.time, false);
+				timechart.series[1].addPoint(data.Bfs.time, false);
+				timechart.series[2].addPoint(data.Ucs.time, false);
+				timechart.series[3].addPoint(data.Greedy.time, false);
+				timechart.series[4].addPoint(data.AStar.time, true);
+			}
 			
                     });
 		});

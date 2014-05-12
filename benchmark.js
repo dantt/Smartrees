@@ -9,7 +9,7 @@ This is no longer a web worker, still lots of magic will be used here
 
 
 
-function Benchmarker(tree){
+function Benchmarker(tree, callback){
     //questo chiama settree
     //settree mette la radice in frontiera
     //this._problem = new Problem(tree);
@@ -45,7 +45,7 @@ function Benchmarker(tree){
 			},
 		},
 		function(err, results) {
-			console.log(results);
+			callback(results);
 		}
 	);
 	

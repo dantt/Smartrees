@@ -1,21 +1,58 @@
-<h1>Benchmark</h1>
+<h1>Benchmarking</h1>
 
 <div class='row'>
 	<form id='benchmarkform'>
 	
 		<h5>Configure</h5>
 		<hr>
+		
 	<div class='row'>
 	    <div class="small-6 medium-3 columns">
-				<label for="benchmarkTreeCount" class="right inline">Number of trees</label>
+				<label for="benchmarkTestCount" class="right inline">Number of tests</label>
 	    </div> 
 	    <div class="small-6 medium-2 columns end">
-				<input type="text" value='' id='benchmarkTreeCount' name='benchmarkTreeCount'>
+				<input type="text" value='' id='benchmarkTestCount' name='benchmarkTestCount'>
 	    </div>
-
+        </div>
+        
+        <div class='row'>
+	    <div class="small-6 medium-3 columns">
+				<label for="benchmarkBranching" class="right inline">Branching</label>
+	    </div> 
+	    <div class="small-6 medium-2 columns end">
+				<input type="text" value='' id='benchmarkBranching' name='benchmarkBranching'>
+	    </div>
+        </div>
+        
+        <div class='row'>
+	    <div class="small-6 medium-3 columns">
+				<label for="benchmarkTreeDepth" class="right inline">Tree Depth</label>
+	    </div> 
+	    <div class="small-6 medium-2 columns end">
+				<input type="text" value='' id='benchmarkTreeDepth' name='benchmarkTreeDepth'>
+	    </div>
         </div>
 
         <input type='submit' value='run' class='button' />
 		
 	</form>
+	
+	
+	<h5>Results</h5>
+		<hr>
+	<div id='benchmarkResults'>
+		<div class='row'>
+			<div id='timechart' class="small-12 column"></div>
+			</div>
+		</div>
+		<div class='row'>
+			<div id='pointschart' class="small-12 column"></div>
+			</div>
+		</div>
+		<div class='row'>
+			<div id='successchart' class="small-12 column"></div>
+			</div>
+		</div>
+	
+	
 </div>
