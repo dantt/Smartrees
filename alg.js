@@ -6,7 +6,10 @@ algoMap = {
     Ids: Ids,
     Greedy: Greedy,
     AStar: AStar,
-    UcsNo: UcsNoRtl
+    UcsNo: UcsNoRtl,
+    UcsInsertionSort: UcsInsertionSort,
+    AStarImproved: AStarImproved,
+    GreedyImproved: GreedyImproved
 };
 
 
@@ -513,3 +516,86 @@ function UcsNoRtl(frontier, tree, options, nodesFound){
     return true;
 }
 
+Array.prototype.insert = function (index, item) {
+  this.splice(index, 0, item);
+};
+
+function UcsInsertionSort(frontier, tree, options, nodesFound){
+    if (checkFrontier(frontier) == 0)
+    	return 0;
+
+    var current_node = pickFirst(frontier, nodesFound);
+    
+    if (checkSuccess(current_node) != 0)
+    	return current_node;
+    	
+    if (current_node.children) {
+      for (var i = 0; i < current_node.children.length; i++) {
+        var inserted = false;
+        for (var j = 0; j < frontier.length && inserted == false; j++){
+          if (current_node.children[i].pathCost < frontier[j].pathCost){
+	    frontier.insert(j,current_node.children[i]);
+            inserted = true;
+          }
+        }
+        if (inserted == false){
+          frontier.push(current_node.children[i]);
+        }
+      }
+    }
+    return true;
+}
+
+function AStarImproved(frontier, tree, options, nodesFound){
+
+    if (checkFrontier(frontier) == 0)
+    	return 0;
+    	
+    var current_node = pickFirst(frontier, nodesFound);
+    
+    if (checkSuccess(current_node) != 0)
+    	return current_node;
+    	    
+     if (current_node.children) {
+      for (var i = 0; i < current_node.children.length; i++) {
+        var inserted = false;
+        for (var j = 0; j < frontier.length && inserted == false; j++){
+          if (current_node.children[i].f < frontier[j].f){
+	    frontier.insert(j,current_node.children[i]);
+            inserted = true;
+          }
+        }
+        if (inserted == false){
+          frontier.push(current_node.children[i]);
+        }
+      }
+    }
+    return true;
+}
+
+
+function GreedyImproved(frontier, tree, options, nodesFound){
+    if (checkFrontier(frontier) == 0)
+    	return 0;
+    	
+    var current_node = pickFirst(frontier, nodesFound);
+    
+    if (checkSuccess(current_node) != 0)
+    	return current_node;
+    	
+    if (current_node.children) {
+      for (var i = 0; i < current_node.children.length; i++) {
+        var inserted = false;
+        for (var j = 0; j < frontier.length && inserted == false; j++){
+          if (current_node.children[i].h < frontier[j].h){
+	    frontier.insert(j,current_node.children[i]);
+            inserted = true;
+          }
+        }
+        if (inserted == false){
+          frontier.push(current_node.children[i]);
+        }
+      }
+    }
+    return true;
+}

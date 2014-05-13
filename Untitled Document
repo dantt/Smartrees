@@ -1,0 +1,5 @@
+abbiamo provato
+->togliere rtl
+->togliere bbsort
+->inserire in frontier i figli con stile insertion sort
+in pratica sostituendo un "merge" fra frontiera e nodi children espansi con un inserimento - insertion sort like le prestazioni sono migliorate del 100000%
