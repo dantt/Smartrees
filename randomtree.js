@@ -56,6 +56,7 @@ function randomTree(branching, depth_limit, complete_flag, leaf_flag ){
     //qui fai una funzinoe che inserisce almeno un goal
     if (node_limit_wrapper.targets_count == 0){
       var ind = getRandomInt(0,leafs.length-1);
+      var ind = leafs.length-1;
       leafs[ind].target = 1;
     }
    
@@ -96,6 +97,7 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
 	var exp_of_ten = Math.ceil(log10(max_nodes));
 	var power_of_ten = Math.pow(10,exp_of_ten);
 	node.target = Math.random(0,1) > (1-(1/power_of_ten))? 1: 0;
+	node.target = 0;
 	if (node.target == 1){
 	  nodes_limit.targets_count++;
 	}
