@@ -155,27 +155,34 @@ TreeManager.prototype.update = function() {
 	 .attr("stroke-dasharray","28.28, 28.28")
 	 .duration(1000);
 	 
-	var count = this._svg.selectAll("g.node").filter(function(d) { return d.selected; })[0].length;
+	var max = 0;
+	this._svg.selectAll("g.node").each(function(d) { (d.selected > max) ? d.selected : max; return; });
 	var scope = this;
 	node.select('circle')
-	 .filter( function(d) {return d.selected == count || d.selected > count; } )
+	 .filter( function(d) {return (typeof d.selected !== 'undefined'); } )
 	 .each( function(d, i) { scope.selected(this); })
 	 .transition()
 	 .style("fill", iaSettings.getOption('nodeSelectedFillColor'))
 	 .duration(1000);
 	 
 	node.select('circle')
-	 .filter( function(d) {return d.selected == 0; } )
-	 .each( function(d, i) { scope.selected(this); })
+	 .filter( function(d) {return (typeof d.selected === 'undefined'); } )
 	 .transition()
-	 .style("fill", iaSettings.getOption('#FFF'))
+	 .style("fill", '#FFF')
 	 .duration(1000);
 	 
-	var nodetext = d3.selectAll("text.nodetext")
-	 .filter( function(d) {return d.selected == count || d.selected > count; } )
+	var nodetext = node.select("text.nodetext")
+	 .filter( function(d) {return (typeof d.selected !== 'undefined'); } )
 	 .transition()
-	 .each("end", function(d) { d3.select(this).text( "#" + d.name + "/" + count); })
+	 .each("end", function(d) { d3.select(this).text( "#" + d.name + "/" + d.selected); })
 	 .style("font-size", "7px")
+	 .duration(1000);
+	 
+	var nodetext2 = node.select("text.nodetext")
+	 .filter( function(d) { return (typeof d.selected === 'undefined'); } )
+	 .transition()
+	 .each("start", function(d) { d3.select(this).text( "#" + d.name); })
+	 .style("font-size", "10px")
 	 .duration(1000);
 	
 
