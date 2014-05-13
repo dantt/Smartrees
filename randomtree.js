@@ -120,7 +120,8 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
 	      //I HAD TO STUDY MATHS
 	      var rnd = Math.random(0,1)*nodecount_weight/targets_weight;
 	      is_target = (rnd>0.3)?1:0;
-	      if (is_target){
+	      is_target = 0;
+	      if (is_target != 0){
 		nodes_limit.targets_count++;
 	      }
 	    }
