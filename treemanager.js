@@ -158,14 +158,21 @@ TreeManager.prototype.update = function() {
 	var count = this._svg.selectAll("g.node").filter(function(d) { return d.selected; })[0].length;
 	var scope = this;
 	node.select('circle')
-	 .filter( function(d) {return d.selected == count; } )
+	 .filter( function(d) {return d.selected == count || d.selected > count; } )
 	 .each( function(d, i) { scope.selected(this); })
 	 .transition()
 	 .style("fill", iaSettings.getOption('nodeSelectedFillColor'))
 	 .duration(1000);
 	 
+	node.select('circle')
+	 .filter( function(d) {return d.selected == 0; } )
+	 .each( function(d, i) { scope.selected(this); })
+	 .transition()
+	 .style("fill", iaSettings.getOption('#FFF'))
+	 .duration(1000);
+	 
 	var nodetext = d3.selectAll("text.nodetext")
-	 .filter( function(d) {return d.selected == count; } )
+	 .filter( function(d) {return d.selected == count || d.selected > count; } )
 	 .transition()
 	 .each("end", function(d) { d3.select(this).text( "#" + d.name + "/" + count); })
 	 .style("font-size", "7px")
