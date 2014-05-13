@@ -91,9 +91,11 @@ Problem.prototype.setTree = function(tree, startTreeFlag){
 
 
 Problem.prototype.idsIterate = function(startTree, cur_limit, cur_iteration){
+  var count = this._nodesFound;
   this.setTree(startTree);
   this._options.limit = cur_limit;
   this._options.iteration = cur_iteration;
+  this._nodesFound = count;
 }
 
 /*****************************/
