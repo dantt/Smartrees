@@ -156,10 +156,11 @@ TreeManager.prototype.update = function() {
 	 .duration(1000);
 	 
 	var max = 0;
-	this._svg.selectAll("g.node").each(function(d) { (d.selected > max) ? d.selected : max; return; });
+	this._svg.selectAll("g.node").each(function(d) { max = (typeof d.selected !== 'undefined' && d.selected > max) ? d.selected : max; return; });
+	console.log(max);
 	var scope = this;
 	node.select('circle')
-	 .filter( function(d) {return (typeof d.selected !== 'undefined'); } )
+	 .filter( function(d) {return d.selected == max; } )
 	 .each( function(d, i) { scope.selected(this); })
 	 .transition()
 	 .style("fill", iaSettings.getOption('nodeSelectedFillColor'))
@@ -172,7 +173,7 @@ TreeManager.prototype.update = function() {
 	 .duration(1000);
 	 
 	var nodetext = node.select("text.nodetext")
-	 .filter( function(d) {return (typeof d.selected !== 'undefined'); } )
+	 .filter( function(d) {return d.selected == max; } )
 	 .transition()
 	 .each("end", function(d) { d3.select(this).text( "#" + d.name + "/" + d.selected); })
 	 .style("font-size", "7px")
