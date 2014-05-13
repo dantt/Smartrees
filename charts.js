@@ -53,6 +53,10 @@ for (var i = 0; i < NoT; i++) {
 				data: []
 			},
 			{
+				name: 'Ids',
+				data: []
+			},
+			{
 				name: 'Greedy',
 				data: []
 			},
@@ -78,6 +82,7 @@ for (var i = 0; i < NoT; i++) {
 		    	'Dfs',
 			'Bfs',
 			'Ucs',
+			'Ids',
 			'Greedy',
 			'A*',		    
 		    ]
@@ -103,7 +108,7 @@ for (var i = 0; i < NoT; i++) {
 		    series: [
 		    	{
 				name: 'Score',
-				data: [0, 0, 0, 0, 0]
+				data: [0, 0, 0, 0, 0, 0]
 			},    
 		    ]
 		});
