@@ -151,25 +151,24 @@
 				console.log(data);
 				
 				var timechart = $('#timechart').highcharts();
-				timechart.series[0].addPoint(data.Dfs.time, false);
-				timechart.series[1].addPoint(data.Bfs.time, false);
-				timechart.series[2].addPoint(data.Ucs.time, false);
-				timechart.series[3].addPoint(data.Ids.time, false);
-				timechart.series[4].addPoint(data.Greedy.time, false);
-				timechart.series[5].addPoint(data.AStar.time, true);
+				timechart.series[0].addPoint(data.Dfs.data.tw, false);
+				timechart.series[1].addPoint(data.Bfs.data.tw, false);
+				timechart.series[2].addPoint(data.Ucs.data.tw, false);
+				timechart.series[3].addPoint(data.Ids.data.tw, false);
+				timechart.series[4].addPoint(data.Greedy.data.tw, false);
+				timechart.series[5].addPoint(data.AStar.data.tw, true);
 				
 				var pointschart = $('#pointschart').highcharts();
 				var par = pointschart.series[0].yData;
 				var results = [
-					['Dfs', data.Dfs.time],
-					['Bfs', data.Bfs.time],
-					['Ucs', data.Ucs.time],
-					['Ids', data.Ids.time],
-					['Greedy', data.Greedy.time],
-					['AStar', data.AStar.time],
+					['Dfs', data.Dfs.data.tw],
+					['Bfs', data.Bfs.data.tw],
+					['Ucs', data.Ucs.data.tw],
+					['Ids', data.Ids.data.tw],
+					['Greedy', data.Greedy.data.tw],
+					['AStar', data.AStar.data.tw],
 				];
 				results.sort(function(a, b) {return a[1] - b[1]});
-				console.log(results);
 				var res2 = {};
 				for (var i = 0; i < 6; i++) {
 					res2[results[i][0]] = i;

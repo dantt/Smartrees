@@ -6,3 +6,5 @@ in pratica sostituendo un "merge" fra frontiera e nodi children espansi con un i
 
 
 Poi abbiamo scoperto un comportamento undocumented dei web workers, non capiamo se vadano in CPU al max 20 alla volta o se ci sia una coda (lenta) di messaggi.
+
+"User agents may impose implementation-specific limits on otherwise unconstrained inputs, e.g. to prevent denial of service attacks, to guard against running out of memory, or to work around platform-specific limitations." (W3 draft)
