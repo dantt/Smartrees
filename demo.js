@@ -153,6 +153,14 @@
 			var mean_old = [0,0,0,0,0,0];
 			var variance_old =  [0,0,0,0,0,0];
 			//Dfs, Bfs, Ucs, Ids, Greedy, AStar
+			var name_to_index = {
+				0: 'Dfs',
+				1: 'Bfs',
+				2: 'Ucs',
+				3: 'Ids',
+				4: 'Greedy',
+				5: 'AStar'
+			};
 			function cback(data) {
 				counter++;
 				
@@ -173,7 +181,6 @@
 				  totale[i] += data_array[i];
 				});
 				
-				//mean_old = mean;
 				$(mean).each(function(i, e){
 				  mean_old[i] = e;
 				  mean[i] = totale[i]/counter;
@@ -184,41 +191,36 @@
 				  variance[i] = variance_old[i] + (data_array[i] - mean[i]) * (data_array[i] - mean_old[i]);
 				});
 				
+				
+				//Variance chart updating
 				$(variancechart.series[0].data).each(function(i, e){
 				  this.update(this.y + variance[i]);
 				});
 				
+				//Time chart updating
 				var timechart = $('#timechart').highcharts();
-				timechart.series[0].addPoint(data.Dfs.data.tw, false);
-				timechart.series[1].addPoint(data.Bfs.data.tw, false);
-				timechart.series[2].addPoint(data.Ucs.data.tw, false);
-				timechart.series[3].addPoint(data.Ids.data.tw, false);
-				timechart.series[4].addPoint(data.Greedy.data.tw, false);
-				timechart.series[5].addPoint(data.AStar.data.tw, true);
+				$(timechart.series).each(function(i, e) {
+					this.addPoint(data_array[i], false);
+				});
+				timechart.redraw();
 				
 				
-				
+				//Score chart updating
 				var pointschart = $('#pointschart').highcharts();
 				var par = pointschart.series[0].yData;
-				var results = [
-					['Dfs', data.Dfs.data.tw],
-					['Bfs', data.Bfs.data.tw],
-					['Ucs', data.Ucs.data.tw],
-					['Ids', data.Ids.data.tw],
-					['Greedy', data.Greedy.data.tw],
-					['AStar', data.AStar.data.tw],
-				];
+				var results = [];
+				for (var i = 0; i < 6; i++) {
+					results.push([name_to_index[i], data_array[i]]);
+				}
 				results.sort(function(a, b) {return a[1] - b[1]});
+				console.log(results);
 				var res2 = {};
 				for (var i = 0; i < 6; i++) {
 					res2[results[i][0]] = i;
 				}
-				par[0]+=(6 - res2['Dfs']);
-				par[1]+=(6 - res2['Bfs']);
-				par[2]+=(6 - res2['Ucs']);
-				par[3]+=(6 - res2['Ids']);
-				par[4]+=(6 - res2['Greedy']);
-				par[5]+=(6 - res2['AStar']);
+				for (var i = 0; i < 6; i++) {
+					par[i] += (6 - res2[name_to_index[i]]);
+				}
 				pointschart.series[0].setData(par);			
 				
 			}
