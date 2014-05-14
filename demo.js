@@ -150,6 +150,7 @@
 			var mean = [0,0,0,0,0,0];
 			var mean_old = [0,0,0,0,0,0];
 			var variance_old =  [0,0,0,0,0,0];
+                       var M2 = [0,0,0,0,0,0];
 			//Dfs, Bfs, Ucs, Ids, Greedy, AStar
 			var name_to_index = {
 				0: 'Dfs',
@@ -209,21 +210,27 @@
 				});
 				
 				$(variance).each(function(i, e){
-                                  //console.log(e);
+                                 //console.log(e);
 				  variance_old[i] = e;
-				  variance[i] = variance_old[i] + (data_array[i] - mean[i]) * (data_array[i] - mean_old[i]);
+                                  
+                                 var delta = data_array[i] - mean_old[i];
+                                 M2[i] += delta*(data_array[i] - mean[i]);
+				  variance[i] = M2[i]/(counter);
+                                 console.log("media: " + mean[i] + "  old: " + mean_old[i] + "  item: " + data_array[i]);
 				});
 				
 				
 				//Variance chart updating
 				$(variancechart.series[0].data).each(function(i, e){
+                                 //console.log(variance[i]);
 				  this.update(variance[i]);
 				});
 				
 				//Time chart updating
 				var timechart = $('#timechart').highcharts();
+                               var bool = (counter>10)? true: false;
 				$(timechart.series).each(function(i, e) {
-					this.addPoint(data_array[i], false);
+					this.addPoint(data_array[i], false, bool);
 				});
 				timechart.redraw();
 				
