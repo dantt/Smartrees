@@ -114,6 +114,51 @@ for (var i = 0; i < NoT; i++) {
 		});
 	    });
 	    
+	    $(function () {
+		$('#variancechart').highcharts({	    
+		    chart: {
+		        type: 'column',
+		    },	    
+		    title: {
+		        text: 'Variance Chart'
+		    },	    
+		    xAxis: {
+		        categories:  [
+		    	'Dfs',
+			'Bfs',
+			'Ucs',
+			'Ids',
+			'Greedy',
+			'A*',		    
+		    ]
+		    },	    
+		    yAxis: {
+		        type: 'logarithmic',
+		        title: {
+		            text: 'milliseconds'
+		        }
+		    },	    
+		    /*tooltip: {
+		        formatter: function() {
+		            return '<b>'+ this.x +'</b><br/>'+
+		                this.series.name +': '+ this.y +'<br/>'+
+		                'Total: '+ this.point.stackTotal;
+		        }
+		    },	    */
+		    plotOptions: {
+		        column: {
+		            //stacking: 'normal'
+		        }
+		    },	    
+		    series: [
+		    	{
+				name: 'Variance',
+				data: [0, 0, 0, 0, 0, 0]
+			},    
+		    ]
+		});
+	    });
+	    
 	    
 	    
 }

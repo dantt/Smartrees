@@ -134,9 +134,7 @@
                         event.preventDefault();
                         var ntest = parseInt($("#benchmarkTestCount").val());
                         initCharts(ntest);
-                        
-                        
-                        
+			
                         for (var i = 0; i < ntest; i++) {
                         	Benchmarker(
                         		randomTree(
@@ -146,9 +144,49 @@
                     				true
                     			), cback
                     		);
-                    	}		
+                    	}
+                    	var overalltime = [];
+			var counter = 0;
+			var variance = [0,0,0,0,0,0];
+			var totale = [0,0,0,0,0,0];
+			var mean = [0,0,0,0,0,0];
+			var mean_old = [0,0,0,0,0,0];
+			var variance_old =  [0,0,0,0,0,0];
+			//Dfs, Bfs, Ucs, Ids, Greedy, AStar
 			function cback(data) {
-				console.log(data);
+				counter++;
+				
+				var data_array = {
+				  0: data.Dfs.data.tw,
+				  1: data.Bfs.data.tw,
+				  2: data.Ucs.data.tw,
+				  3: data.Ids.data.tw,
+				  4: data.Greedy.data.tw,
+				  5: data.AStar.data.tw,
+				};
+				
+				
+				var variancechart = $('#variancechart').highcharts();
+				//console.log(variancechart.series[0].data[0]);
+				
+				$(totale).each(function(i, e){
+				  totale[i] += data_array[i];
+				});
+				
+				//mean_old = mean;
+				$(mean).each(function(i, e){
+				  mean_old[i] = e;
+				  mean[i] = totale[i]/counter;
+				});
+				
+				$(variance).each(function(i, e){
+				  variance_old[i] = e;
+				  variance[i] = variance_old[i] + (data_array[i] - mean[i]) * (data_array[i] - mean_old[i]);
+				});
+				
+				$(variancechart.series[0].data).each(function(i, e){
+				  this.update(this.y + variance[i]);
+				});
 				
 				var timechart = $('#timechart').highcharts();
 				timechart.series[0].addPoint(data.Dfs.data.tw, false);
@@ -157,6 +195,8 @@
 				timechart.series[3].addPoint(data.Ids.data.tw, false);
 				timechart.series[4].addPoint(data.Greedy.data.tw, false);
 				timechart.series[5].addPoint(data.AStar.data.tw, true);
+				
+				
 				
 				var pointschart = $('#pointschart').highcharts();
 				var par = pointschart.series[0].yData;
