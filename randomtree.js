@@ -56,7 +56,7 @@ function randomTree(branching, depth_limit, complete_flag, leaf_flag ){
     //qui fai una funzinoe che inserisce almeno un goal
     if (node_limit_wrapper.targets_count == 0){
       var ind = getRandomInt(0,leafs.length-1);
-      var ind = leafs.length-1;
+      //var ind = leafs.length-1;
       leafs[ind].target = 1;
     }
    
@@ -89,15 +89,14 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
     if (num_childrens == 1){
         num_childrens++; //atleaast 2
     }
+    
+    //http://en.wikipedia.org/wiki/K-ary_tree
+    var max_nodes = (Math.pow(branching, depth_limit+1)-1)/(branching-1);
+    var max_leaves = Math.pow(branching, depth_limit);
     //check if it is a leaf
     if (num_childrens == 0 || node.depth == depth_limit){
       if(leaf_flag){
-	//math, bitches http://cdn.memegenerator.net/images/300x/8111949.jpg
-	var max_nodes = Math.pow(depth_limit, branching);
-	var exp_of_ten = Math.ceil(log10(max_nodes));
-	var power_of_ten = Math.pow(10,exp_of_ten);
-	node.target = Math.random(0,1) > (1-(1/power_of_ten))? 1: 0;
-	node.target = 0;
+	node.target = (getRandomInt(0, max_leaves) < 1)? 1 : 0;
 	if (node.target == 1){
 	  nodes_limit.targets_count++;
 	}
@@ -109,18 +108,10 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
         for (var i = 0; i < num_childrens; i++){
 	    //decide if the node will be target
 	    //probability grows with node_count and decrease with targets_count
-	    
 	    var is_target = 0;
 
 	    if(!leaf_flag){
-	      //max nodes number
-	      var max_nodes = Math.pow(depth_limit, branching);
-	      var nodecount_weight = Math.log(nodes_limit.node_counter) / Math.log(max_nodes); //this is between 0 and 1
-	      var targets_weight = 1+nodes_limit.targets_count/2;
-	      //I HAD TO STUDY MATHS
-	      var rnd = Math.random(0,1)*nodecount_weight/targets_weight;
-	      is_target = (rnd>0.3)?1:0;
-	      is_target = 0;
+	      is_target = (getRandomInt(0, max_nodes) < 1)? 1 : 0;
 	      if (is_target != 0){
 		nodes_limit.targets_count++;
 	      }
