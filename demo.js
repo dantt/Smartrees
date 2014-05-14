@@ -183,10 +183,10 @@
                                 
                                var optimal_node_id = data.Ucs.data.res.name;
                                var successchart = $('#successchart').highcharts();
-                               console.log ("the optimal node is " + optimal_node_id);
-                               console.log ("they found");
+                               //console.log ("the optimal node is " + optimal_node_id);
+                               //console.log ("they found");
                                $(data_array2).each(function(i, e){
-                                 console.log(name_to_index[i] + " " + e.res.name);
+                                 //console.log(name_to_index[i] + " " + e.res.name);
                                  if (e.res.name == optimal_node_id)  {
                                    successchart.series[0].data[i].update(successchart.series[0].data[i].y + 1);
                                  }
@@ -209,6 +209,7 @@
 				});
 				
 				$(variance).each(function(i, e){
+                                  //console.log(e);
 				  variance_old[i] = e;
 				  variance[i] = variance_old[i] + (data_array[i] - mean[i]) * (data_array[i] - mean_old[i]);
 				});
@@ -216,7 +217,7 @@
 				
 				//Variance chart updating
 				$(variancechart.series[0].data).each(function(i, e){
-				  this.update(this.y + variance[i]);
+				  this.update(variance[i]);
 				});
 				
 				//Time chart updating
