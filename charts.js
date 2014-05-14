@@ -27,13 +27,23 @@ for (var i = 0; i < NoT; i++) {
 		            text: 'Time'
 		        }
 		    },	    
-		    /*tooltip: {
-		        formatter: function() {
-		            return '<b>'+ this.x +'</b><br/>'+
-		                this.series.name +': '+ this.y +'<br/>'+
-		                'Total: '+ this.point.stackTotal;
-		        }
-		    },	    */
+		    legend: {
+                      align: 'right',
+                      x: -70,
+                      verticalAlign: 'top',
+                      y: 20,
+                      floating: true,
+                      backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+                      borderColor: '#CCC',
+                      borderWidth: 1,
+                      shadow: false
+                    },
+                    tooltip: {
+                      formatter: function() {
+                        return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y +' ms<br/>';
+                      }
+                    },
 		    plotOptions: {
 		        column: {
 		            //stacking: 'normal'
@@ -93,13 +103,23 @@ for (var i = 0; i < NoT; i++) {
 		            text: 'Points'
 		        }
 		    },	    
-		    /*tooltip: {
-		        formatter: function() {
-		            return '<b>'+ this.x +'</b><br/>'+
-		                this.series.name +': '+ this.y +'<br/>'+
-		                'Total: '+ this.point.stackTotal;
-		        }
-		    },	    */
+		    legend: {
+                      align: 'right',
+                      x: -70,
+                      verticalAlign: 'top',
+                      y: 20,
+                      floating: true,
+                      backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+                      borderColor: '#CCC',
+                      borderWidth: 1,
+                      shadow: false
+                    },
+                    tooltip: {
+                      formatter: function() {
+                        return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y +'<br/>';
+                      }
+                    },
 		    plotOptions: {
 		        column: {
 		            //stacking: 'normal'
@@ -138,13 +158,23 @@ for (var i = 0; i < NoT; i++) {
 		            text: 'milliseconds'
 		        }
 		    },	    
-		    /*tooltip: {
-		        formatter: function() {
-		            return '<b>'+ this.x +'</b><br/>'+
-		                this.series.name +': '+ this.y +'<br/>'+
-		                'Total: '+ this.point.stackTotal;
-		        }
-		    },	    */
+                    legend: {
+                      align: 'right',
+                      x: -70,
+                      verticalAlign: 'top',
+                      y: 20,
+                      floating: true,
+                      backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+                      borderColor: '#CCC',
+                      borderWidth: 1,
+                      shadow: false
+                    },
+                    tooltip: {
+                      formatter: function() {
+                        return '<b>'+ this.x +'</b><br/>'+
+                        this.series.name +': '+ this.y +'<br/>';
+                      }
+                    },
 		    plotOptions: {
 		        column: {
 		            //stacking: 'normal'
