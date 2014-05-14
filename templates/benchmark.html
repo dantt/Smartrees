@@ -1,60 +1,78 @@
 <h1>Benchmarking</h1>
 
 <div class='row'>
-	<form id='benchmarkform'>
+	<div class="small-12 medium-6 columns">
+		<form id='benchmarkform'>
 	
-		<h5>Configure</h5>
+			<h5>Configure</h5>
+			<hr>
+		
+		<div class='row'>
+		    <div class="small-6 columns">
+					<label for="benchmarkTestCount" class="right inline">Number of tests</label>
+		    </div> 
+		    <div class="small-6 columns end">
+					<input type="text" value='' id='benchmarkTestCount' name='benchmarkTestCount'>
+		    </div>
+		</div>
+		
+		<div class='row'>
+		    <div class="small-6 columns">
+					<label for="benchmarkBranching" class="right inline">Branching</label>
+		    </div> 
+		    <div class="small-6 columns end">
+					<input type="text" value='' id='benchmarkBranching' name='benchmarkBranching'>
+		    </div>
+		</div>
+		
+		<div class='row'>
+		    <div class="small-6 columns">
+					<label for="benchmarkTreeDepth" class="right inline">Tree Depth</label>
+		    </div> 
+		    <div class="small-6 columns end">
+					<input type="text" value='' id='benchmarkTreeDepth' name='benchmarkTreeDepth'>
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="small-6 columns">
+		        <label for="benchmarkLeafFlag" class="right inline">Goals only in leafs</label>
+		    </div>
+		    <div class="small-6 columns end">
+		    
+		        <input type="checkbox" id="benchmarkLeafFlag" name="benchmarkLeafFlag">
+		    </div>
+		</div>
+		<div class="row">
+		    <div class="small-6 columns">
+		        <label for="benchmarkCompleteFlag" class="right inline">Complete</label>
+		    </div>
+		    <div class="small-6 columns end">
+		        <input type="checkbox" id="benchmarkCompleteFlag" name="benchmarkCompleteFlag" checked="checked">
+		    </div>
+		</div>
+
+		<input type='submit' value='run' class='button' />
+		
+		</form>
+	</div>
+	
+	<div class="small-12 medium-6 columns">
+		<h5>Plot options</h5>
 		<hr>
 		
-	<div class='row'>
-	    <div class="small-6 medium-3 columns">
-				<label for="benchmarkTestCount" class="right inline">Number of tests</label>
-	    </div> 
-	    <div class="small-6 medium-2 columns end">
-				<input type="text" value='' id='benchmarkTestCount' name='benchmarkTestCount'>
-	    </div>
-        </div>
-        
-        <div class='row'>
-	    <div class="small-6 medium-3 columns">
-				<label for="benchmarkBranching" class="right inline">Branching</label>
-	    </div> 
-	    <div class="small-6 medium-2 columns end">
-				<input type="text" value='' id='benchmarkBranching' name='benchmarkBranching'>
-	    </div>
-        </div>
-        
-        <div class='row'>
-	    <div class="small-6 medium-3 columns">
-				<label for="benchmarkTreeDepth" class="right inline">Tree Depth</label>
-	    </div> 
-	    <div class="small-6 medium-2 columns end">
-				<input type="text" value='' id='benchmarkTreeDepth' name='benchmarkTreeDepth'>
-	    </div>
-        </div>
-        <div class="row">
-            <div class="small-6 medium-3 columns">
-                <label for="benchmarkLeafFlag" class="right inline">Goals only in leafs</label>
-            </div>
-            <div class="small-6 medium-2 columns end">
-            
-                <input type="checkbox" id="benchmarkLeafFlag" name="benchmarkLeafFlag">
-            </div>
-        </div>
-        <div class="row">
-            <div class="small-6 medium-3 columns">
-                <label for="benchmarkCompleteFlag" class="right inline">Complete</label>
-            </div>
-            <div class="small-6 medium-2 columns end">
-                <input type="checkbox" id="benchmarkCompleteFlag" name="benchmarkCompleteFlag" checked="checked">
-            </div>
-        </div>
-
-        <input type='submit' value='run' class='button' />
+		<!--<div id='sticker'>-->
+		<div>
+			<h5>Completion status</h5>
+			<hr>
+			<div class="progress"> <span class="meter" id='completionMeter' style="width: 0%"></span> </div>
+		</div>
 		
-	</form>
+		
 	
+	</div>
 	
+</div>
+<div class='row'>
 	<h5>Results</h5>
 		<hr>
 	<div id='benchmarkResults'>
@@ -74,6 +92,5 @@
 			<div id='variancechart' class="small-12 column"></div>
 			</div>
 		</div>
-	
-	
+	</div>	
 </div>

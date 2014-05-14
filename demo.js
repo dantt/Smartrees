@@ -129,7 +129,21 @@
 		
 		});
 		
-		$('#benchmark').load('templates/benchmark.html', function() {
+			
+		$('#benchmark').load('templates/benchmark.html', function() {		    
+			                  
+			     /* var s = $("#sticker");
+			        var pos = s.position();                  
+			    $('.off-canvas-wrap').scroll(function() {
+				var windowpos = $('.off-canvas-wrap').scrollTop();
+				console.log(windowpos, pos.top);
+				if (windowpos - 100 >= pos.top) {
+				    s.addClass("stick");
+				} else {
+				    s.removeClass("stick");
+				}
+			    }); */
+		
 		    $('#benchmarkform').submit(function(event) {
                         event.preventDefault();
                         var ntest = parseInt($("#benchmarkTestCount").val());
@@ -160,7 +174,10 @@
 				5: 'AStar'
 			};
 			function cback(data) {
+			
 				counter++;
+				$('#completionMeter').style('width', (counter/ntest)*100 + "%");
+				
 				console.log(data);
 				var data_array = {
 				  0: data.Dfs.data.tw,

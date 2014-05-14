@@ -59,6 +59,13 @@
 /*			*/
 /**************/ 
 
+.stick {
+    position:fixed;
+    top:0px;
+    background: #FFF;
+    z-index: 9999;
+}
+
 .warning {
 	color: #c60f13 !important;
 }
@@ -74,7 +81,7 @@
 
 .off-canvas-wrap{  
 	height: 100%;
-	overflow-y: auto;
+	overflow: auto;
 }
 
 .topmenu {
