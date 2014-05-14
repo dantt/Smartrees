@@ -134,18 +134,16 @@
                         event.preventDefault();
                         var ntest = parseInt($("#benchmarkTestCount").val());
                         initCharts(ntest);
-			
                         for (var i = 0; i < ntest; i++) {
                         	Benchmarker(
                         		randomTree(
                         			parseInt($("#benchmarkBranching").val()),
                     				parseInt($("#benchmarkTreeDepth").val()),
-                    				true,
-                    				true
+                                              $("#benchmarkCompleteFlag").is(':checked'),
+                                              $("#benchmarkLeafFlag").is(':checked')
                     			), cback
                     		);
                     	}
-                    	var overalltime = [];
 			var counter = 0;
 			var variance = [0,0,0,0,0,0];
 			var totale = [0,0,0,0,0,0];
@@ -163,7 +161,7 @@
 			};
 			function cback(data) {
 				counter++;
-				
+				console.log(data);
 				var data_array = {
 				  0: data.Dfs.data.tw,
 				  1: data.Bfs.data.tw,
@@ -173,7 +171,31 @@
 				  5: data.AStar.data.tw,
 				};
 				
-				
+                               var data_array2 = [
+                                  data.Dfs.data,
+                                  data.Bfs.data,
+                                  data.Ucs.data,
+                                  data.Ids.data,
+                                  data.Greedy.data,
+                                  data.AStar.data,
+                                ];
+                               
+                                
+                               var optimal_node_id = data.Ucs.data.res.name;
+                               var successchart = $('#successchart').highcharts();
+                               console.log ("the optimal node is " + optimal_node_id);
+                               console.log ("they found");
+                               $(data_array2).each(function(i, e){
+                                 console.log(name_to_index[i] + " " + e.res.name);
+                                 if (e.res.name == optimal_node_id)  {
+                                   successchart.series[0].data[i].update(successchart.series[0].data[i].y + 1);
+                                 }
+                                 else{
+                                   successchart.series[1].data[i].update(successchart.series[1].data[i].y + 1);
+                                 }
+                               })
+                               
+                               
 				var variancechart = $('#variancechart').highcharts();
 				//console.log(variancechart.series[0].data[0]);
 				
@@ -213,7 +235,6 @@
 					results.push([name_to_index[i], data_array[i]]);
 				}
 				results.sort(function(a, b) {return a[1] - b[1]});
-				console.log(results);
 				var res2 = {};
 				for (var i = 0; i < 6; i++) {
 					res2[results[i][0]] = i;

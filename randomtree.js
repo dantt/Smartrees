@@ -59,7 +59,6 @@ function randomTree(branching, depth_limit, complete_flag, leaf_flag ){
       //var ind = leafs.length-1;
       leafs[ind].target = 1;
     }
-   
     return root;
 }
 
@@ -96,7 +95,7 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
     //check if it is a leaf
     if (num_childrens == 0 || node.depth == depth_limit){
       if(leaf_flag){
-	node.target = (getRandomInt(0, max_leaves) < 1)? 1 : 0;
+	node.target = (getRandomInt(0, max_leaves) < 2)? 1 : 0;
 	if (node.target == 1){
 	  nodes_limit.targets_count++;
 	}
@@ -111,7 +110,7 @@ function generateChildrens(node, branching, depth_limit, complete, leaf_flag, no
 	    var is_target = 0;
 
 	    if(!leaf_flag){
-	      is_target = (getRandomInt(0, max_nodes) < 1)? 1 : 0;
+	      is_target = (getRandomInt(0, max_nodes) < 6)? 1 : 0;
 	      if (is_target != 0){
 		nodes_limit.targets_count++;
 	      }

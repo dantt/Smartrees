@@ -158,7 +158,6 @@ TreeManager.prototype.update = function() {
 	 
 	var max = 0;
 	this._svg.selectAll("g.node").each(function(d) { max = (typeof d.selected !== 'undefined' && d.selected > max) ? d.selected : max; return; });
-	console.log(max);
 	var scope = this;
 	node.select('circle')
 	 .filter( function(d) {return d.selected == max; } )
