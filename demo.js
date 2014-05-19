@@ -177,8 +177,8 @@
 			function cback(data) {
 			
 				counter++;
-				$('#completionMeter').style('width', (counter/ntest)*100 + "%");
-				
+				$('#completionMeter').css('width', (counter/ntest)*100 + "%");
+				//$('#completionMeter').html((counter/ntest)*100 + "%");
 				console.log(data);
 				var data_array = {
 				  0: data.Dfs.data.tw,
@@ -233,7 +233,7 @@
                                  var delta = data_array[i] - mean_old[i];
                                  M2[i] += delta*(data_array[i] - mean[i]);
 				  variance[i] = M2[i]/(counter);
-                                 console.log("media: " + mean[i] + "  old: " + mean_old[i] + "  item: " + data_array[i]);
+                                 //console.log("media: " + mean[i] + "  old: " + mean_old[i] + "  item: " + data_array[i]);
 				});
 				
 				

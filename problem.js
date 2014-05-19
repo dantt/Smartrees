@@ -67,7 +67,7 @@ Problem.prototype.setTree = function(tree, startTreeFlag){
     if (typeof startTreeFlag === 'undefined'){startTreeFlag = true;}
   
     this._tree = tree;
-    this.preElab();
+    //this.preElab();
     var seen = [];
     var stringami = "{}";
     if (startTreeFlag == true){
