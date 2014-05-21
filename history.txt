@@ -9,8 +9,13 @@ Poi abbiamo scoperto un comportamento undocumented dei web workers, non capiamo 
 
 "User agents may impose implementation-specific limits on otherwise unconstrained inputs, e.g. to prevent denial of service attacks, to guard against running out of memory, or to work around platform-specific limitations." (W3 draft)
 
-
+Ricordarsi di dire che astar non trova l'ottimo perche h non e' un euristica seria
+Ricordarsi di spiegare i criteri di generaz albero random e goal
 Todo:
-1) levare rtl ltr
+1) levare rtl ltr  ->  done
 2) riportare home a home 
-3) togliere preelab?
+3) togliere preelab?  ->  done
+4) quando trova goal non si ferma
+5) le spunte sui risultati (vogilo vedere la varianza?)
+6) fixare il completionstatus in benchmarking
+7) scrivere la percentuale dentro alla barra?s

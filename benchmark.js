@@ -32,16 +32,16 @@ function Benchmarker(tree, callback){
 				doWork("Bfs", callback);
 			},
 			Ucs: function(callback) {
-				doWork("UcsInsertionSort", callback);
+				doWork("Ucs", callback);
 			},
 			Ids: function(callback) {
 				doWork("Ids", callback);
 			},
 			Greedy: function(callback) {
-				doWork("GreedyImproved", callback);
+				doWork("Greedy", callback);
 			},
 			AStar: function(callback) {
-				doWork("AStarImproved", callback);
+				doWork("AStar", callback);
 			},
 		},
 		function(err, results) {

@@ -1,17 +1,43 @@
 algoMap = {
     Dfs: Dfs,
     Bfs: Bfs,
-    Ucs: Ucs,
+    UcsOld: UcsOld,
     Lds: Lds,
     Ids: Ids,
-    Greedy: Greedy,
-    AStar: AStar,
+    GreedyOld: GreedyOld,
+    AStarOld: AStarOld,
     UcsNo: UcsNoRtl,
-    UcsInsertionSort: UcsInsertionSort,
-    AStarImproved: AStarImproved,
-    GreedyImproved: GreedyImproved
+    Ucs: Ucs,
+    AStar: AStar,
+    Greedy: Greedy
 };
 
+
+/**
+ * Merges two list of nodes into frontier.
+ * Precondition is that frontier is already ordered after the parameter returned by getP (increasing).
+ * 
+ * @param frontier: the current frontier
+ * @param childrens: the array containing the childrens of the node to expand
+ * @param getP: a function that takes a node in input and returns the parameter for the comparison
+ * 
+ * example: function f(node){returns node.h;}
+ * @returns nothing, frontier will contain the children nodes in the correct place.
+ */
+function mergeFrontier(frontier, childrens, getP){
+      for (var i = 0; i < childrens.length; i++) {
+        var inserted = false;
+        for (var j = 0; j < frontier.length && inserted == false; j++){
+          if (getP(childrens[i]) < getP(frontier[j])){
+            frontier.insert(j,childrens[i]);
+            inserted = true;
+          }
+        }
+        if (inserted == false){
+          frontier.push(childrens[i]);
+        }
+      }
+}
 
 //This is ugly and will probably kill your cat
 function getPath(node) {
@@ -71,7 +97,7 @@ function pickFirst(frontier, nodesFound){
 /***
  * Random coded
  */
-function AStar(frontier, tree, options, nodesFound){
+function AStarOld(frontier, tree, options, nodesFound){
 
     if (checkFrontier(frontier) == 0)
     	return 0;
@@ -163,7 +189,7 @@ function AStar(frontier, tree, options, nodesFound){
 
 
 
-function Greedy(frontier, tree, options, nodesFound){
+function GreedyOld(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
     	
@@ -251,7 +277,7 @@ function Greedy(frontier, tree, options, nodesFound){
         string += "]";
         debug(string);
     }
-    return true;
+    return 1;
 }
 
 
@@ -265,23 +291,34 @@ function Bfs(frontier, tree, options, nodesFound){
     	return current_node;
     	
     if (typeof(current_node.children) != 'undefined') {
-        //debug(options.order);
-        if (options.order == 'ltr'){
-            for (var i = 0; i < current_node.children.length; i++){
-                frontier.push(current_node.children[i]);
-            }
-        }
-        else if (options.order == 'rtl'){
-            for (var i = current_node.children.length-1; i >= 0; i--){
-                frontier.push(current_node.children[i]);
-            }
-        }
+      for (var i = 0; i < current_node.children.length; i++){
+        frontier.push(current_node.children[i]);
+      }
     }
     return 1;
 }
 
 
 function Dfs(frontier, tree, options, nodesFound){
+    if (checkFrontier(frontier) == 0)
+        return 0;
+        
+    var current_node = pickFirst(frontier, nodesFound);
+    
+    if (checkSuccess(current_node) != 0)
+        return current_node;
+        
+    if (typeof(current_node.children) != 'undefined') {
+      for (var i = 0; i < current_node.children.length; i++){
+        frontier.unshift(current_node.children[current_node.children.length - i -1]);
+      }
+    }
+    return 1;
+}
+
+
+
+function DfsOld(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
     	
@@ -305,6 +342,7 @@ function Dfs(frontier, tree, options, nodesFound){
     return 1;
 }
 
+
 function Lds(frontier, tree, options, nodesFound) {
     if (checkFrontier(frontier) == 0)
     	return 0;
@@ -313,29 +351,16 @@ function Lds(frontier, tree, options, nodesFound) {
     
     if (checkSuccess(current_node) != 0)
     	return current_node;
-    	
-    if (typeof(current_node.depth) == 'undefined') { //we are in root
-        current_node.depth = 0;
+
+    if (current_node.children && options.limit) {
+      updateChildrens(current_node);
+      for (i = 0; i < current_node.children.length; i++) {
+        frontier.unshift(current_node.children[current_node.children.length - i - 1]);
+      }
     }
-    if (typeof(current_node.children) != 'undefined') {
-        if (current_node.depth < options.limit) {
-            for (var i = 0; i < current_node.children.length; i++) {
-                current_node.children[i].depth = current_node.depth + 1;
-            }
-            if(options.order == 'ltr'){
-                for (i = 0; i < current_node.children.length; i++) {
-                    frontier.unshift(current_node.children[current_node.children.length - i - 1]);
-                }
-            }
-            else{
-                for (i = current_node.children.length - 1; i >= 0; i--) {
-                    frontier.unshift(current_node.children[current_node.children.length - i - 1]);
-                }
-            }
-        }
-    }
-    return true;
+    return 1;
 }
+
 
 function Ids(frontier, tree, options, nodesFound){
     if (frontier.length == 0) {
@@ -396,7 +421,7 @@ function bubbleSorta(array, criteria){
 /*
  Implements Uniform Cost search
  */
-function Ucs(frontier, tree, options, nodesFound){
+function UcsOld(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
     	
@@ -483,7 +508,7 @@ function Ucs(frontier, tree, options, nodesFound){
         string += "]";
         debug(string);
     }
-    return true;
+    return 1;
 }
 
 
@@ -507,11 +532,11 @@ function UcsNoRtl(frontier, tree, options, nodesFound){
         })
 	
         var string = "[";
-        /*for (i in frontier){
+        for (i in frontier){
             string += frontier[i].name + ": " + frontier[i].pathCost + ", ";
         }
         string += "]";
-        debug(string);*/
+        debug(string);
     }
     return true;
 }
@@ -520,7 +545,7 @@ Array.prototype.insert = function (index, item) {
   this.splice(index, 0, item);
 };
 
-function UcsInsertionSort(frontier, tree, options, nodesFound){
+function Ucs(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
 
@@ -530,24 +555,13 @@ function UcsInsertionSort(frontier, tree, options, nodesFound){
     	return current_node;
     	
     if (current_node.children) {
-      for (var i = 0; i < current_node.children.length; i++) {
-        var inserted = false;
-        for (var j = 0; j < frontier.length && inserted == false; j++){
-          if (current_node.children[i].pathCost < frontier[j].pathCost){
-	    frontier.insert(j,current_node.children[i]);
-            inserted = true;
-          }
-        }
-        if (inserted == false){
-          frontier.push(current_node.children[i]);
-        }
-      }
+      updateChildrens(current_node);
+      mergeFrontier(frontier, current_node.children, function(node){return node.pathCost});
     }
-    return true;
+    return 1;
 }
 
-function AStarImproved(frontier, tree, options, nodesFound){
-
+function AStar(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
     	
@@ -557,33 +571,36 @@ function AStarImproved(frontier, tree, options, nodesFound){
     	return current_node;
     	    
      if (current_node.children) {
-      for (var i = 0; i < current_node.children.length; i++) {
-        var inserted = false;
-        for (var j = 0; j < frontier.length && inserted == false; j++){
-          if (current_node.children[i].f < frontier[j].f){
-	    frontier.insert(j,current_node.children[i]);
-            inserted = true;
-          }
-        }
-        if (inserted == false){
-          frontier.push(current_node.children[i]);
-        }
-      }
+       updateChildrens(current_node);
+       mergeFrontier(frontier, current_node.children, function(node){return node.f});
     }
-    return true;
+    return 1;
+}
+
+function updateChildrens(node){
+  
+  for( var i = 0; i < node.children.length; i++){
+    node.children[i].depth = node.depth + 1;
+    node.children[i].pathCost = node.pathCost + node.children[i].cost;
+    node.children[i].f = node.children[i].h + node.children[i].pathCost;
+  }
+  
 }
 
 
-function GreedyImproved(frontier, tree, options, nodesFound){
+function Greedy(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
     	
     var current_node = pickFirst(frontier, nodesFound);
-    
+//     
     if (checkSuccess(current_node) != 0)
     	return current_node;
-    	
+    
     if (current_node.children) {
+      mergeFrontier(frontier, current_node.children, function(node){return node.h});
+    }
+      /*
       for (var i = 0; i < current_node.children.length; i++) {
         var inserted = false;
         for (var j = 0; j < frontier.length && inserted == false; j++){
@@ -596,6 +613,6 @@ function GreedyImproved(frontier, tree, options, nodesFound){
           frontier.push(current_node.children[i]);
         }
       }
-    }
-    return true;
+    }*/
+    return 1;
 }

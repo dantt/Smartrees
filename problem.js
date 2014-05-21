@@ -82,9 +82,12 @@ Problem.prototype.setTree = function(tree, startTreeFlag){
     }
     //debug(stringami);
     this._startingTree = JSON.parse(stringami);
+    this._tree[0].pathCost = 0;
+    this._tree[0].depth = 0;
+    this._tree[0].f = 0;
     this._frontier = [this._tree[0]];
     this._nodesFound = 0;
-    this._options.limit = 1;
+    this._options.limit = 0;
     this._options.iteration = 0;
 };
 
