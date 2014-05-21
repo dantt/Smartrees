@@ -1,8 +1,9 @@
 <h1>Benchmarking</h1>
 
 <div class='row'>
+      <form id='benchmarkform'>
 	<div class="small-12 medium-6 columns">
-		<form id='benchmarkform'>
+
 	
 			<h5>Configure</h5>
 			<hr>
@@ -50,16 +51,48 @@
 		        <input type="checkbox" id="benchmarkCompleteFlag" name="benchmarkCompleteFlag" checked="checked">
 		    </div>
 		</div>
+                <div class="row">
+                  <input type='submit' value='run' class='button right' /><br>
 
-		<input type='submit' value='run' class='button' />
-		
-		</form>
+		</div>
+             
 	</div>
 	
 	<div class="small-12 medium-6 columns">
 		<h5>Plot options</h5>
 		<hr>
-		
+		<div class="row">
+		  <div class="small-6 columns">
+                    <label for="resultExecTime" class="right inline">Execution Time</label>
+                  </div>
+                  <div class="small-6 columns end">
+                    <input type="checkbox" id="resultExecTime" value="exectime" checked="checked">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="small-6 columns">
+                    <label for="resultScore" class="right inline">Overall Score</label>
+                  </div>
+                  <div class="small-6 columns end">
+                    <input type="checkbox" id="resultScore" value="score" checked="checked">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="small-6 columns">
+                    <label for="resultSuccesses" class="right inline">Successes</label>
+                  </div>
+                  <div class="small-6 columns end">
+                    <input type="checkbox" id="resultSuccesses" value="successes" checked="checked">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="small-6 columns">
+                    <label for="resultVariance" class="right inline">Variance</label>
+                  </div>
+                  <div class="small-6 columns end">
+                    <input type="checkbox" id="resultVariance" value="variance" checked="checked">
+                  </div>
+                </div>                
 		<!--<div id='sticker'>-->
 		<div>
 			<h5>Completion status</h5>
@@ -70,7 +103,7 @@
 		
 	
 	</div>
-	
+      </form>
 </div>
 <div class='row'>
 	<h5>Results</h5>
