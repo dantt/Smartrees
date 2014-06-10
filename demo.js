@@ -204,7 +204,7 @@ $(document).ready(function () {
 
                 counter++;
                 $('#completionMeter').css('width', (counter / ntest) * 100 + "%");
-                $('#completionMeter').html((counter / ntest) * 100 + "%");
+                $('#completionMeter').html(parseInt((counter / ntest) * 100) + "%");
                 //$('#completionMeter').html((counter/ntest)*100 + "%");
                 console.log(data);
                 var data_array = {

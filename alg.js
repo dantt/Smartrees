@@ -364,9 +364,10 @@ function Lds(frontier, tree, options, nodesFound) {
 
 function Ids(frontier, tree, options, nodesFound){
     if (frontier.length == 0) {
-        console.log("here");
-        document.dispatchEvent(new CustomEvent('limitincremented', {'detail': { 'limit': options.limit+1 }}));
-        return 2; //2 means iterate on the depth
+      if(typeof window !== 'undefined'){
+          document.dispatchEvent(new CustomEvent('limitincremented', {'detail': { 'limit': options.limit+1 }}));
+      }
+      return 2; //2 means iterate on the depth
     }
     else {
         return Lds(frontier, tree, options, nodesFound);

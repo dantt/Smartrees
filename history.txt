@@ -20,5 +20,5 @@ Todo:
 6) [DONE] fixare il completionstatus in benchmarking
 7) [DONE] scrivere la percentuale dentro alla barra?
 8) [DONE] togliere limited depth dalla lista
-9) mostra il limite sull'esecuzione di limited depth
+9) [DONE] mostra il limite sull'esecuzione di limited depth
 10) i nomi fighi
