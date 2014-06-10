@@ -113,3 +113,9 @@
 .presetcontainer a {
 	color: #222;
 }
+
+.meter {
+   font-size: 10px;
+   padding: 5px 0px;
+}
+textarea { height: auto; }

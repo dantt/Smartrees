@@ -352,7 +352,7 @@ function Lds(frontier, tree, options, nodesFound) {
     if (checkSuccess(current_node) != 0)
     	return current_node;
 
-    if (current_node.children && options.limit) {
+    if (current_node.children && current_node.depth < options.limit) {
       updateChildrens(current_node);
       for (i = 0; i < current_node.children.length; i++) {
         frontier.unshift(current_node.children[current_node.children.length - i - 1]);
@@ -364,7 +364,9 @@ function Lds(frontier, tree, options, nodesFound) {
 
 function Ids(frontier, tree, options, nodesFound){
     if (frontier.length == 0) {
-        return 2; //facciamo finta che 2 significhi restart
+        console.log("here");
+        document.dispatchEvent(new CustomEvent('limitincremented', {'detail': { 'limit': options.limit+1 }}));
+        return 2; //2 means iterate on the depth
     }
     else {
         return Lds(frontier, tree, options, nodesFound);

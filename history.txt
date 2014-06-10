@@ -13,10 +13,12 @@ Ricordarsi di dire che astar non trova l'ottimo perche h non e' un euristica ser
 Ricordarsi di spiegare i criteri di generaz albero random e goal
 Todo:
 1) levare rtl ltr  ->  (manca in home)
-2) riportare home a home 
+2) [DONE] riportare home a home 
 3) togliere preelab?  ->  done
-4) quando trova goal non si ferma
-5) le spunte sui risultati (vogilo vedere la varianza?)
-6) fixare il completionstatus in benchmarking
-7) scrivere la percentuale dentro alla barra?s
-8) limited depth
+4) [DONE] quando trova goal non si ferma
+5) [DONE] le spunte sui risultati (vogilo vedere la varianza?)
+6) [DONE] fixare il completionstatus in benchmarking
+7) [DONE] scrivere la percentuale dentro alla barra?
+8) [DONE] togliere limited depth dalla lista
+9) mostra il limite sull'esecuzione di limited depth
+10) i nomi fighi

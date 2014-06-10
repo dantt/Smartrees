@@ -61,7 +61,10 @@ $(document).ready(function () {
             $('#output').append('<p class="success">Path to goal was: ' + e.detail.path + '</p>');
             mIA.stop();
         }, false);
-
+        
+        document.addEventListener('limitincremented', function (e) {
+            $('#output').html('<p class="">Limit now set to ' + e.detail.limit + '</p>');
+        }, false);
 
     });
 
@@ -201,6 +204,7 @@ $(document).ready(function () {
 
                 counter++;
                 $('#completionMeter').css('width', (counter / ntest) * 100 + "%");
+                $('#completionMeter').html((counter / ntest) * 100 + "%");
                 //$('#completionMeter').html((counter/ntest)*100 + "%");
                 console.log(data);
                 var data_array = {

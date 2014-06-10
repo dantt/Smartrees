@@ -36,7 +36,7 @@ Problem.prototype._tree;
 Problem.prototype._nodesFound = 0;
 Problem.prototype.strategy;
 Problem.prototype._options = {
-    limit: 1,
+    limit: 2,
     iteration: 0,
     order: 'ltr'
 }

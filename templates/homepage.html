@@ -9,7 +9,6 @@
                 <option value="Dfs">DFS</option>
                 <option value="Bfs">BFS</option>
                 <option value="Ucs">Uniform cost</option>
-                <option value="Lds">Limited depth</option>
                 <option value="Ids">Iterative Deepening</option>
                 <option value="Greedy">Greedy</option>
                 <option value="AStar">AStar</option>
@@ -21,12 +20,12 @@
         <div class='panel'>
             <ul class="small-block-grid-3 centered">
 
-                    <li><button id="step" value="steppa" ><img id="img_step" width='100%' src="images/step.png"> </button></li>
-                    <li><button id="play" value="playya" ><img id="img_play" width='100%' src="images/play.png"></button></li>
+                    <li><button id="step" value="steppa" data-tooltip class=".has-tip" title="Execute a single step of the search" ><img id="img_step" width='100%' src="images/step.png" > </button></li>
+                    <li><button id="play" value="playya" data-tooltip class=".has-tip" title="Start the search in autoplay"><img id="img_play" width='100%' src="images/play.png"></button></li>
 
 
-                    <li><button id="stop" value="stoppa" ><img id="img_stop" width='100%' src="images/pause_h.png"></button></li>
-                    <li><button id="restart" value="restarta" ><img id="img_restart" width='100%' src="images/restart.png"></button></li>
+                    <li><button id="stop" value="stoppa" data-tooltip class=".has-tip" title="Stop the search on the tree"><img id="img_stop" width='100%' src="images/pause_h.png"></button></li>
+                    <li><button id="restart" value="restarta" data-tooltip class=".has-tip" title="Restart the current tree to its original state"><img id="img_restart" width='100%' src="images/restart.png"></button></li>
 
 
             </ul>
@@ -34,7 +33,7 @@
     </div>
     <div class='row'>
         <div class='panel'>
-            <h5>Output</h5>
+            <h5>Status</h5>
             <div id='output'></div>
         </div>
     </div>
