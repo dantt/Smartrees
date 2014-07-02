@@ -114,6 +114,11 @@
 	color: #222;
 }
 
+#index a {
+    color: #39b6e6;
+}
+}
+
 .meter {
    font-size: 10px;
    padding: 5px 0px;
@@ -122,4 +127,9 @@ textarea { height: auto; }
 
 .logo {
     margin-top: 4.5px;
+}
+
+#index .button {
+    background-color: #39b6e6;
+    color: #FFF;
 }

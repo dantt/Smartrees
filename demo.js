@@ -15,6 +15,10 @@ $(document).ready(function () {
         event.preventDefault();
         navigateTo(this.hash);
     });
+    $('#index a').click(function (event) {
+        event.preventDefault();
+        navigateTo(this.hash);
+    });
 
     function navigateTo(hash) {
         $('#maincontainer div').removeClass('active');
