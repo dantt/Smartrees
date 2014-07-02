@@ -61,7 +61,7 @@ $(document).ready(function () {
             $('#output').append('<p class="success">Path to goal was: ' + e.detail.path + '</p>');
             mIA.stop();
         }, false);
-        
+
         document.addEventListener('limitincremented', function (e) {
             $('#output').html('<p class="">Limit now set to ' + e.detail.limit + '</p>');
         }, false);
@@ -144,43 +144,74 @@ $(document).ready(function () {
     $('#benchmark').load('templates/benchmark.html', function () {
 
         /* var s = $("#sticker");
-                                var pos = s.position();                  
-                            $('.off-canvas-wrap').scroll(function() {
-                                var windowpos = $('.off-canvas-wrap').scrollTop();
-                                console.log(windowpos, pos.top);
-                                if (windowpos - 100 >= pos.top) {
-                                    s.addClass("stick");
-                                } else {
-                                    s.removeClass("stick");
-                                }
-                            }); */
+         var pos = s.position();
+         $('.off-canvas-wrap').scroll(function() {
+         var windowpos = $('.off-canvas-wrap').scrollTop();
+         console.log(windowpos, pos.top);
+         if (windowpos - 100 >= pos.top) {
+         s.addClass("stick");
+         } else {
+         s.removeClass("stick");
+         }
+         }); */
 
         $('#benchmarkform').submit(function (event) {
             event.preventDefault();
             var ntest = parseInt($("#benchmarkTestCount").val());
             initCharts(ntest);
+
+            //The total number of nodes in a perfect k-ary tree is (k^{h+1} - 1)/(k-1)
+            //Ok l'idea è creo un array di tasks da passare a series e poi lo invoco
+            var array_da_passare_a_series = [];
             for (var i = 0; i < ntest; i++) {
-                Benchmarker(
-                    randomTree(
-                        parseInt($("#benchmarkBranching").val()),
-                        parseInt($("#benchmarkTreeDepth").val()),
-                        $("#benchmarkCompleteFlag").is(':checked'),
-                        $("#benchmarkLeafFlag").is(':checked')
-                    ), cback
+                array_da_passare_a_series.push(
+                    function(callback){
+                        k = parseInt($("#benchmarkBranching").val());
+                        h = parseInt($("#benchmarkTreeDepth").val());
+                        Benchmarker(
+                            randomTree(
+                                k,
+                                h,
+                                $("#benchmarkCompleteFlag").is(':checked'),
+                                $("#benchmarkLeafFlag").is(':checked')
+                            ),
+                                (Math.pow(k, h+1) - 1)/(k - 1),
+                            cback
+                        );
+                        document.addEventListener('nextone', function (e) {
+                            callback(null, i);
+                        }, false);
+                    }
                 );
             }
-            
+            async.series(array_da_passare_a_series);
+            /*
+             for (var i = 0; i < ntest; i++) {
+             k = parseInt($("#benchmarkBranching").val());
+             h = parseInt($("#benchmarkTreeDepth").val());
+             Benchmarker(
+             randomTree(
+             k,
+             h,
+             $("#benchmarkCompleteFlag").is(':checked'),
+             $("#benchmarkLeafFlag").is(':checked')
+             ),
+             (Math.pow(k, h+1) - 1)/(k - 1),
+             cback
+             );
+             }*/
+
             if (!$("#resultExecTime").is(':checked')){
-              $("#timechart").remove();
+                $("#timechart").remove();
             }
             if (!$("#resultScore").is(':checked')){
-              $("#pointschart").remove();
+                $("#pointschart").remove();
             }
             if (!$("#resultSuccesses").is(':checked')){
-              $("#successchart").remove();
+                $("#successchart").remove();
             }
             if (!$("#resultVariance").is(':checked')){
-              $("#variancechart").remove();
+                $("#variancechart").remove();
             }
 
             var counter = 0;
@@ -201,6 +232,7 @@ $(document).ready(function () {
             };
 
             function cback(data) {
+                document.dispatchEvent(new Event('nextone'));
 
                 counter++;
                 $('#completionMeter').css('width', (counter / ntest) * 100 + "%");
