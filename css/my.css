@@ -133,3 +133,8 @@ textarea { height: auto; }
     background-color: #39b6e6;
     color: #FFF;
 }
+
+.big-logo {
+    width: 50%;
+    max-width: 480px;
+}
