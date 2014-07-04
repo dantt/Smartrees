@@ -98,9 +98,18 @@ TreeManager.prototype.update = function() {
 			 .attr("class", "labels")
 			 .attr("x", d.source.x/2 + d.target.x/2)
 			 .attr("y", d.source.y/2 + d.target.y/2)
-			 .attr("dx", function() { if (d.source.x > d.target.x) return -20; else return 3; })
+			 .attr("dx", function() { if (d.source.x > d.target.x) return -10; else return 3; })
 			 .style("font-size", "5px")
-			 .text("c:" + d.target.cost + "|h:" + d.target.h);
+			 .text("c:" + d.target.cost);
+			 
+			 
+			 _svg.append("text")
+			 .attr("class", "labels")
+			 .attr("x", d.target.x - 5)
+			 .attr("y", d.target.y - 12)
+			 //.attr("dx", function() { if (d.source.x > d.target.x) return -20; else return 3; })
+			 .style("font-size", "5px")
+			 .text("h:" + d.target.h); 
 	 
 			return "p" + d.target.name; 
 		})
