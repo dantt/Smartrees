@@ -306,6 +306,16 @@ $(document).ready(function () {
                         //console.log(variance[i]);
                         this.update(variance[i]);
                     });
+		    
+		    
+		    var meanchart = $('#meanchart').highcharts();
+		    
+		    $(meanchart.series[0].data).each(function (i, e) {
+		      //console.log(variance[i]);
+		      this.update(mean[i]);
+		    });
+		    
+		    
                 }
                 //Time chart updating
                 if ($("#resultExecTime").is(':checked')) {

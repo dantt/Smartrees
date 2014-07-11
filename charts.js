@@ -189,6 +189,61 @@ for (var i = 0; i < NoT; i++) {
 		});
 	    });
 	    
+	    $(function () {
+	      $('#meanchart').highcharts({	    
+		chart: {
+		  type: 'column',
+		},	    
+		title: {
+		  text: 'Exec time Mean Chart'
+		},	    
+		xAxis: {
+		  categories:  [
+		  'Dfs',
+		  'Bfs',
+		  'Ucs',
+		  'Ids',
+		  'Greedy',
+		  'A*',		    
+		  ]
+		},	    
+		yAxis: {
+		  type: 'logarithmic',
+		  title: {
+		    text: 'milliseconds'
+		  }
+		},	    
+		legend: {
+		  align: 'right',
+		  x: -70,
+		  verticalAlign: 'top',
+		  y: 20,
+		  floating: true,
+		  backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+					     borderColor: '#CCC',
+				      borderWidth: 1,
+				      shadow: false
+		},
+		tooltip: {
+		  formatter: function() {
+		    return '<b>'+ this.x +'</b><br/>'+
+		    this.series.name +': '+ this.y +'<br/>';
+		  }
+		},
+		plotOptions: {
+		  column: {
+		    //stacking: 'normal'
+		  }
+		},	    
+		series: [
+		{
+		  name: 'Mean',
+		  data: [0, 0, 0, 0, 0, 0]
+		},    
+		]
+	      });
+	    });
+	    
 	    
             $(function () {
               $('#successchart').highcharts({
