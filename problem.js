@@ -135,6 +135,8 @@ Problem.prototype.step = function(){
 
 /***
  * Don't question this function purpose
+ *
+ * THIS IS NOT USED ANYMORE
  */
 Problem.prototype.preElab = function(){
     if(typeof this._tree != 'undefined'){
