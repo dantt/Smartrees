@@ -172,7 +172,7 @@ for (var i = 0; i < NoT; i++) {
                     tooltip: {
                       formatter: function() {
                         return '<b>'+ this.x +'</b><br/>'+
-                        this.series.name +': '+ this.y +'<br/>';
+                        this.series.name +': '+ Math.round(this.y*100)/100 +'<br/>';
                       }
                     },
 		    plotOptions: {
@@ -227,7 +227,7 @@ for (var i = 0; i < NoT; i++) {
 		tooltip: {
 		  formatter: function() {
 		    return '<b>'+ this.x +'</b><br/>'+
-		    this.series.name +': '+ this.y +'<br/>';
+		    this.series.name +': '+ Math.round(this.y*100)/100 +'<br/>';
 		  }
 		},
 		plotOptions: {
