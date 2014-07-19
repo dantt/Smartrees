@@ -26,7 +26,15 @@ for (var i = 0; i < NoT; i++) {
 		        title: {
 		            text: 'Time'
 		        }
-		    },	    
+		    },
+		    colors: [
+		      '#39b6e6',
+		      '#ab4090',
+		      '#605a9a',
+		      '#91bd4e',
+		      '#f2c921',
+		      '#bb012a',
+		    ],
 		    legend: {
                       align: 'right',
                       x: -70,
@@ -86,7 +94,8 @@ for (var i = 0; i < NoT; i++) {
 		    },	    
 		    title: {
 		        text: 'Overall score - The higher the better'
-		    },	    
+		    },
+		    colors: ['#39b6e6'],
 		    xAxis: {
 		        categories:  [
 		    	'Dfs',
@@ -157,7 +166,8 @@ for (var i = 0; i < NoT; i++) {
 		        title: {
 		            text: 'milliseconds'
 		        }
-		    },	    
+		    },
+		    colors: ['#91bd4e'],
                     legend: {
                       align: 'right',
                       x: -70,
@@ -212,7 +222,8 @@ for (var i = 0; i < NoT; i++) {
 		  title: {
 		    text: 'milliseconds'
 		  }
-		},	    
+		},
+		colors: ['#605a9a'],
 		legend: {
 		  align: 'right',
 		  x: -70,
@@ -276,6 +287,7 @@ for (var i = 0; i < NoT; i++) {
                     }
                 }
               },
+	      colors: ['#f2c921', '#434348'],
               legend: {
                 align: 'right',
                 x: -70,
