@@ -1,6 +1,6 @@
 /**********************************/
 /**********************************/
-/******* Costruttore di IA  *******/
+/******* IA Constructor *******/
 /**********************************/
 /**********************************/
 
@@ -20,7 +20,7 @@ function IA(tree){
 
 /*********************************/
 /*********************************/
-/******** Campi dati di IA *******/
+/******** IA fields *******/
 /*********************************/
 /*********************************/
 
@@ -35,9 +35,9 @@ IA.prototype.step = function(){
 };
 
 
-
-//HERE BE DRAGONS.
-//THIS WILL BE REFACTORED W/SIGNALS & TRIGGERS
+/**
+ * Autoplays the search, using setInterval
+ */
 IA.prototype.play = function(){
     debug("method play" + this._isPlaying);
     if (this._isPlaying == false){
@@ -51,7 +51,9 @@ IA.prototype.play = function(){
 };
 
 
-
+/**
+ * Stop the autoplay
+ */
 IA.prototype.stop = function(){
     if (this._isPlaying == true){
       clearInterval(this._intervalId);
@@ -63,7 +65,7 @@ IA.prototype.stop = function(){
 
 /*********************************/
 /*********************************/
-/**** Getter & Setter di IA ******/
+/**** IA setters and getters ******/
 /*********************************/
 /*********************************/
 
@@ -90,15 +92,22 @@ IA.prototype.setOptions = function(options) {
 
 /*****************************/
 /*****************************/
-/******** Metodi di IA *******/
+/******** IA methods *******/
 /*****************************/
 /*****************************/
 
+/**
+ * Set a new tree
+ * @param tree
+ */
 IA.prototype.newTree = function(tree) {
     this.problem.setTree(tree);
     this.treemanager = new TreeManager(this.problem.getTree.bind(this.problem));
 }
 
+/**
+ * Reset the original tree and redraws it
+ */
 IA.prototype.reset = function() {/*
  this.problem.frontier = [];
  this.problem._tree = this.problem._startingTree;*/
@@ -107,10 +116,17 @@ IA.prototype.reset = function() {/*
     $('#output').html("");
 };
 
+/**
+ * Draws the tree into an html container
+ * @param container
+ */
 IA.prototype.draw = function(container) {
     this.treemanager.draw(container);
 };
 
+/**
+ * Updates the d3's tree
+ */
 IA.prototype.update = function() {
     this.treemanager.update();
 };

@@ -1,4 +1,3 @@
-//IA_PROJECT INIT CODE (will be moved)
 mIA = new IA(treePresets.preset2);
 
 

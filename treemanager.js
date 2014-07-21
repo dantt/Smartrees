@@ -6,7 +6,7 @@
 	 
 /**********************************/
 /**********************************/
-/*** Costruttore di TreeManager ***/
+/*** Constructor ***/
 /**********************************/
 /**********************************/
 
@@ -21,12 +21,6 @@ function TreeManager(getTree) {
 }
 
 
-/*********************************/
-/*********************************/
-/*** Campi dati di TreeManager ***/
-/*********************************/
-/*********************************/
-
 /*** Un albero ha i riferimenti ad albero di d3.js, e al rendering in svg ***/
 TreeManager.prototype._getTree = '';
 TreeManager.prototype._tree = '';
@@ -35,13 +29,7 @@ TreeManager.prototype._svg = '';
 
 
 
-/*****************************/
-/*****************************/
-/*** Metodi di TreeManager ***/
-/*****************************/
-/*****************************/
-
-/*** Metodo Draw, probabilmente esposto ***/
+/*** Draw the tree to the container ***/
 TreeManager.prototype.draw = function(container) {
 
 	//IFF il metodo draw si espone all'esterno,
@@ -58,7 +46,7 @@ TreeManager.prototype.draw = function(container) {
 	this.update();
 };
 
-/*** Metodo Update ***/
+/*** Updates the tree with the model status ***/
 TreeManager.prototype.update = function() {
 	
 	var source = this._getTree();
@@ -205,10 +193,7 @@ TreeManager.prototype.update = function() {
 
 
 
-/*** Metodo NodeSelected ***/
-//OBSOLETE
-//A PARTE LA PARTE "CLONA IL NODO", VA SPOSTATA IN UPDATE
-//MA PER ORA FUNZIONA CHIAMANDOLO
+/*** NodeSelected ***/
 TreeManager.prototype.selected = function(selector) {
 
 	var node = d3.select(selector).node();
@@ -219,10 +204,3 @@ TreeManager.prototype.selected = function(selector) {
 };
 
 
-/******************/
-/******************/
-/***** Init *******/
-/******************/
-/******************/
-
-//Moved to client code

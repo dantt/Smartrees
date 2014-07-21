@@ -1,6 +1,6 @@
 /**********************************/
 /**********************************/
-/** Costruttore di Problem (LOL)  */
+/** Problem constructor*/
 /**********************************/
 /**********************************/
 
@@ -8,7 +8,10 @@ function Problem(tree, saveStartTreeFlag){
     this.setTree(tree, saveStartTreeFlag);
 }
 
-
+/**
+ * Prints a string representation of a tree object
+ * @param tree
+ */
 function printTree(tree){
     var seen = [];
     var stringami = JSON.stringify(tree, function(key, val) {
@@ -27,7 +30,7 @@ function printTree(tree){
 
 /*********************************/
 /*********************************/
-/***** Campi dati di Problem *****/
+/***** Problem fields *****/
 /*********************************/
 /*********************************/
 
@@ -46,7 +49,7 @@ Problem.prototype._options = {
 
 /*********************************/
 /*********************************/
-/** Getter & Setter di Problem ***/
+/** Getter & Setter Problem ***/
 /*********************************/
 /*********************************/
 
@@ -92,7 +95,13 @@ Problem.prototype.setTree = function(tree, startTreeFlag){
 };
 
 
-
+/**
+ * Implements the 'limit increase' in Ids
+ * Reset the tree and its status
+ * @param startTree
+ * @param cur_limit
+ * @param cur_iteration
+ */
 Problem.prototype.idsIterate = function(startTree, cur_limit, cur_iteration){
   var count = this._nodesFound;
   this.setTree(startTree);
@@ -101,11 +110,10 @@ Problem.prototype.idsIterate = function(startTree, cur_limit, cur_iteration){
   this._nodesFound = count;
 }
 
-/*****************************/
-/*****************************/
-/***** Metodi di Problem *****/
-/*****************************/
-/*****************************/
+/**
+ * Runs a step on the tree search
+ * @returns {*}
+ */
 Problem.prototype.step = function(){
     var result = this.strategy(this._frontier, this._tree, this._options, this._nodesFound);
     if (typeof result === 'object' && result.target == 1){ //nodo goal
@@ -134,8 +142,6 @@ Problem.prototype.step = function(){
 }
 
 /***
- * Don't question this function purpose
- *
  * THIS IS NOT USED ANYMORE
  */
 Problem.prototype.preElab = function(){

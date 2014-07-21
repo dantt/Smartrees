@@ -39,7 +39,11 @@ function mergeFrontier(frontier, childrens, getP){
       }
 }
 
-//This is ugly and will probably kill your cat
+/**
+ * Returns the complete path to the node
+ * @param node
+ * @returns {string}
+ */
 function getPath(node) {
     if (typeof node.parent === 'undefined')
         return '#' + node.name;
@@ -47,7 +51,11 @@ function getPath(node) {
         return getPath(node.parent) +' #' + node.name;
 };
 
-
+/**
+ * Check if the frontier is empty, send an event if it is
+ * @param frontier
+ * @returns {number}
+ */
 function checkFrontier(frontier) { 
 	 if (frontier.length == 0){
         	debug('frontiera vuota fail');
@@ -61,6 +69,11 @@ function checkFrontier(frontier) {
 };
 
 
+/**
+ * Check if the node is a goal, send an event if it is
+ * @param current_node
+ * @returns {*}
+ */
 function checkSuccess(current_node) {
 	if (current_node.target == 1){
 		debug("goal raggiunto");
@@ -73,7 +86,9 @@ function checkSuccess(current_node) {
 	}
 };
 
-
+/**
+ * Send an updated event
+ */
 function updated() {
 	if(typeof window !== 'undefined')
 		 document.dispatchEvent(new Event('updated'));
@@ -82,7 +97,7 @@ function updated() {
 
 
 /**
- * Assumes that frontier is not empty
+ * Assumes that frontier is not empty, remove the first node from the frontier and returns it
  * @param frontier
  * @param nodesFound
  */
@@ -94,8 +109,8 @@ function pickFirst(frontier, nodesFound){
 }
 
 
-/***
- * Random coded
+/**
+ * Not used anymore
  */
 function AStarOld(frontier, tree, options, nodesFound){
 
@@ -188,7 +203,15 @@ function AStarOld(frontier, tree, options, nodesFound){
 }
 
 
-
+/**
+ * Not used anymore
+ * @param frontier
+ * @param tree
+ * @param options
+ * @param nodesFound
+ * @returns {*}
+ * @constructor
+ */
 function GreedyOld(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
@@ -280,7 +303,15 @@ function GreedyOld(frontier, tree, options, nodesFound){
     return 1;
 }
 
-
+/**
+ * Implements Bfs
+ * @param frontier
+ * @param tree
+ * @param options
+ * @param nodesFound
+ * @returns {*}
+ * @constructor
+ */
 function Bfs(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
@@ -298,7 +329,15 @@ function Bfs(frontier, tree, options, nodesFound){
     return 1;
 }
 
-
+/**
+ * Implements Dfs
+ * @param frontier
+ * @param tree
+ * @param options
+ * @param nodesFound
+ * @returns {*}
+ * @constructor
+ */
 function Dfs(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
         return 0;
@@ -317,7 +356,15 @@ function Dfs(frontier, tree, options, nodesFound){
 }
 
 
-
+/**
+ * Not used anymore
+ * @param frontier
+ * @param tree
+ * @param options
+ * @param nodesFound
+ * @returns {*}
+ * @constructor
+ */
 function DfsOld(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
@@ -342,7 +389,15 @@ function DfsOld(frontier, tree, options, nodesFound){
     return 1;
 }
 
-
+/**
+ * Implements limited depth search
+ * @param frontier
+ * @param tree
+ * @param options
+ * @param nodesFound
+ * @returns {*}
+ * @constructor
+ */
 function Lds(frontier, tree, options, nodesFound) {
     if (checkFrontier(frontier) == 0)
     	return 0;
@@ -361,7 +416,15 @@ function Lds(frontier, tree, options, nodesFound) {
     return 1;
 }
 
-
+/**
+ * Implements Ids
+ * @param frontier
+ * @param tree
+ * @param options
+ * @param nodesFound
+ * @returns {*}
+ * @constructor
+ */
 function Ids(frontier, tree, options, nodesFound){
     if (frontier.length == 0) {
       if(typeof window !== 'undefined'){
@@ -376,6 +439,12 @@ function Ids(frontier, tree, options, nodesFound){
 }
 
 
+/**
+ * Orders an array with bubble sort following a particular criteria
+ * @param array
+ * @param criteria
+ * @returns {*}
+ */
 function bubbleSorta(array, criteria){
     for (var i = 0; i < array.length; i++){
         for (var j = i; j < array.length; j++){
@@ -421,8 +490,8 @@ function bubbleSorta(array, criteria){
 }
 
 
-/*
- Implements Uniform Cost search
+/**
+ * Not used anymore
  */
 function UcsOld(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
@@ -514,7 +583,15 @@ function UcsOld(frontier, tree, options, nodesFound){
     return 1;
 }
 
-
+/**
+ * Not used anymore
+ * @param frontier
+ * @param tree
+ * @param options
+ * @param nodesFound
+ * @returns {*}
+ * @constructor
+ */
 function UcsNoRtl(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
@@ -543,11 +620,24 @@ function UcsNoRtl(frontier, tree, options, nodesFound){
     }
     return true;
 }
-
+/**
+ * Insert an element in a specific position of the array
+ * @param index -- the index where to insert
+ * @param item -- the item to insert
+ */
 Array.prototype.insert = function (index, item) {
   this.splice(index, 0, item);
 };
 
+/**
+ * Implements Uniform Cost search
+ * @param frontier
+ * @param tree
+ * @param options
+ * @param nodesFound
+ * @returns {*}
+ * @constructor
+ */
 function Ucs(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
@@ -564,6 +654,16 @@ function Ucs(frontier, tree, options, nodesFound){
     return 1;
 }
 
+
+/**
+ * Implements A Star search
+ * @param frontier
+ * @param tree
+ * @param options
+ * @param nodesFound
+ * @returns {*}
+ * @constructor
+ */
 function AStar(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;
@@ -580,6 +680,10 @@ function AStar(frontier, tree, options, nodesFound){
     return 1;
 }
 
+/**
+ * Update the values of depth, pathCost, and f in the children of a node
+ * @param node
+ */
 function updateChildrens(node){
   
   for( var i = 0; i < node.children.length; i++){
@@ -590,7 +694,15 @@ function updateChildrens(node){
   
 }
 
-
+/**
+ * Implements Greedy search
+ * @param frontier
+ * @param tree
+ * @param options
+ * @param nodesFound
+ * @returns {*}
+ * @constructor
+ */
 function Greedy(frontier, tree, options, nodesFound){
     if (checkFrontier(frontier) == 0)
     	return 0;

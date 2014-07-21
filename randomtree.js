@@ -21,7 +21,7 @@ function getRandomInt (min, max) {
 
 
 /**
- *
+ * Generates a random tree with the given parameters
  * @param branching
  * @param depth_limit
  * @param complete
@@ -65,6 +65,7 @@ function randomTree(branching, depth_limit, complete_flag, leaf_flag ){
 
 
 /**
+ * Generates the children of a node
  * @param node: the object node
  * @param branching: the branching factor
  * @param depth_limit: the maximum value for depth

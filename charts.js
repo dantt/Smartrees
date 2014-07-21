@@ -1,3 +1,7 @@
+/**
+ * Initialize the charts with the correct settings
+ * @param NoT -- number of trees
+ */
 function initCharts(NoT) {
 
 var categoryArray = [];

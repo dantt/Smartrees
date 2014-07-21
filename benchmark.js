@@ -1,19 +1,17 @@
-/*
-
- This is no longer a web worker, still lots of magic will be used here
-
+/**
+ * Runs a single benchmarking test on a tree
+ * @param tree -- reference to the tree
+ * @param nodesCount -- number of nodes in the tree
+ * @param cb -- callback function
+ * @constructor
  */
-
-
-
-
-
-
 function Benchmarker(tree, nodesCount, cb){
-    //questo chiama settree
-    //settree mette la radice in frontiera
-    //this._problem = new Problem(tree);
 
+    /**
+     * Spawns a Web worker and send him some work to do on a tree following a particular strategy
+     * @param strategy -- reference to the function implementing the search
+     * @param bbb -- callback function
+     */
     function doWork(strategy, bbb) {
         var t0 = performance.now();
         var worker = new Worker('my_worker.js');
