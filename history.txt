@@ -22,3 +22,7 @@ Todo:
 8) [DONE] togliere limited depth dalla lista
 9) [DONE] mostra il limite sull'esecuzione di limited depth
 10) i nomi fighi
+
+
+
+Vediamo se questo branch viene separato da gh-pages
