@@ -81,6 +81,7 @@ $(document).ready(function () {
                 var to_string;
                 to_string = JSON.parse($('#treepaster').val().replace("\\t", '').replace("\\n", ''));
                 mIA.newTree(to_string);
+		$('#treecontainer').html('');
                 mIA.draw('treecontainer');
                 navigateTo('#homepage');
             } catch (err) {
