@@ -14,7 +14,7 @@ function Benchmarker(tree, nodesCount, cb){
      */
     function doWork(strategy, bbb) {
         var t0 = performance.now();
-        var worker = new Worker('my_worker.js');
+        var worker = new Worker('js/client/my_worker.js');
         worker.onmessage = function(e) {
             var t1 = performance.now();
             bbb(null, {'data': e.data, 'time': t1-t0});
